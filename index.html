@@ -18,13 +18,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",s
 .calc{display:flex;gap:8px;align-items:center;margin-bottom:8px}
 .calc input{flex:1;padding:10px 12px;border:none;border-radius:8px;font-size:16px;background:rgba(255,255,255,.95);color:#2a1f1c;min-height:40px}
 .calc .eq{font-weight:700;font-size:15px;min-width:96px;text-align:right}
-.budget{display:flex;justify-content:space-between;align-items:center;font-size:12px;background:rgba(0,0,0,.15);padding:6px 10px;border-radius:6px}
-.budget strong{font-size:14px}
-.bar{height:5px;background:rgba(255,255,255,.3);border-radius:3px;margin-top:4px;overflow:hidden}
+.budget{background:rgba(0,0,0,.15);padding:7px 10px;border-radius:6px}
+.budget-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;gap:6px;flex-wrap:wrap}
+.budget-row+.budget-row{margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.15)}
+.budget-row strong{font-size:13px}
+.bar{height:5px;background:rgba(255,255,255,.3);border-radius:3px;margin-top:6px;overflow:hidden}
 .bar-fill{height:100%;background:#fff;border-radius:3px;transition:width .3s,background .3s}
 .bar-fill.warn{background:#ffd166}
 .bar-fill.danger{background:#ff6b6b}
-.tabs{display:flex;background:#fff;border-bottom:1px solid #e5d4c5;overflow-x:auto;position:sticky;top:calc(96px + env(safe-area-inset-top));z-index:99;scrollbar-width:none}
+.tabs{display:flex;background:#fff;border-bottom:1px solid #e5d4c5;overflow-x:auto;position:sticky;top:calc(116px + env(safe-area-inset-top));z-index:99;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex:0 0 auto;padding:14px 16px;font-size:13px;color:#7a6a5e;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;min-height:44px;display:flex;align-items:center}
 .tab.active{color:#b06b54;border-bottom-color:#b06b54;font-weight:600}
@@ -54,6 +56,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",s
 .tag.smoke{background:#7a6a5e;color:#fff}
 .tag.hot{background:#d4a574;color:#fff}
 .tag.move{background:#8aa085;color:#fff}
+.tag.wake{background:#a89d94;color:#fff}
+.tag.gift{background:#c99fc1;color:#fff}
 .card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .card h3{color:#b06b54;font-size:15px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #e5d4c5}
 .card h4{font-size:14px;margin:10px 0 6px}
@@ -75,6 +79,9 @@ a{color:#b06b54;text-decoration:none}
 .spend-item .ic{font-size:18px;flex-shrink:0}
 .spend-item .meta{flex:1;min-width:0}
 .spend-item .when{color:#a89d94;font-size:11px;margin-top:2px}
+.spend-item .pay-pill{display:inline-block;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:4px;font-weight:700;vertical-align:middle}
+.spend-item .pay-pill.cash{background:#5a7355;color:#fff}
+.spend-item .pay-pill.card{background:#d4a574;color:#fff}
 .spend-item button{background:#fbe9e0;border:none;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer;color:#b06b54;font-weight:700;min-height:32px}
 .add-btn{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));right:20px;width:60px;height:60px;border-radius:30px;background:linear-gradient(135deg,#b06b54,#c9886b);color:#fff;border:none;font-size:32px;font-weight:300;box-shadow:0 4px 20px rgba(176,107,84,.5);z-index:1000;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,opacity .2s}
 .add-btn:active{transform:scale(.92)}
@@ -83,9 +90,10 @@ a{color:#b06b54;text-decoration:none}
 .modal.show{display:flex}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 @keyframes slideup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-.modal-box{background:#fff;border-radius:18px 18px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-width:480px;animation:slideup .25s}
+.modal-box{background:#fff;border-radius:18px 18px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-width:480px;animation:slideup .25s;max-height:88vh;overflow-y:auto}
 .modal-box h3{margin-bottom:14px;color:#b06b54;font-size:16px}
-.modal-box input,.modal-box select{width:100%;padding:12px;border:1px solid #e5d4c5;border-radius:8px;margin-bottom:10px;font-size:16px;font-family:inherit;min-height:44px}
+.modal-box input,.modal-box textarea,.modal-box select{width:100%;padding:12px;border:1px solid #e5d4c5;border-radius:8px;margin-bottom:10px;font-size:16px;font-family:inherit;min-height:44px;background:#fff;color:#2a1f1c}
+.modal-box textarea{min-height:96px;resize:vertical;line-height:1.5}
 .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
 .quick button{padding:10px 4px;border:1px solid #e5d4c5;background:#fbf6f1;border-radius:8px;font-size:12px;color:#b06b54;cursor:pointer;font-weight:600;font-family:inherit;min-height:40px}
 .quick button:active{background:#b06b54;color:#fff}
@@ -93,10 +101,14 @@ a{color:#b06b54;text-decoration:none}
 .cat button{padding:10px 4px;border:1.5px solid #e5d4c5;background:#fff;border-radius:8px;font-size:11px;cursor:pointer;font-family:inherit;color:#7a6a5e;min-height:50px;display:flex;flex-direction:column;align-items:center;gap:2px}
 .cat button .ic{font-size:18px}
 .cat button.on{border-color:#b06b54;background:#fff5ec;color:#b06b54;font-weight:700}
+.pay-type{display:flex;gap:6px;margin-bottom:10px}
+.pay-type button{flex:1;padding:12px;border:1.5px solid #e5d4c5;background:#fff;border-radius:8px;font-size:13px;cursor:pointer;color:#7a6a5e;min-height:44px;font-family:inherit;font-weight:600}
+.pay-type button.on{border-color:#b06b54;background:#fff5ec;color:#b06b54}
 .modal-btns{display:flex;gap:8px;margin-top:4px}
 .modal-btns button{flex:1;padding:13px;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;font-family:inherit;min-height:48px}
 .btn-save{background:#b06b54;color:#fff}
 .btn-cancel{background:#e5d4c5;color:#7a6a5e}
+.btn-del{background:#fff;color:#b54040;border:1px solid #ffd1d1 !important}
 .warn{background:#fff5ec;border-left:3px solid #d4a574;padding:10px 14px;font-size:12px;color:#7a6a5e;border-radius:0 8px 8px 0;margin:10px 0;line-height:1.7;word-break:break-word}
 .warn.danger{background:#ffe9e9;border-left-color:#ff6b6b;color:#b54040}
 .kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
@@ -107,6 +119,11 @@ a{color:#b06b54;text-decoration:none}
 .copyable:active{background:#b06b54;color:#fff;border-color:#b06b54}
 .toast{position:fixed;bottom:calc(100px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:rgba(42,31,28,.92);color:#fff;padding:10px 18px;border-radius:24px;font-size:13px;z-index:3000;opacity:0;transition:all .3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.user-note{background:#fff8ec;border-left:3px solid #d4a574;padding:8px 10px;margin-top:6px;border-radius:0 6px 6px 0;font-size:12px;color:#7a6a5e;line-height:1.6;cursor:pointer;word-break:break-word;white-space:pre-wrap}
+.user-note .lbl{font-weight:700;color:#b06b54;margin-right:4px}
+.user-note:active{background:#fbe9e0}
+.note-btn{display:inline-flex;align-items:center;gap:4px;background:transparent;border:1px dashed #e5d4c5;color:#b06b54;padding:5px 12px;border-radius:14px;font-size:11px;margin-top:8px;cursor:pointer;font-family:inherit;font-weight:600;min-height:30px}
+.note-btn:active{background:#b06b54;color:#fff;border-color:#b06b54}
 </style>
 </head>
 <body>
@@ -117,11 +134,17 @@ a{color:#b06b54;text-decoration:none}
     <div class="eq" id="twd">≈ NT$0</div>
   </div>
   <div class="budget">
-    <span>預算 <strong>¥85,000</strong></span>
-    <span>已花 <strong id="spent">¥0</strong></span>
-    <span>剩 <strong id="left">¥85,000</strong></span>
+    <div class="budget-row">
+      <span>💴 現金 <strong>¥85,000</strong></span>
+      <span>已花 <strong id="spent">¥0</strong></span>
+      <span>剩 <strong id="left">¥85,000</strong></span>
+    </div>
+    <div class="budget-row">
+      <span>💳 刷卡 <strong id="card-spent">¥0</strong></span>
+      <span>合計 <strong id="total-spent">¥0</strong> (<span id="total-twd">NT$0</span>)</span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="bar" style="width:0%"></div></div>
   </div>
-  <div class="bar"><div class="bar-fill" id="bar" style="width:0%"></div></div>
 </div>
 
 <div class="tabs" id="tabs">
@@ -142,50 +165,57 @@ a{color:#b06b54;text-decoration:none}
 
 <div class="day" data-date="2026-05-21"><div class="day-head"><strong>Day 1 · 5/21 四</strong><div class="meta"><span>福岡→別府</span><span class="chev">▼</span></div></div>
 <div class="day-body">
-<div class="event"><div class="time">04:30</div><div class="event-body"><div class="title">小港機場集合</div><div class="note">CI138 07:05→10:50 福岡</div></div></div>
-<div class="event"><div class="time">10:50</div><div class="event-body"><div class="title">福岡空港抵達</div><span class="tag buy">IQOS限定先看</span><span class="tag smoke">機場吸菸區</span><div class="note">入境後直奔免稅店問限定款</div></div></div>
-<div class="event"><div class="time">13:00</div><div class="event-body"><div class="title">日田豆田町</div><div class="note">壽司便當車上吃</div></div></div>
-<div class="event"><div class="time">15:56</div><div class="event-body"><div class="title">由布院之森列車</div><div class="note">→16:50 湯布院（車內全禁菸）</div></div></div>
-<div class="event"><div class="time">17:30</div><div class="event-body"><div class="title">別府清風飯店 Check in</div><span class="tag eat">和洋自助晚餐</span></div></div>
-<div class="event"><div class="time">18:45</div><div class="event-body"><div class="title">⭐ Yumetown 別府（跳過晚餐去）</div><span class="tag buy">UNIQLO+GU</span><span class="tag hot">熊本熊卡</span><div class="note">7-8 分鐘步行，預算 ¥15,000，21:00 關</div><a class="btn map" href="https://maps.google.com/?q=Yumetown+Beppu" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
+<div class="event" data-eid="d1-depart"><div class="time">03:30</div><div class="event-body"><div class="title">🚕 家中出發</div><span class="tag move">小港機場</span><div class="note">預留 1 小時抵達機場</div></div></div>
+<div class="event" data-eid="d1-meet"><div class="time">04:30</div><div class="event-body"><div class="title">小港機場集合</div><div class="note">CI138 07:05→10:50 福岡</div></div></div>
+<div class="event" data-eid="d1-arrive-fuk"><div class="time">10:50</div><div class="event-body"><div class="title">福岡空港抵達</div><span class="tag buy">IQOS 限定先看</span><span class="tag smoke">機場吸菸區</span><div class="note">入境後直奔免稅店問 Iluma 銀河藍庫存</div></div></div>
+<div class="event" data-eid="d1-hita"><div class="time">13:00</div><div class="event-body"><div class="title">日田豆田町</div><div class="note">壽司便當車上吃</div></div></div>
+<div class="event" data-eid="d1-train"><div class="time">15:56</div><div class="event-body"><div class="title">由布院之森列車</div><div class="note">→16:50 湯布院（車內全禁菸）</div></div></div>
+<div class="event" data-eid="d1-checkin"><div class="time">17:30</div><div class="event-body"><div class="title">別府清風飯店 Check in</div></div></div>
+<div class="event" data-eid="d1-dinner"><div class="time">18:00</div><div class="event-body"><div class="title">🍱 飯店和洋自助晚餐</div><span class="tag eat">飯店 buffet</span><div class="note">不跳過晚餐｜吃飽再去 Yumetown</div></div></div>
+<div class="event" data-eid="d1-yumetown"><div class="time">19:30</div><div class="event-body"><div class="title">⭐ Yumetown 別府</div><span class="tag buy">UNIQLO+GU</span><span class="tag hot">熊本熊卡</span><div class="note">步行 7-8 分｜21:00 關｜預算 ¥15,000</div><a class="btn map" href="https://maps.google.com/?q=Yumetown+Beppu" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
 </div>
 </div>
 
 <div class="day" data-date="2026-05-22"><div class="day-head"><strong>Day 2 · 5/22 五</strong><div class="meta"><span>動物園→阿蘇</span><span class="chev">▼</span></div></div>
 <div class="day-body">
-<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">九州自然動物園</div></div></div>
-<div class="event"><div class="time">13:00</div><div class="event-body"><div class="title">湯布院</div><span class="tag eat">炭火燒肉定食¥2500</span><div class="note">領 B-SPEAK 蛋糕、史努比茶屋、金麟湖</div></div></div>
-<div class="event"><div class="time">17:00</div><div class="event-body"><div class="title">阿蘇格蘭飯店</div><span class="tag eat">阿蘇赤牛 buffet</span><div class="note">山上露天溫泉看星空 ♨️</div></div></div>
+<div class="event" data-eid="d2-wake"><div class="time">07:00</div><div class="event-body"><div class="title">🛌 別府清風 晨間</div><span class="tag wake">起床</span><div class="note">07:30 早餐 buffet｜08:30 退房＋大廳集合｜08:45 出發</div></div></div>
+<div class="event" data-eid="d2-zoo"><div class="time">09:00</div><div class="event-body"><div class="title">九州自然動物園</div></div></div>
+<div class="event" data-eid="d2-yufu"><div class="time">13:00</div><div class="event-body"><div class="title">湯布院</div><span class="tag eat">炭火燒肉定食 ¥2500</span><div class="note">領 B-SPEAK 蛋糕、史努比茶屋、金麟湖</div></div></div>
+<div class="event" data-eid="d2-aso"><div class="time">17:00</div><div class="event-body"><div class="title">阿蘇格蘭飯店</div><span class="tag eat">阿蘇赤牛 buffet</span><div class="note">山上露天溫泉看星空 ♨️</div></div></div>
 </div>
 </div>
 
 <div class="day" data-date="2026-05-23"><div class="day-head"><strong>Day 3 · 5/23 六 ⭐</strong><div class="meta"><span>採購主戰場</span><span class="chev">▼</span></div></div>
 <div class="day-body">
-<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">阿蘇神社+門前町</div></div></div>
-<div class="event"><div class="time">11:00</div><div class="event-body"><div class="title">阿蘇草千里</div><span class="tag smoke">停車場吸菸區</span></div></div>
-<div class="event"><div class="time">12:00</div><div class="event-body"><div class="title">草千里午餐 ¥2500</div><div class="note">必吃阿蘇赤牛</div></div></div>
-<div class="event"><div class="time">14:30</div><div class="event-body"><div class="title">⭐ Bic Camera 鶴屋 7F</div><span class="tag buy">SR86 + 凝膠×2</span><span class="tag hot">熊本熊卡達標</span><div class="note">¥78,000（NT$16,380）一筆刷爆 NT$500 加碼</div><a class="btn map" href="https://maps.google.com/?q=Bic+Camera+Tsuruya+Kumamoto" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
-<div class="event"><div class="time">15:45</div><div class="event-body"><div class="title">回飯店放美顏器</div><span class="tag smoke">鶴屋外抽菸</span></div></div>
-<div class="event"><div class="time">18:00</div><div class="event-body"><div class="title">涮涮鍋暢食</div><span class="tag eat">¥3500 含軟飲</span></div></div>
-<div class="event"><div class="time">20:00</div><div class="event-body"><div class="title">⭐ 唐吉訶德下通</div><span class="tag buy">IQOS+喉嚨噴霧×6</span><div class="note">¥10,000+¥6,000，飯店步行 5 分</div></div></div>
-<div class="event"><div class="time">21:00</div><div class="event-body"><div class="title">Bar 小酌 🥃</div></div></div>
+<div class="event" data-eid="d3-wake"><div class="time">06:30</div><div class="event-body"><div class="title">🛌 阿蘇格蘭 晨間</div><span class="tag wake">起床</span><span class="tag hot">晨溫泉</span><div class="note">06:30 起床泡晨溫泉看雲海｜07:30 早餐｜08:30 退房集合｜08:45 出發</div></div></div>
+<div class="event" data-eid="d3-aso"><div class="time">09:00</div><div class="event-body"><div class="title">阿蘇神社+門前町</div></div></div>
+<div class="event" data-eid="d3-kusa"><div class="time">11:00</div><div class="event-body"><div class="title">阿蘇草千里</div><span class="tag smoke">停車場吸菸區</span></div></div>
+<div class="event" data-eid="d3-lunch"><div class="time">12:00</div><div class="event-body"><div class="title">草千里午餐 ¥2500</div><div class="note">必吃阿蘇赤牛</div></div></div>
+<div class="event" data-eid="d3-bic"><div class="time">14:30</div><div class="event-body"><div class="title">⭐ Bic Camera 鶴屋 7F</div><span class="tag buy">SR86 + 凝膠×2</span><span class="tag hot">熊本熊卡達標</span><div class="note">¥78,000（NT$16,380）一筆刷爆 NT$500 加碼</div><a class="btn map" href="https://maps.google.com/?q=Bic+Camera+Tsuruya+Kumamoto" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
+<div class="event" data-eid="d3-back"><div class="time">15:45</div><div class="event-body"><div class="title">回飯店放美顏器</div><span class="tag smoke">鶴屋外抽菸</span></div></div>
+<div class="event" data-eid="d3-shabu"><div class="time">18:00</div><div class="event-body"><div class="title">涮涮鍋暢食</div><span class="tag eat">¥3500 含軟飲</span></div></div>
+<div class="event" data-eid="d3-don"><div class="time">20:00</div><div class="event-body"><div class="title">⭐ 唐吉訶德下通</div><span class="tag buy">Iluma 銀河藍 ×2</span><span class="tag buy">噴霧 ×6</span><span class="tag buy">合力他命 ×6</span><span class="tag gift">阿姨軟糖</span><div class="note">飯店步行 5 分｜可順手找恩碩禮物</div></div></div>
+<div class="event" data-eid="d3-bar"><div class="time">21:00</div><div class="event-body"><div class="title">Bar 小酌 🥃</div></div></div>
 </div>
 </div>
 
 <div class="day" data-date="2026-05-24"><div class="day-head"><strong>Day 4 · 5/24 日 💖</strong><div class="meta"><span>約會夜</span><span class="chev">▼</span></div></div>
 <div class="day-body">
-<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">水前寺成趣園</div></div></div>
-<div class="event"><div class="time">12:00</div><div class="event-body"><div class="title">熊本風味御膳 ¥2500</div><div class="note">辛子蓮根、太平燕｜⚠️ 馬刺し讓老公吃</div></div></div>
-<div class="event"><div class="time">13:30</div><div class="event-body"><div class="title">AEON Mall 嘉島</div><span class="tag buy">JINS 鈦框</span><span class="tag buy">UNIQLO/GU 補貨</span><div class="note">JINS 全鈦框 ¥13,200+鏡片 ¥3,300（NT$3,120）</div></div></div>
-<div class="event"><div class="time">19:00</div><div class="event-body"><div class="title">🌟 SORA 和牛燒肉「空」套餐</div><span class="tag eat">¥7,920×2</span><span class="tag smoke">テラス可抽</span><div class="note">蜜月旅行紀念｜半個室｜免費訊息盤</div><a class="btn tel" href="tel:+81962238688">📞 撥打</a><a class="btn map" href="https://maps.google.com/?q=和牛のたか+空+下通" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
-<div class="event"><div class="time">21:15</div><div class="event-body"><div class="title">🎷 醉ing Swing Jazz Bar</div><div class="note">花畑町 10-1 中山ビル 2F</div><a class="btn tel" href="tel:+818060596960">📞 撥打</a></div></div>
+<div class="event" data-eid="d4-wake"><div class="time">07:00</div><div class="event-body"><div class="title">🛌 GRIDS 熊本 晨間</div><span class="tag wake">起床</span><div class="note">07:45 早餐｜08:45 大廳集合出發</div></div></div>
+<div class="event" data-eid="d4-suizenji"><div class="time">09:00</div><div class="event-body"><div class="title">水前寺成趣園</div></div></div>
+<div class="event" data-eid="d4-lunch"><div class="time">12:00</div><div class="event-body"><div class="title">熊本風味御膳 ¥2500</div><div class="note">辛子蓮根、太平燕｜⚠️ 馬刺し讓老公吃</div></div></div>
+<div class="event" data-eid="d4-aeon"><div class="time">13:30</div><div class="event-body"><div class="title">AEON Mall 嘉島</div><span class="tag buy">JINS 鈦框</span><span class="tag buy">UNIQLO/GU 補貨</span><span class="tag gift">NB / Nautica 看運氣</span><div class="note">JINS 全鈦框 ¥13,200+鏡片 ¥3,300（NT$3,120）<br>NB、Nautica 逛到再買，不用特別找</div></div></div>
+<div class="event" data-eid="d4-sora"><div class="time">19:00</div><div class="event-body"><div class="title">🌟 SORA 和牛燒肉「空」套餐</div><span class="tag eat">¥7,920×2</span><span class="tag smoke">テラス可抽</span><div class="note">蜜月旅行紀念｜半個室｜免費訊息盤</div><a class="btn tel" href="tel:+81962238688">📞 撥打</a><a class="btn map" href="https://maps.google.com/?q=和牛のたか+空+下通" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
+<div class="event" data-eid="d4-jazz"><div class="time">21:15</div><div class="event-body"><div class="title">🎷 醉ing Swing Jazz Bar</div><div class="note">花畑町 10-1 中山ビル 2F</div><a class="btn tel" href="tel:+818060596960">📞 撥打</a></div></div>
 </div>
 </div>
 
 <div class="day" data-date="2026-05-25"><div class="day-head"><strong>Day 5 · 5/25 一</strong><div class="meta"><span>回家</span><span class="chev">▼</span></div></div>
 <div class="day-body">
-<div class="event"><div class="time">08:00</div><div class="event-body"><div class="title">飯店早餐+退房</div></div></div>
-<div class="event"><div class="time">11:50</div><div class="event-body"><div class="title">熊本→高雄 CI199</div><div class="note">13:30 抵達</div></div></div>
+<div class="event" data-eid="d5-wake"><div class="time">07:00</div><div class="event-body"><div class="title">🛌 GRIDS 熊本 晨間</div><span class="tag wake">起床</span><div class="note">08:00 早餐｜08:30 退房｜09:00 大廳集合 → 機場</div></div></div>
+<div class="event" data-eid="d5-airport"><div class="time">10:00</div><div class="event-body"><div class="title">熊本空港 報到</div><span class="tag smoke">空港吸菸室</span></div></div>
+<div class="event" data-eid="d5-flight"><div class="time">11:50</div><div class="event-body"><div class="title">熊本→高雄 CI199</div><div class="note">13:30 抵達小港</div></div></div>
+<div class="event" data-eid="d5-home"><div class="time">15:00</div><div class="event-body"><div class="title">🏠 預估抵達家中</div><div class="note">領行李＋海關＋接送預留 1.5 小時</div></div></div>
 </div>
 </div>
 
@@ -195,11 +225,11 @@ a{color:#b06b54;text-decoration:none}
 <div class="section" id="buy">
 
 <div class="kpi">
-<div class="kpi-card"><div class="v">¥164,300</div><div class="l">總採購</div></div>
-<div class="kpi-card"><div class="v">NT$846</div><div class="l">淨回饋</div></div>
+<div class="kpi-card"><div class="v" id="buy-total-jpy">¥165,460</div><div class="l">預計採購</div></div>
+<div class="kpi-card"><div class="v" id="buy-total-twd">NT$34,747</div><div class="l">≈ 台幣</div></div>
 </div>
 
-<div class="card">
+<div class="card" data-eid="buy-sr86">
 <h3>💆 SR86 美顏器 + 凝膠</h3>
 <div class="row"><span>主機（棕色 -T）</span><b>¥72,000</b></div>
 <div class="row"><span>凝膠 EH-4R03 ×2 條</span><b>¥6,000</b></div>
@@ -208,7 +238,7 @@ a{color:#b06b54;text-decoration:none}
 <a class="btn map" href="https://maps.google.com/?q=Bic+Camera+Tsuruya+Kumamoto" target="_blank" rel="noopener">🗺️ 地圖</a>
 </div>
 
-<div class="card">
+<div class="card" data-eid="buy-jins">
 <h3>👓 JINS 鈦框眼鏡</h3>
 <div class="row"><span>全鈦框（雙鼻橋款）</span><b>¥13,200</b></div>
 <div class="row"><span>升級薄型+抗藍光</span><b>¥3,300</b></div>
@@ -216,38 +246,65 @@ a{color:#b06b54;text-decoration:none}
 <div class="warn">📅 5/24（日）13:30｜📍 AEON Mall 嘉島 2F<br>帶台灣驗光單 + 喜歡款式截圖｜省 NT$5,000</div>
 </div>
 
-<div class="card">
-<h3>👟 NB 9060 Summer "Raincloud"</h3>
-<div class="row"><span>型號 U90603FA / 27cm</span><b>¥19,800</b></div>
-<div class="warn">📦 東京朋友代購寄飯店<br>📞 calif 渋谷 03-6712-7167<br>指定 5/22 送達 GRIDS 熊本</div>
+<div class="card" data-eid="buy-iqos">
+<h3>🚬 IQOS Iluma 銀河藍 ×2</h3>
+<div class="row"><span>Iluma 主機 銀河藍</span><b>¥9,980 ×2</b></div>
+<div class="row"><span>合計</span><b>¥19,960</b></div>
+<div class="warn">📅 5/21 福岡空港先看現貨 → 5/23 唐吉訶德下通補<br>📍 限定色，先機場再市區，刷卡買</div>
 </div>
 
-<div class="card">
-<h3>👕 Nautica 短袖 ×3</h3>
-<div class="row"><span>ZOZOTOWN SALE 寄飯店</span><b>¥12,000</b></div>
-<div class="warn">⏰ 5/16 前下單，指定 5/22 配送</div>
-<a class="btn" href="https://zozo.jp/brand/nautica/" target="_blank" rel="noopener">🌐 ZOZO</a>
+<div class="card" data-eid="buy-spray">
+<h3>💊 喉嚨噴霧 ×6 罐</h3>
+<div class="row"><span>のどぬ〜るスプレー</span><b>¥1,000 ×6</b></div>
+<div class="row"><span>合計</span><b>¥6,000</b></div>
+<div class="warn">📅 5/23（六）20:00｜📍 唐吉訶德下通｜現金<br>藥妝區｜可一起退稅</div>
 </div>
 
-<div class="card">
-<h3>🚬 IQOS 限定主機</h3>
-<div class="row"><span>限定款主機</span><b>¥9,980</b></div>
-<div class="row"><span>日本菸彈 ×3</span><b>¥1,800</b></div>
-<div class="warn">Day 1 福岡空港先看 → Day 3 唐吉訶德補</div>
+<div class="card" data-eid="buy-vitamin">
+<h3>💊 合力他命 ×6 罐</h3>
+<div class="row"><span>合力他命 EX Plus α 60 錠</span><b>¥1,800 ×6</b></div>
+<div class="row"><span>合計</span><b>¥10,800</b></div>
+<div class="warn">📅 5/23（六）20:00｜📍 唐吉訶德下通（藥妝區）<br>免稅門檻 ¥5,000 起｜可與噴霧一起算<br>找日文「アリナミン EX プラス α」</div>
 </div>
 
-<div class="card">
-<h3>💊 喉嚨噴霧 ×6 + 👔 UNIQLO/GU</h3>
-<div class="row"><span>喉嚨噴霧 ×6</span><b>¥6,000</b></div>
-<div class="row"><span>UNIQLO+GU 別府</span><b>¥15,000</b></div>
-<div class="row"><span>AEON 補貨</span><b>¥10,000</b></div>
+<div class="card" data-eid="buy-gummy">
+<h3>🍬 阿姨的軟糖</h3>
+<div class="row"><span>HARIBO / KANRO 綜合</span><b>¥500 ×5</b></div>
+<div class="row"><span>合計</span><b>¥2,500</b></div>
+<div class="warn">📅 5/23 唐吉訶德 / 5/25 機場補｜現金<br>挑日本限定口味（哈密瓜、葡萄、抹茶）</div>
+</div>
+
+<div class="card" data-eid="buy-enshuo">
+<h3>🎁 恩碩禮物</h3>
+<div class="row"><span>預算</span><b>¥5,000</b></div>
+<div class="warn">📅 5/23 唐吉訶德 / 5/24 AEON / 5/25 機場 隨機看<br>方向：日系小物、零食組、文具｜📝 點下方加註想送的款式</div>
+</div>
+
+<div class="card" data-eid="buy-uniqlo">
+<h3>👕 UNIQLO / GU 補貨</h3>
+<div class="row"><span>別府 Yumetown</span><b>¥15,000</b></div>
+<div class="row"><span>AEON Mall 嘉島</span><b>¥10,000</b></div>
+<div class="row"><span>合計</span><b>¥25,000</b></div>
+<div class="warn">📅 Day 1 別府 + Day 4 AEON 兩波<br>UNIQLO U / +J 系列日本限定優先</div>
+</div>
+
+<div class="card" data-eid="buy-nb">
+<h3>👟 NB（看運氣）</h3>
+<div class="row"><span>預算（遇到再買）</span><b>¥20,000</b></div>
+<div class="warn">📍 AEON Mall 嘉島 / Yumetown / 鶴屋｜不特別找<br>逛街時看到順眼款式再決定｜尺寸 27cm</div>
+</div>
+
+<div class="card" data-eid="buy-nautica">
+<h3>👕 Nautica（看運氣）</h3>
+<div class="row"><span>預算（遇到再買）</span><b>¥12,000</b></div>
+<div class="warn">📍 AEON Mall 嘉島 / Yumetown 商場逛看｜不特別找<br>短袖 T / Polo 為主</div>
 </div>
 
 </div>
 
 <!-- BOOK -->
 <div class="section" id="book">
-<div class="card">
+<div class="card" data-eid="book-sora">
 <h3>🥩 SORA 和牛燒肉「空」</h3>
 <div class="row"><span>日期</span><b>5/24（日）19:00</b></div>
 <div class="row"><span>套餐</span><b>至福「空」18 道 ¥7,920</b></div>
@@ -264,23 +321,19 @@ a{color:#b06b54;text-decoration:none}
 <a class="btn" href="https://tabelog.com/en/kumamoto/A4301/A430101/43019418/" target="_blank" rel="noopener">Tabelog</a>
 </div>
 
-<div class="card">
+<div class="card" data-eid="book-jazz">
 <h3>🎷 醉ing Swing Jazz Bar</h3>
 <div class="row"><span>5/24 21:15</span><b>飯後散步去</b></div>
 <div class="warn">📍 花畑町 10-1 中山ビル 2F</div>
 <a class="btn tel" href="tel:+818060596960">📞 +81 80-6059-6960</a>
 </div>
 
-<div class="card">
-<h3>🏨 GRIDS 熊本飯店</h3>
-<div class="row"><span>入住</span><b>5/23-5/24（兩晚）</b></div>
-<h4 style="margin-top:6px">📦 代收宅配地址（點一下複製）</h4>
-<div class="copyable" onclick="copy(this)">〒860-0012
-熊本県熊本市中央区古屋今町1-7
-GRIDS PREMIUM HOTEL KUMAMOTO フロント気付
-SUN MASON 様
-2026年5月23日チェックイン</div>
-<a class="btn tel" href="tel:+81963122700">📞 +81 96-312-2700</a>
+<div class="card" data-eid="book-hotel">
+<h3>🏨 飯店資訊</h3>
+<div class="row"><span>Day 1</span><b>別府清風（含晚餐+早餐）</b></div>
+<div class="row"><span>Day 2</span><b>阿蘇格蘭（赤牛 buffet）</b></div>
+<div class="row"><span>Day 3-4</span><b>GRIDS PREMIUM 熊本（兩晚）</b></div>
+<a class="btn tel" href="tel:+81963122700">📞 GRIDS +81-96-312-2700</a>
 </div>
 </div>
 
@@ -306,13 +359,6 @@ SUN MASON 様
 <a class="btn tel" href="tel:+81962238688">SORA 和牛 +81-96-223-8688</a>
 <a class="btn tel" href="tel:+818060596960">醉ing Jazz +81-80-6059-6960</a>
 </div>
-
-<div class="card">
-<h3>👟 NB 採購（給東京朋友）</h3>
-<a class="btn tel" href="tel:+81367127167">calif 渋谷 03-6712-7167</a>
-<a class="btn tel" href="tel:+81334021906">NB 原宿 03-3402-1906</a>
-<a class="btn tel" href="tel:+81353250851">NB 新宿 03-5325-0851</a>
-</div>
 </div>
 
 <!-- SMOKE -->
@@ -331,7 +377,11 @@ SUN MASON 様
 <!-- SET -->
 <div class="section" id="set">
 <div class="card">
-<h3>💰 已花費 <span style="float:right;font-size:12px;color:#7a6a5e;font-weight:400" id="spend-count">0 筆</span></h3>
+<h3>💰 花費明細 <span style="float:right;font-size:12px;color:#7a6a5e;font-weight:400" id="spend-count">0 筆</span></h3>
+<div class="row"><span>現金已花</span><b id="set-cash">¥0</b></div>
+<div class="row"><span>現金剩餘</span><b id="set-cash-left">¥85,000</b></div>
+<div class="row"><span>刷卡花費</span><b id="set-card">¥0</b></div>
+<div class="row"><span>合計花費</span><b id="set-total">¥0</b></div>
 <ul class="spend-list" id="list"></ul>
 <button onclick="clearSpend()" style="margin-top:10px;padding:10px 14px;background:#fbe9e0;border:none;border-radius:8px;font-size:13px;cursor:pointer;color:#b06b54;font-weight:600;min-height:40px">🗑️ 清空全部</button>
 </div>
@@ -339,27 +389,27 @@ SUN MASON 様
 <div class="card">
 <h3>📋 出國前 Checklist <span style="float:right;font-size:12px;color:#7a6a5e;font-weight:400" id="check-count">0/8</span></h3>
 <div class="row check" data-k="c1"><span><span class="box">✓</span>登錄熊本熊卡 6% 加碼</span></div>
-<div class="row check" data-k="c2"><span><span class="box">✓</span>國泰 CUBE 換 ¥35,000 大寮分行</span></div>
-<div class="row check" data-k="c3"><span><span class="box">✓</span>ZOZOTOWN Nautica 5/16 前下單</span></div>
-<div class="row check" data-k="c4"><span><span class="box">✓</span>請東京朋友幫買 NB</span></div>
-<div class="row check" data-k="c5"><span><span class="box">✓</span>打 GRIDS 確認可代收兩包裹</span></div>
+<div class="row check" data-k="c2"><span><span class="box">✓</span>國泰 CUBE 換 ¥85,000 現金（大寮分行）</span></div>
 <div class="row check" data-k="c6"><span><span class="box">✓</span>寶島驗光拿英文版處方箋</span></div>
 <div class="row check" data-k="c7"><span><span class="box">✓</span>下載 Google 翻譯日文離線包</span></div>
 <div class="row check" data-k="c8"><span><span class="box">✓</span>行李箱預留 SR86 25×25×12 空間</span></div>
+<div class="row check" data-k="c9"><span><span class="box">✓</span>確認 3:30 家裡 → 小港交通安排</span></div>
+<div class="row check" data-k="c10"><span><span class="box">✓</span>SORA 蜜月備註截圖存手機</span></div>
+<div class="row check" data-k="c11"><span><span class="box">✓</span>列出恩碩禮物候選清單（給自己看）</span></div>
 </div>
 
 <div class="card">
 <h3>💳 玉山熊本熊卡策略</h3>
-<div class="warn">SR86 一刷 NT$15,120 = 6% 加碼瞬間達 NT$500 上限<br><br>淨回饋 = NT$378（2.5%）+ NT$500（6%）− NT$227（1.5% 手續費）= <b>+NT$651</b><br><br>其他指定通路（唐吉訶德、UNIQLO、GU）超過上限後僅基本 2.5%，但全程刷熊本熊卡最簡單</div>
+<div class="warn">SR86 一刷 NT$15,120 = 6% 加碼瞬間達 NT$500 上限<br><br>淨回饋 = NT$378（2.5%）+ NT$500（6%）− NT$227（1.5% 手續費）= <b>+NT$651</b><br><br>其他指定通路（唐吉訶德、UNIQLO、GU、Iluma）超過上限後僅基本 2.5%，但全程刷熊本熊卡最簡單</div>
 <a class="btn" href="https://event.esunbank.com.tw/credit/kumamon-card/japan-discount.html" target="_blank" rel="noopener">🌐 登錄活動</a>
 </div>
 
 <div class="card">
 <h3>ℹ️ 關於</h3>
 <div class="row"><span>匯率</span><b>1 ¥ = NT$ 0.21</b></div>
-<div class="row"><span>預算</span><b>¥85,000</b></div>
-<div class="row"><span>版本</span><b>v2 手機強化版</b></div>
-<div class="warn">💡 iPhone：分享 → 加到主畫面，即可離線使用<br>💡 Android：選單 → 加到主畫面</div>
+<div class="row"><span>現金預算</span><b>¥85,000</b></div>
+<div class="row"><span>版本</span><b>v3 含附註＋刷卡</b></div>
+<div class="warn">💡 每個行程／採購卡片下方可點「📝 附註」加備忘<br>💡 新增花費可選「現金」或「刷卡」分別計算<br>💡 iPhone：分享 → 加到主畫面，即可離線使用</div>
 </div>
 </div>
 
@@ -377,6 +427,10 @@ SUN MASON 様
 <button type="button" onclick="setQ(3000)">¥3,000</button>
 <button type="button" onclick="setQ(5000)">¥5,000</button>
 </div>
+<div class="pay-type" id="pay">
+<button type="button" data-p="cash" class="on">💴 現金</button>
+<button type="button" data-p="card">💳 刷卡</button>
+</div>
 <div class="cat" id="cat">
 <button type="button" data-c="food" class="on"><span class="ic">🍱</span><span>飲食</span></button>
 <button type="button" data-c="buy"><span class="ic">🛍️</span><span>採購</span></button>
@@ -391,12 +445,28 @@ SUN MASON 様
 </div>
 </div>
 
+<!-- Note modal -->
+<div class="modal" id="note-modal" onclick="if(event.target===this)closeNoteModal()">
+<div class="modal-box">
+<h3 id="note-title">📝 附註</h3>
+<div style="font-size:12px;color:#7a6a5e;margin-bottom:8px" id="note-target"></div>
+<textarea id="note-input" placeholder="輸入備忘（行程細節、店家地址、要買的款式、給誰的禮物…）"></textarea>
+<div class="modal-btns">
+<button class="btn-cancel" type="button" onclick="closeNoteModal()">取消</button>
+<button class="btn-del" type="button" onclick="deleteNote()">刪除</button>
+<button class="btn-save" type="button" onclick="saveNote()">儲存</button>
+</div>
+</div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 const RATE=0.21,BUDGET=85000;
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
 let curCat='food';
+let curPay='cash';
+let curNoteEid=null;
 
 function vib(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._tm);t._tm=setTimeout(()=>t.classList.remove('show'),1600)}
@@ -442,7 +512,6 @@ function todayInit(){
     if(dt<today)nearestPast=d;
     if(dt>today&&!nearestFuture)nearestFuture=d;
   });
-  // banner
   const banner=document.getElementById('today-banner');
   if(foundToday){
     const t=document.querySelector('.day.today .day-head strong').textContent;
@@ -457,13 +526,12 @@ function todayInit(){
   }else{
     banner.style.display='none';
   }
-  // 點 day-head 展開/摺疊
   document.querySelectorAll('.day-head').forEach(h=>{
     h.addEventListener('click',()=>{h.parentElement.classList.toggle('collapsed');vib(5);});
   });
 }
 
-// Modal
+// 花費 Modal
 function openModal(){
   document.getElementById('modal').classList.add('show');
   document.getElementById('addBtn').classList.add('hide');
@@ -475,8 +543,9 @@ function closeModal(){
   document.getElementById('addBtn').classList.remove('hide');
   document.getElementById('m-jpy').value='';
   document.getElementById('m-note').value='';
-  curCat='food';
+  curCat='food';curPay='cash';
   document.querySelectorAll('#cat button').forEach(b=>b.classList.toggle('on',b.dataset.c==='food'));
+  document.querySelectorAll('#pay button').forEach(b=>b.classList.toggle('on',b.dataset.p==='cash'));
 }
 function setQ(v){document.getElementById('m-jpy').value=v;document.getElementById('m-jpy').focus();vib(5);}
 
@@ -486,8 +555,13 @@ document.getElementById('cat').addEventListener('click',e=>{
   document.querySelectorAll('#cat button').forEach(x=>x.classList.toggle('on',x===b));
   vib(5);
 });
+document.getElementById('pay').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  curPay=b.dataset.p;
+  document.querySelectorAll('#pay button').forEach(x=>x.classList.toggle('on',x===b));
+  vib(5);
+});
 
-// Enter 鍵儲存
 document.getElementById('m-jpy').addEventListener('keydown',e=>{if(e.key==='Enter')saveSpend()});
 document.getElementById('m-note').addEventListener('keydown',e=>{if(e.key==='Enter')saveSpend()});
 
@@ -498,10 +572,10 @@ function saveSpend(){
   const note=document.getElementById('m-note').value||'';
   if(!jpy){toast('請輸入金額');vib(20);return;}
   const list=loadSpend();
-  list.push({jpy,note,cat:curCat,t:Date.now()});
+  list.push({jpy,note,cat:curCat,pay:curPay,t:Date.now()});
   localStorage.setItem('kyushu-spend',JSON.stringify(list));
   closeModal();render();
-  toast('已記錄 ¥'+jpy.toLocaleString());
+  toast((curPay==='card'?'💳 ':'💴 ')+'已記錄 ¥'+jpy.toLocaleString());
   vib([10,40,10]);
 }
 function delSpend(i){
@@ -521,23 +595,107 @@ function fmtTime(ts){
 }
 function render(){
   const list=loadSpend();
-  const total=list.reduce((s,x)=>s+x.jpy,0);
-  const left=BUDGET-total;
-  const pct=Math.min(100,total/BUDGET*100);
-  document.getElementById('spent').textContent='¥'+total.toLocaleString();
+  let cash=0,card=0;
+  list.forEach(x=>{
+    if(x.pay==='card')card+=x.jpy;
+    else cash+=x.jpy;
+  });
+  const total=cash+card;
+  const left=BUDGET-cash;
+  const pct=Math.min(100,cash/BUDGET*100);
+  document.getElementById('spent').textContent='¥'+cash.toLocaleString();
   document.getElementById('left').textContent='¥'+left.toLocaleString();
+  document.getElementById('card-spent').textContent='¥'+card.toLocaleString();
+  document.getElementById('total-spent').textContent='¥'+total.toLocaleString();
+  document.getElementById('total-twd').textContent='NT$'+Math.round(total*RATE).toLocaleString();
   const bar=document.getElementById('bar');
   bar.style.width=pct+'%';
   bar.className='bar-fill'+(pct>=95?' danger':pct>=80?' warn':'');
+  // 設定 tab 統計
+  const sc=document.getElementById('set-cash');if(sc)sc.textContent='¥'+cash.toLocaleString();
+  const scl=document.getElementById('set-cash-left');if(scl)scl.textContent='¥'+left.toLocaleString();
+  const sd=document.getElementById('set-card');if(sd)sd.textContent='¥'+card.toLocaleString();
+  const st=document.getElementById('set-total');if(st)st.textContent='¥'+total.toLocaleString();
   document.getElementById('spend-count').textContent=list.length+' 筆';
   const ul=document.getElementById('list');
   ul.innerHTML=list.length?list.map((x,i)=>{
     const ic=ICONS[x.cat]||'💰';
     const tstr=typeof x.t==='number'?fmtTime(x.t):x.t;
-    return `<li class="spend-item"><span class="ic">${ic}</span><div class="meta"><div><b style="color:#b06b54">¥${x.jpy.toLocaleString()}</b> ${x.note?'· '+escapeHtml(x.note):''}</div><div class="when">${tstr}</div></div><button onclick="delSpend(${i})" aria-label="刪除">×</button></li>`;
+    const pay=x.pay==='card'?'card':'cash';
+    const payLbl=pay==='card'?'刷卡':'現金';
+    return `<li class="spend-item"><span class="ic">${ic}</span><div class="meta"><div><b style="color:#b06b54">¥${x.jpy.toLocaleString()}</b><span class="pay-pill ${pay}">${payLbl}</span> ${x.note?'· '+escapeHtml(x.note):''}</div><div class="when">${tstr}</div></div><button onclick="delSpend(${i})" aria-label="刪除">×</button></li>`;
   }).reverse().join(''):'<li style="text-align:center;color:#a89d94;padding:20px;font-size:12px">點右下 + 號開始記帳</li>';
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+// ====== 行程／採購 附註功能 ======
+function loadNotes(){return JSON.parse(localStorage.getItem('kyushu-notes')||'{}')}
+function getNoteTargets(){
+  return [...document.querySelectorAll('[data-eid]')];
+}
+function openNoteModal(eid,titleText){
+  curNoteEid=eid;
+  const notes=loadNotes();
+  document.getElementById('note-input').value=notes[eid]||'';
+  document.getElementById('note-target').textContent=titleText||eid;
+  document.getElementById('note-modal').classList.add('show');
+  document.getElementById('addBtn').classList.add('hide');
+  setTimeout(()=>document.getElementById('note-input').focus(),50);
+  vib(8);
+}
+function closeNoteModal(){
+  document.getElementById('note-modal').classList.remove('show');
+  document.getElementById('addBtn').classList.remove('hide');
+  curNoteEid=null;
+}
+function saveNote(){
+  if(!curNoteEid)return;
+  const v=document.getElementById('note-input').value.trim();
+  const notes=loadNotes();
+  if(v)notes[curNoteEid]=v;
+  else delete notes[curNoteEid];
+  localStorage.setItem('kyushu-notes',JSON.stringify(notes));
+  closeNoteModal();renderNotes();
+  toast(v?'已儲存附註':'附註已清空');vib([10,30,10]);
+}
+function deleteNote(){
+  if(!curNoteEid)return;
+  if(!confirm('刪除這則附註？'))return;
+  const notes=loadNotes();delete notes[curNoteEid];
+  localStorage.setItem('kyushu-notes',JSON.stringify(notes));
+  closeNoteModal();renderNotes();
+  toast('已刪除');vib(15);
+}
+function getTargetTitle(el){
+  const t=el.querySelector('.title');
+  if(t)return t.textContent.trim();
+  const h=el.querySelector('h3');
+  if(h)return h.textContent.trim();
+  return el.dataset.eid;
+}
+function renderNotes(){
+  const notes=loadNotes();
+  getNoteTargets().forEach(el=>{
+    el.querySelectorAll(':scope > .user-note, :scope > .event-body > .user-note').forEach(n=>n.remove());
+    el.querySelectorAll(':scope > .note-btn, :scope > .event-body > .note-btn').forEach(n=>n.remove());
+    const eid=el.dataset.eid;
+    const text=notes[eid];
+    const container=el.querySelector('.event-body')||el;
+    if(text){
+      const n=document.createElement('div');
+      n.className='user-note';
+      n.innerHTML='<span class="lbl">📝 我的附註</span>'+escapeHtml(text);
+      n.addEventListener('click',()=>openNoteModal(eid,getTargetTitle(el)));
+      container.appendChild(n);
+    }
+    const btn=document.createElement('button');
+    btn.className='note-btn';
+    btn.type='button';
+    btn.textContent=text?'📝 編輯附註':'📝 加附註';
+    btn.addEventListener('click',ev=>{ev.stopPropagation();openNoteModal(eid,getTargetTitle(el));});
+    container.appendChild(btn);
+  });
+}
 
 // Checklist
 function loadCheck(){return JSON.parse(localStorage.getItem('kyushu-check')||'{}')}
@@ -567,7 +725,6 @@ async function copy(el){
     await navigator.clipboard.writeText(text);
     toast('✅ 已複製');vib([10,30,10]);
   }catch(e){
-    // fallback
     const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();
     try{document.execCommand('copy');toast('✅ 已複製');}catch(_){toast('複製失敗，請手動長按');}
     document.body.removeChild(ta);
@@ -575,11 +732,17 @@ async function copy(el){
 }
 
 // ESC 關 modal
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('modal').classList.contains('show'))closeModal()});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(document.getElementById('modal').classList.contains('show'))closeModal();
+    if(document.getElementById('note-modal').classList.contains('show'))closeNoteModal();
+  }
+});
 
 // 啟動
 todayInit();
 checkInit();
+renderNotes();
 render();
 </script>
 </body>
