@@ -31,7 +31,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",s
 .bar-fill{height:100%;background:#fff;border-radius:3px;transition:width .3s,background .3s}
 .bar-fill.warn{background:#ffd166}
 .bar-fill.danger{background:#ff6b6b}
-.tabs{display:flex;background:#fff;border-bottom:1px solid #e5d4c5;overflow-x:auto;position:sticky;top:calc(116px + env(safe-area-inset-top));z-index:99;scrollbar-width:none}
+.next-gather{background:rgba(255,255,255,.2);padding:9px 12px;border-radius:8px;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;border:1px solid rgba(255,255,255,.22)}
+.next-gather .lbl{font-size:11px;opacity:.92;margin-bottom:2px;letter-spacing:.5px}
+.next-gather .time{font-size:20px;font-weight:800;font-feature-settings:"tnum";line-height:1;color:#fff;font-family:Georgia,serif}
+.next-gather .place{font-weight:700;font-size:13px;text-align:right;flex:1;min-width:0;line-height:1.3;color:#fff}
+.tabs{display:flex;background:#fff;border-bottom:1px solid #e5d4c5;overflow-x:auto;position:sticky;top:calc(170px + env(safe-area-inset-top));z-index:99;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex:0 0 auto;padding:14px 16px;font-size:13px;color:#7a6a5e;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;min-height:44px;display:flex;align-items:center}
 .tab.active{color:#b06b54;border-bottom-color:#b06b54;font-weight:600}
@@ -151,11 +155,20 @@ a{color:#b06b54;text-decoration:none}
     </div>
     <div class="bar"><div class="bar-fill" id="bar" style="width:0%"></div></div>
   </div>
+  <div class="next-gather" id="next-gather">
+    <div>
+      <div class="lbl">下次集合</div>
+      <div class="time" id="ng-time">--:--</div>
+    </div>
+    <div class="place" id="ng-place">出發前</div>
+  </div>
 </div>
 
 <div class="tabs" id="tabs">
   <div class="tab active" data-tab="day">📅 五天行程</div>
   <div class="tab" data-tab="buy">🛍️ 採購</div>
+  <div class="tab" data-tab="tax">🧾 退稅</div>
+  <div class="tab" data-tab="coffee">☕ 咖啡</div>
   <div class="tab" data-tab="book">🍽️ 訂位</div>
   <div class="tab" data-tab="tel">📞 電話</div>
   <div class="tab" data-tab="smoke">🚬 抽菸</div>
@@ -305,6 +318,125 @@ a{color:#b06b54;text-decoration:none}
 <h3>👕 Nautica（看運氣）</h3>
 <div class="row"><span>預算（遇到再買）</span><b>¥12,000</b></div>
 <div class="warn">📍 AEON Mall 嘉島 / Yumetown 商場逛看｜不特別找<br>短袖 T / Polo 為主</div>
+</div>
+
+</div>
+
+<!-- TAX -->
+<div class="section" id="tax">
+
+<div class="card">
+<h3>📋 我的退稅 checklist <span style="float:right;font-size:12px;color:#7a6a5e;font-weight:400" id="tax-count">0/0</span></h3>
+
+<h4 style="margin-top:0">Day 1 · 別府 Yumetown</h4>
+<div class="row check" data-k="t1"><span><span class="box">✓</span>UNIQLO / GU 別府｜<b>結帳櫃台直接退</b></span></div>
+<div class="row check" data-k="t2"><span><span class="box">✓</span>Yumetown 服務台｜<b>1F</b>（其他綜合）</span></div>
+
+<h4>Day 3 · 熊本上下通</h4>
+<div class="row check" data-k="t3"><span><span class="box">✓</span>⭐ Bic Camera 鶴屋｜<b>7F 結帳直退</b>（SR86 主買點 ¥78,000）</span></div>
+<div class="row check" data-k="t4"><span><span class="box">✓</span>鶴屋百貨 1F 服務台（化妝品/服飾綜合）</span></div>
+<div class="row check" data-k="t5"><span><span class="box">✓</span>⭐ 唐吉訶德 下通｜<b>結帳直退</b>（IQOS / 噴霧 / 合力他命）</span></div>
+
+<h4>Day 4 · AEON Mall 嘉島</h4>
+<div class="row check" data-k="t6"><span><span class="box">✓</span>⭐ JINS｜<b>結帳直退</b>（眼鏡，預算 ¥10,000）</span></div>
+<div class="row check" data-k="t7"><span><span class="box">✓</span>UNIQLO / GU AEON 店｜結帳直退（補貨）</span></div>
+<div class="row check" data-k="t8"><span><span class="box">✓</span>NB / Nautica（看運氣）｜結帳直退</span></div>
+<div class="row check" data-k="t9"><span><span class="box">✓</span>AEON Mall 服務台｜<b>1F</b>（其他綜合）</span></div>
+
+<h4>Day 5 · 機場前確認</h4>
+<div class="row check" data-k="t10"><span><span class="box">✓</span>所有退稅紙保留好</span></div>
+<div class="row check" data-k="t11"><span><span class="box">✓</span>退稅商品密封袋未拆封</span></div>
+</div>
+
+<div class="card">
+<h3>📍 退稅櫃台速查</h3>
+<div class="warn">📌 <b>A 結帳即退</b>：結帳出示護照，店員直接扣稅<br>📌 <b>B 服務台</b>：先正常結帳，再拿發票去 1F 服務台</div>
+<h4 style="margin-top:14px">A 結帳直退（我的店）</h4>
+<div class="row"><span>Bic Camera 鶴屋</span><b>7F 收銀</b></div>
+<div class="row"><span>UNIQLO / GU</span><b>各店收銀</b></div>
+<div class="row"><span>JINS</span><b>各店收銀</b></div>
+<div class="row"><span>唐吉訶德</span><b>下通店收銀</b></div>
+<div class="row"><span>NB / Nautica</span><b>各店收銀</b></div>
+
+<h4>B 服務台集中退</h4>
+<div class="row"><span>Yumetown 別府</span><b>1F 服務台</b></div>
+<div class="row"><span>鶴屋百貨</span><b>1F 服務台</b></div>
+<div class="row"><span>AEON Mall 嘉島</span><b>1F Customer Service</b></div>
+</div>
+
+<div class="card">
+<h3>💡 退稅小撇步（我用）</h3>
+<div class="row"><span>湊金額</span><b>同店滿 ¥5,000 含稅前</b></div>
+<div class="row"><span>主力店</span><b>Bic Camera ¥78,000 一筆達標</b></div>
+<div class="row"><span>唐吉訶德</span><b>IQOS+噴霧+合力他命 合計達標</b></div>
+<div class="warn">⚠️ 退稅必須當日辦理<br>⚠️ 密封袋離境前不要拆<br>💳 熊本熊卡刷可疊回饋</div>
+</div>
+
+</div>
+
+<!-- COFFEE -->
+<div class="section" id="coffee">
+
+<div class="warn tip" style="background:#fff5ec;border-left:3px solid #b06b54;padding:11px 14px;font-size:12px;color:#7a6a5e;border-radius:0 8px 8px 0;margin-bottom:12px;line-height:1.75">☕ 每天精選 1-2 家精品咖啡<br>⭐ 是九州必訪｜不確定就 Google Maps 搜「自家焙煎」</div>
+
+<div class="card">
+<h3>📅 Day 1 · 5/21 午後 ~14:00 日田豆田町</h3>
+<div class="row"><span>老街茶屋</span><b>散策時挑一家</b></div>
+<div class="row"><span>由布院之森車上</span><b>15:56 列車內可購</b></div>
+</div>
+
+<div class="card">
+<h3>📅 Day 2 早晨 · 別府清風</h3>
+<div class="row"><span>⭐ COMMA, COFFEE STAND</span><b>別府站前 / 08:00 開</b></div>
+<div class="row"><span>飯店早餐咖啡</span><b>保底選擇</b></div>
+<a class="btn-map" href="https://maps.google.com/?q=COMMA+COFFEE+STAND+別府" target="_blank" rel="noopener" style="display:inline-block;background:#a8bcc9;color:#fff;padding:8px 14px;border-radius:8px;font-size:12px;margin-top:8px;text-decoration:none">🗺️ COMMA, 別府</a>
+</div>
+
+<div class="card">
+<h3>📅 Day 2 午後 · ~13:00 湯布院</h3>
+<div class="row"><span>⭐ Café La Ruche</span><b>金鱗湖湖畔 / 09:00</b></div>
+<div class="warn" style="margin-top:8px">湯布院咖啡天花板，玻璃屋景觀 + 手沖 + 甜點，IG 必拍</div>
+<a class="btn-map" href="https://maps.google.com/?q=Cafe+La+Ruche+湯布院" target="_blank" rel="noopener" style="display:inline-block;background:#a8bcc9;color:#fff;padding:8px 14px;border-radius:8px;font-size:12px;margin-top:8px;text-decoration:none">🗺️ La Ruche</a>
+</div>
+
+<div class="card">
+<h3>📅 Day 3 早晨 · 阿蘇格蘭</h3>
+<div class="warn">⚠️ 山區選擇少，飯店現磨機 + 路上補</div>
+<div class="row"><span>飯店現磨機</span><b>自助餐區 espresso</b></div>
+<div class="row"><span>道の駅 阿蘇</span><b>09:00 開 / 阿蘇牛乳拿鐵</b></div>
+</div>
+
+<div class="card">
+<h3>📅 Day 4 早晨 · 熊本 ⭐⭐ 必去</h3>
+<div class="row"><span>⭐⭐ AND COFFEE ROASTERS</span><b>上通 / 09:00 開</b></div>
+<div class="warn" style="margin-top:8px">熊本第一名，世界級豆單。可買豆帶回家</div>
+<div class="row" style="margin-top:8px"><span>STARBUCKS 下通</span><b>趕時間用 / 07:00 開</b></div>
+<a class="btn-map" href="https://maps.google.com/?q=AND+COFFEE+ROASTERS+熊本" target="_blank" rel="noopener" style="display:inline-block;background:#a8bcc9;color:#fff;padding:8px 14px;border-radius:8px;font-size:12px;margin-top:8px;text-decoration:none">🗺️ AND COFFEE</a>
+</div>
+
+<div class="card">
+<h3>📅 Day 4 午後 · AEON 嘉島</h3>
+<div class="row"><span>AEON 美食街</span><b>STARBUCKS / Tully's</b></div>
+</div>
+
+<div class="card">
+<h3>📅 Day 5 早晨 · 熊本（趕飛機前）</h3>
+<div class="row"><span>⭐ 珈琲アロー</span><b>下通 / 08:00 開</b></div>
+<div class="warn" style="margin-top:8px">昭和虹吸老店，最後一杯有儀式感</div>
+<div class="row" style="margin-top:8px"><span>STARBUCKS 下通</span><b>保底 / 07:00 開</b></div>
+<a class="btn-map" href="https://maps.google.com/?q=珈琲アロー+熊本" target="_blank" rel="noopener" style="display:inline-block;background:#a8bcc9;color:#fff;padding:8px 14px;border-radius:8px;font-size:12px;margin-top:8px;text-decoration:none">🗺️ Coffee Arrow</a>
+</div>
+
+<div class="card">
+<h3>🌟 熊本市區其他名店（彈性）</h3>
+<div class="row"><span>⭐ ORTO COFFEE ROASTER</span><b>中央區 / 09:00</b></div>
+<div class="row"><span>⭐ NORM COFFEE 熊本店</span><b>中央區 / 08:00</b></div>
+<div class="row"><span>珈琲茶館 集</span><b>中央區 / 09:00</b></div>
+</div>
+
+<div class="card">
+<h3>💡 買豆帶回家</h3>
+<div class="warn">☕ specialty 店 200g 包裝 ¥1,500-2,500<br>📦 豆比粉好，回台研磨香氣足<br>💳 滿 ¥5,000 退稅（AND COFFEE / ORTO 都接受）<br>🥛 必喝：阿蘇牛乳拿鐵</div>
 </div>
 
 </div>
@@ -723,9 +855,14 @@ function checkInit(){
   updateCheckCount();
 }
 function updateCheckCount(){
-  const total=document.querySelectorAll('.row.check').length;
-  const done=document.querySelectorAll('.row.check.done').length;
-  document.getElementById('check-count').textContent=done+'/'+total;
+  const t1=document.querySelectorAll('#set .row.check').length;
+  const d1=document.querySelectorAll('#set .row.check.done').length;
+  const el1=document.getElementById('check-count');
+  if(el1)el1.textContent=d1+'/'+t1;
+  const t2=document.querySelectorAll('#tax .row.check').length;
+  const d2=document.querySelectorAll('#tax .row.check.done').length;
+  const el2=document.getElementById('tax-count');
+  if(el2)el2.textContent=d2+'/'+t2;
 }
 
 // 複製
@@ -749,11 +886,50 @@ document.addEventListener('keydown',e=>{
   }
 });
 
+// 下次集合倒數（含時區處理）
+const GATHERS=[
+  {dt:'2026-05-21 05:05',tz:'+08:00',tzLabel:'台灣時間',place:'小港機場 3F 華航櫃台'},
+  {dt:'2026-05-21 15:40',tz:'+09:00',tzLabel:'日本時間',place:'日田站（由布院之森）'},
+  {dt:'2026-05-22 08:30',tz:'+09:00',tzLabel:'日本時間',place:'別府清風 大廳'},
+  {dt:'2026-05-23 08:30',tz:'+09:00',tzLabel:'日本時間',place:'阿蘇格蘭 大廳'},
+  {dt:'2026-05-23 17:30',tz:'+09:00',tzLabel:'日本時間',place:'GRIDS 大廳'},
+  {dt:'2026-05-24 08:45',tz:'+09:00',tzLabel:'日本時間',place:'GRIDS 大廳'},
+  {dt:'2026-05-24 17:30',tz:'+09:00',tzLabel:'日本時間',place:'GRIDS 大廳'},
+  {dt:'2026-05-25 09:00',tz:'+09:00',tzLabel:'日本時間',place:'GRIDS 大廳'}
+];
+function updateNextGather(){
+  const now=new Date();
+  const upcoming=GATHERS.map(g=>{
+    const d=new Date(g.dt.replace(' ','T')+':00'+g.tz);
+    return {...g,d};
+  }).filter(g=>g.d>now).sort((a,b)=>a.d-b.d)[0];
+  const tEl=document.getElementById('ng-time');
+  const pEl=document.getElementById('ng-place');
+  if(!upcoming){
+    tEl.textContent='🏠';
+    pEl.innerHTML='<div class="lbl">行程結束</div>平安回家！';
+    return;
+  }
+  const diffMs=upcoming.d-now;
+  const diffMin=Math.round(diffMs/60000);
+  const [datePart,timePart]=upcoming.dt.split(' ');
+  const [hh,mm]=timePart.split(':');
+  const [,mo,dd]=datePart.split('-');
+  let dlbl='';
+  if(diffMin<60)dlbl=' · '+diffMin+'分後';
+  else if(diffMin<24*60)dlbl=' · '+Math.floor(diffMin/60)+'小時後';
+  else dlbl=' · '+Math.floor(diffMin/(60*24))+'天後';
+  tEl.textContent=hh+':'+mm;
+  pEl.innerHTML='<div class="lbl">'+parseInt(mo)+'/'+parseInt(dd)+' '+upcoming.tzLabel+dlbl+'</div>'+upcoming.place;
+}
+
 // 啟動
 todayInit();
 checkInit();
 renderNotes();
 render();
+updateNextGather();
+setInterval(updateNextGather,30000);
 </script>
 </body>
 </html>
