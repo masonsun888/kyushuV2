@@ -17,8 +17,9 @@ html{-webkit-text-size-adjust:100%}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;background:#fdf9ec;color:#3a2e1a;padding-bottom:calc(90px + env(safe-area-inset-bottom));overscroll-behavior-y:contain;background-image:radial-gradient(circle at 20% 10%,rgba(240,222,160,.18),transparent 45%),radial-gradient(circle at 80% 60%,rgba(200,210,218,.12),transparent 45%)}
 .sticky{position:sticky;top:0;background:linear-gradient(110deg,#f4e4b4 0%,#ebd9a0 45%,#e8c8c8 85%,#dcb4b4 100%);color:#3a2e1a;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));z-index:100;box-shadow:0 4px 14px rgba(184,150,74,.18)}
 .brand{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:8px 12px;background:rgba(255,255,255,.65);border-radius:12px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.6)}
-.brand .logo{flex-shrink:0;width:42px;height:42px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 1px 3px rgba(58,46,26,.1),inset 0 0 0 1px rgba(240,222,160,.5)}
-.brand .logo img{width:100%;height:100%;object-fit:contain;padding:3px}
+.brand .logo{flex-shrink:0;height:44px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.brand .logo img{height:100%;width:auto;object-fit:contain;mix-blend-mode:multiply}
+.brand .logo svg{display:none}
 .brand .name-block{flex:1;min-width:0;line-height:1.25}
 .brand .name1{font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:16px;color:#3a2e1a;font-style:italic;font-weight:600;letter-spacing:.5px}
 .brand .name2{font-family:Georgia,serif;font-size:10px;color:#8a7040;letter-spacing:1.8px;margin-top:3px;font-style:italic}
@@ -149,9 +150,9 @@ a{color:#8a7040;text-decoration:none}
 .cover{background:linear-gradient(165deg,#fffaeb 0%,#fff 45%,#fdf0e8 100%);border-radius:20px;padding:38px 24px 32px;margin-bottom:14px;border:1px solid #f3ead2;text-align:center;position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(184,150,74,.10)}
 .cover::before{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(199,181,212,.35),transparent 65%);border-radius:50%;pointer-events:none}
 .cover::after{content:"";position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(245,212,134,.4),transparent 65%);border-radius:50%;pointer-events:none}
-.cover-logo{position:relative;width:130px;height:130px;margin:0 auto 18px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 8px 28px rgba(184,150,74,.18),inset 0 0 0 1px rgba(240,222,160,.6);z-index:2}
-.cover-logo img{width:100%;height:100%;object-fit:contain;padding:8px}
-.cover-logo .fallback{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.cover-logo{position:relative;max-width:260px;margin:0 auto 14px;z-index:2}
+.cover-logo img{width:100%;height:auto;display:block;mix-blend-mode:multiply}
+.cover-logo .fallback{width:130px;height:130px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;box-shadow:0 8px 28px rgba(184,150,74,.18),inset 0 0 0 1px rgba(240,222,160,.6)}
 .cover-brand{position:relative;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-style:italic;font-size:26px;color:#3a2e1a;letter-spacing:1.5px;font-weight:600;margin-bottom:4px;z-index:2}
 .cover-sub{position:relative;font-family:Georgia,serif;font-size:11px;color:#8a7040;letter-spacing:4px;margin-bottom:18px;z-index:2;font-style:italic}
 .cover-essence{position:relative;font-family:Georgia,"Noto Serif TC",serif;font-size:13px;color:#5a4a20;line-height:1.9;margin-bottom:6px;z-index:2;letter-spacing:1px}
@@ -175,7 +176,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="sticky">
   <div class="brand">
     <div class="logo">
-      <img src="logo.png" alt="Hi Y.P store" onerror="if(this.src.endsWith('logo.png')){this.src='logo.svg'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}">
+      <img src="logo.jpg" alt="Hi Y.P store" onerror="if(this.src.endsWith('logo.jpg')){this.src='logo.png'}else if(this.src.endsWith('logo.png')){this.src='logo.svg'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}">
       <svg width="36" height="36" viewBox="0 0 100 100" style="display:none">
         <defs><linearGradient id="bm" x1="0.5" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#c7b5d4"/><stop offset="40%" stop-color="#eec5cf"/><stop offset="75%" stop-color="#f5d486"/><stop offset="100%" stop-color="#e0b85c"/></linearGradient></defs>
         <path d="M 38 20 C 18 36 18 64 38 82 C 62 72 56 52 50 48 C 56 42 60 28 38 20 Z" fill="url(#bm)"/>
@@ -221,7 +222,7 @@ a{color:#8a7040;text-decoration:none}
 
 <div class="cover">
   <div class="cover-logo">
-    <img src="logo.png" alt="Hi Y.P store" onerror="if(this.src.endsWith('logo.png')){this.src='logo.svg'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}">
+    <img src="logo.jpg" alt="Hi Y.P store" onerror="if(this.src.endsWith('logo.jpg')){this.src='logo.png'}else if(this.src.endsWith('logo.png')){this.src='logo.svg'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}">
     <div class="fallback" style="display:none">
       <svg width="100" height="100" viewBox="0 0 100 100">
         <defs><linearGradient id="cm" x1="0.5" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#c7b5d4"/><stop offset="40%" stop-color="#eec5cf"/><stop offset="75%" stop-color="#f5d486"/><stop offset="100%" stop-color="#e0b85c"/></linearGradient></defs>
@@ -232,8 +233,6 @@ a{color:#8a7040;text-decoration:none}
       </svg>
     </div>
   </div>
-  <div class="cover-brand">Hi y.p store</div>
-  <div class="cover-sub">BABY'S SOMETHING</div>
   <div class="cover-essence">為每個小生命寫下日常的溫柔</div>
   <div class="cover-craft">設計 · 織布 · 印刷 · 手工製作</div>
   <div class="cover-divider"><span class="l"></span><span class="o"></span><span class="r"></span></div>
@@ -628,10 +627,49 @@ a{color:#8a7040;text-decoration:none}
 <!-- COFFEE -->
 <div class="section" id="coffee">
 
-<div class="warn tip">☕ 想每天早上喝現磨咖啡？這頁整理每個飯店周邊步行可達的咖啡店<br>📍 多數 7:00-8:00 開門｜不確定時 Google Maps 搜「自家焙煎」「specialty coffee」</div>
+<div class="warn tip">☕ 這頁整理九州知名 specialty coffee + 行程／飯店周邊可達的咖啡店<br>📍 多數 7:00-9:00 開門｜不確定就 Google Maps 搜「自家焙煎」「specialty coffee」</div>
 
 <div class="card">
-<h3>☕ 別府清風 周邊（Day 2 早晨）</h3>
+<h3>🌟 九州必訪精品咖啡 TOP 名單</h3>
+<div class="coffee-item">
+<div class="name">⭐ AND COFFEE ROASTERS</div>
+<div class="dist">📍 熊本 上通｜Day 4 早晨</div>
+<div class="desc">熊本第一名 specialty coffee，自家烘焙，世界級豆單，必訪</div>
+</div>
+<div class="coffee-item">
+<div class="name">⭐ ORTO COFFEE ROASTER</div>
+<div class="dist">📍 熊本市中央區｜Day 4</div>
+<div class="desc">熊本年輕精品咖啡新秀，極淺焙、單品強</div>
+</div>
+<div class="coffee-item">
+<div class="name">⭐ NORM COFFEE 熊本店</div>
+<div class="dist">📍 熊本中央區｜Day 4</div>
+<div class="desc">日本咖啡圈知名連鎖精品咖啡，豆款多</div>
+</div>
+<div class="coffee-item">
+<div class="name">⭐ 珈琲アロー COFFEE ARROW</div>
+<div class="dist">📍 熊本 下通｜Day 4 早晨</div>
+<div class="desc">昭和時代留下的虹吸老店，必喝深焙</div>
+</div>
+<div class="coffee-item">
+<div class="name">⭐ REC COFFEE 福岡薬院本店</div>
+<div class="dist">📍 福岡市內｜Day 1 路過</div>
+<div class="desc">2 屆世界咖啡師大賽冠軍店，福岡精品代表（路途遠，列為知識）</div>
+</div>
+<div class="coffee-item">
+<div class="name">⭐ Café La Ruche</div>
+<div class="dist">📍 湯布院 金鱗湖畔｜Day 2 自由</div>
+<div class="desc">湖畔玻璃屋咖啡，季節限定甜點＋手沖，IG 拍照熱點</div>
+</div>
+</div>
+
+<div class="card">
+<h3>☕ Day 2 早晨 · 別府清風 周邊</h3>
+<div class="coffee-item">
+<div class="name">COMMA, COFFEE STAND</div>
+<div class="dist">📍 別府站前｜步行 約 10 分｜⏰ 08:00 開</div>
+<div class="desc">別府 specialty coffee 代表，淺焙手沖＋外帶杯</div>
+</div>
 <div class="coffee-item">
 <div class="name">STARBUCKS 別府站前店</div>
 <div class="dist">📍 飯店步行 約 12 分｜⏰ 07:00 開</div>
@@ -640,26 +678,51 @@ a{color:#8a7040;text-decoration:none}
 <div class="coffee-item">
 <div class="name">上島珈琲店 別府店</div>
 <div class="dist">📍 別府站附近｜⏰ 08:00 開</div>
-<div class="desc">日式深焙，黑糖牛奶咖啡招牌</div>
+<div class="desc">日式深焙連鎖，黑糖牛奶咖啡招牌</div>
 </div>
 <div class="coffee-item">
 <div class="name">飯店早餐咖啡</div>
 <div class="dist">📍 自助餐區｜⏰ 07:00-09:30</div>
-<div class="desc">不想出門就喝這個，現磨機通常品質還行</div>
+<div class="desc">不想出門就喝這個，現磨機通常還行</div>
 </div>
-<a class="btn coffee" href="https://maps.google.com/?q=specialty+coffee+別府+北浜" target="_blank" rel="noopener">🗺️ Google Maps 找附近</a>
+<a class="btn coffee" href="https://maps.google.com/?q=specialty+coffee+別府站" target="_blank" rel="noopener">🗺️ Google Maps 找附近</a>
 </div>
 
 <div class="card">
-<h3>☕ 阿蘇格蘭 周邊（Day 3 早晨）</h3>
-<div class="warn">⚠️ 山區咖啡選擇有限，建議「飯店現磨機 + 路上補」雙保險</div>
+<h3>☕ Day 2 自由 · 湯布院午後</h3>
+<div class="warn">🌸 湯布院咖啡店多到逛不完，這 4 間是觀光客最愛</div>
+<div class="coffee-item">
+<div class="name">Café La Ruche（湖畔玻璃屋）⭐</div>
+<div class="dist">📍 金鱗湖旁｜⏰ 09:00 開</div>
+<div class="desc">湯布院咖啡店天花板，景觀＋甜點＋手沖三合一</div>
+</div>
+<div class="coffee-item">
+<div class="name">B-SPEAK 蛋糕捲 + 咖啡</div>
+<div class="dist">📍 湯之坪街道｜⏰ 10:00 開</div>
+<div class="desc">領完蛋糕順道喝，店內小坐區</div>
+</div>
+<div class="coffee-item">
+<div class="name">café NICOL（湯之坪）</div>
+<div class="dist">📍 湯之坪街道｜⏰ 10:00 開</div>
+<div class="desc">小巧自家烘焙，與當地 patissier 合作甜點</div>
+</div>
+<div class="coffee-item">
+<div class="name">Theomurata 巧克力</div>
+<div class="dist">📍 湯之坪街道｜⏰ 10:00 開</div>
+<div class="desc">熊本起家的 chocolate boutique，espresso 配巧克力</div>
+</div>
+</div>
+
+<div class="card">
+<h3>☕ Day 3 早晨 · 阿蘇格蘭 周邊</h3>
+<div class="warn">⚠️ 山區咖啡選擇有限，「飯店現磨機 + 路上補」雙保險</div>
 <div class="coffee-item">
 <div class="name">飯店現磨咖啡機</div>
 <div class="dist">📍 自助餐區｜⏰ 早餐時段</div>
 <div class="desc">阿蘇格蘭通常有 espresso 機，香氣足</div>
 </div>
 <div class="coffee-item">
-<div class="name">道之驛 阿蘇</div>
+<div class="name">道の駅 阿蘇</div>
 <div class="dist">📍 出發路上｜⏰ 09:00 開</div>
 <div class="desc">當地咖啡＋阿蘇牛乳，可順手買</div>
 </div>
@@ -672,34 +735,60 @@ a{color:#8a7040;text-decoration:none}
 </div>
 
 <div class="card">
-<h3>☕ GRIDS 熊本 周邊（Day 4-5 早晨）</h3>
-<div class="warn">😍 熊本市區咖啡天堂！步行 5-15 分內有 10+ 間精品店</div>
+<h3>☕ Day 4-5 早晨 · GRIDS 熊本 周邊（咖啡天堂 🌟）</h3>
+<div class="warn">😍 熊本市區 specialty coffee 密度爆表，步行 5-15 分有 10+ 間精品店<br>Day 4 早晨建議 6:30 起床多預留 1 小時 coffee run</div>
 <div class="coffee-item">
-<div class="name">AND COFFEE ROASTERS</div>
-<div class="dist">📍 上通商店街｜步行 約 10 分｜⏰ 09:00 開</div>
-<div class="desc">熊本本地名店，自家烘焙，必喝。Day 4 適合（Day 5 太晚）</div>
+<div class="name">AND COFFEE ROASTERS ⭐</div>
+<div class="dist">📍 上通商店街｜步行 10 分｜⏰ 09:00 開</div>
+<div class="desc">熊本第一名，世界級豆單。Day 4 必去（Day 5 太晚開）</div>
 </div>
 <div class="coffee-item">
-<div class="name">珈琲アロー（Coffee Arrow）</div>
-<div class="dist">📍 下通｜步行 約 5 分｜⏰ 08:00 開</div>
-<div class="desc">熊本老牌虹吸式咖啡，昭和氛圍</div>
+<div class="name">珈琲アロー COFFEE ARROW ⭐</div>
+<div class="dist">📍 下通｜步行 5 分｜⏰ 08:00 開</div>
+<div class="desc">熊本老牌虹吸式，昭和喫茶店氛圍</div>
+</div>
+<div class="coffee-item">
+<div class="name">ORTO COFFEE ROASTER ⭐</div>
+<div class="dist">📍 中央區｜步行 10 分｜⏰ 09:00 開</div>
+<div class="desc">年輕精品店，淺焙＋單品超強</div>
+</div>
+<div class="coffee-item">
+<div class="name">NORM COFFEE 熊本店 ⭐</div>
+<div class="dist">📍 中央區｜步行 10 分｜⏰ 08:00 開</div>
+<div class="desc">日本知名精品連鎖，豆款多選擇豐富</div>
+</div>
+<div class="coffee-item">
+<div class="name">CHALK COFFEE STAND</div>
+<div class="dist">📍 上通｜步行 10 分｜⏰ 09:00 開</div>
+<div class="desc">站著喝的小巧咖啡 stand，espresso 強</div>
+</div>
+<div class="coffee-item">
+<div class="name">OPENNERS COFFEE</div>
+<div class="dist">📍 上通｜步行 10 分｜⏰ 08:00 開</div>
+<div class="desc">早起跑者最愛，外帶杯設計感強</div>
+</div>
+<div class="coffee-item">
+<div class="name">珈琲茶館 集</div>
+<div class="dist">📍 中央區｜步行 10 分｜⏰ 09:00 開</div>
+<div class="desc">私人小店，自家烘焙，老闆挑豆認真</div>
 </div>
 <div class="coffee-item">
 <div class="name">STARBUCKS 下通店</div>
-<div class="dist">📍 下通商店街｜步行 約 5 分｜⏰ 07:00 開</div>
+<div class="dist">📍 下通｜步行 5 分｜⏰ 07:00 開</div>
 <div class="desc">最早開的，趕時間就這個</div>
 </div>
 <div class="coffee-item">
 <div class="name">上島珈琲店 鶴屋店</div>
 <div class="dist">📍 鶴屋百貨 1F｜⏰ 08:00 開</div>
-<div class="desc">穩定選擇，飯後散步可到</div>
+<div class="desc">穩定選擇，購物順道喝</div>
 </div>
-<div class="coffee-item">
-<div class="name">珈琲茶館 集</div>
-<div class="dist">📍 中央區｜步行 約 10 分｜⏰ 09:00 開</div>
-<div class="desc">私人小店，自家烘焙，老闆挑豆認真</div>
+<a class="btn coffee" href="https://maps.google.com/?q=specialty+coffee+熊本+下通" target="_blank" rel="noopener">🗺️ 上下通咖啡群</a>
+<a class="btn coffee" href="https://maps.google.com/?q=AND+COFFEE+ROASTERS+熊本" target="_blank" rel="noopener">🗺️ AND COFFEE</a>
 </div>
-<a class="btn coffee" href="https://maps.google.com/?q=specialty+coffee+熊本+下通" target="_blank" rel="noopener">🗺️ Google Maps 找附近</a>
+
+<div class="card">
+<h3>💡 咖啡採購小撇步</h3>
+<div class="warn">☕ <b>買豆帶回</b>：specialty 咖啡店多有 200g 包裝（¥1,500-2,500），未開封保存佳<br>📦 豆比粉好：回台研磨香氣才足<br>💳 <b>退稅</b>：同店滿 ¥5,000 可退｜AND COFFEE / ORTO 都接受<br>🥛 <b>本地特色</b>：阿蘇牛乳拿鐵、熊本 chai 都值得試</div>
 </div>
 
 </div>
