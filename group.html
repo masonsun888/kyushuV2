@@ -300,7 +300,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="warn tip">📍 <b>iPhone Safari</b>：底部「分享」鈕 → 加到主畫面<br>📍 <b>Android Chrome</b>：右上選單 → 加到主畫面<br>📍 加完之後沒網路也能查行程、計算匯率、記帳</div>
 
 <h4>🔄 內容會自動更新</h4>
-<div class="warn tip">📍 網址永遠是同一個，<b>每次打開就是最新版</b><br>📍 每 5 分鐘自動檢查新版，<b>有新版會跳通知請你刷新</b><br>📍 已加主畫面 → 開啟 app 後<b>下拉刷新一次</b>就會抓到新版（iOS 15+ / Android Chrome）<br>📍 還是舊版 → 到「ℹ️ 資訊」分頁點「🔄 強制刷新最新版」<br>📍 你的記帳/退稅打勾紀錄<b>不會被更新洗掉</b></div>
+<div class="warn tip">📍 網址永遠是同一個，<b>每次打開就是最新版</b><br>📍 背景偵測到新版會跳<b>一次</b>通知（10 秒自動收），不會一直騷擾<br>📍 看到通知就點 → 自動刷新到新版<br>📍 沒點到 → 「ℹ️ 資訊」tab 會有<b>小紅點</b>提示，隨時去點「🔄 強制刷新」<br>📍 加主畫面後 → 開啟 app <b>下拉刷新一次</b>也可抓到新版（iOS 15+ / Android）<br>📍 你的記帳/退稅打勾紀錄<b>不會被更新洗掉</b></div>
 
 <h4>💌 旅途中提醒</h4>
 <div class="warn tip">📍 米色底行格 = <b>集合時間</b>，務必準時<br>📍 找路、查公車：手機 Google Maps 最快<br>📍 拍照記得分享到群組，回家後一起回味</div>
@@ -1206,25 +1206,34 @@ render();
 updateNextGather();
 setInterval(updateNextGather,30000);
 
-// 自動偵測新版本：每 5 分鐘抓一次最新 HTML 對照 APP_VERSION
+// 自動偵測新版本：每 15 分鐘檢查，整個 session 只跳一次通知
+let _updateNotified=false;
 async function checkForUpdate(){
+  if(_updateNotified)return;
   try{
     const res=await fetch(location.pathname+'?cb='+Date.now(),{cache:'no-store'});
     if(!res.ok)return;
     const text=await res.text();
     const m=text.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
     if(m&&m[1]&&m[1]!==APP_VERSION){
+      _updateNotified=true;
+      // 標記 資訊頁 tab 有紅點提示，使用者隨時可去點「強制刷新」
+      const infoTab=document.querySelector('.tab[data-tab="info"]');
+      if(infoTab&&!infoTab.querySelector('.dot')){
+        infoTab.insertAdjacentHTML('beforeend','<span class="dot" style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#c9a96a;margin-left:4px;vertical-align:top"></span>');
+      }
+      // 跳一次 toast，10 秒自動收
       const t=document.getElementById('toast');
       t.innerHTML='🔄 有新版可用 · 點我刷新';
       t.style.cursor='pointer';
       t.onclick=()=>location.reload(true);
       t.classList.add('show');
-      // 不自動消失，等使用者點
+      setTimeout(()=>{t.classList.remove('show');t.onclick=null;t.style.cursor='';},10000);
     }
   }catch(e){}
 }
 setTimeout(checkForUpdate,3000);
-setInterval(checkForUpdate,5*60*1000);
+setInterval(checkForUpdate,15*60*1000);
 </script>
 </body>
 </html>
