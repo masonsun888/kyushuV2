@@ -282,7 +282,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="warn tip">📍 頂部<b>奶油色輸入框</b>輸入日幣金額 → 自動換算成台幣<br>📍 範例：輸入 <code style="background:#fffaeb;padding:1px 4px;border-radius:3px">5000</code> → 顯示「≈ NT$1,150」<br>📍 匯率採 PDF 官方 <b>1 ¥ = NT$ 0.23</b><br>📍 實際刷卡匯率以銀行為準，這只是現場估算用</div>
 
 <h4>⏰ 下次集合倒數（頂部黃色框）</h4>
-<div class="warn tip">📍 顯示下一個集合時間 + 地點 + <b>還剩幾小時／幾分鐘</b><br>📍 每 30 秒自動更新，不用手動重整<br>📍 集合過了會自動跳到下一個</div>
+<div class="warn tip">📍 顯示下一個集合時間 + 地點 + <b>還剩幾小時／幾分鐘</b><br>📍 時間下方會標 <b>「台灣時間」或「日本時間」</b>，不會搞混<br>📍 Day 1 第一個集合是<b>台灣時間 05:05</b>（小港機場還在台灣）<br>📍 從 Day 1 下午抵達日本後，全部都是 <b>日本時間</b>（比台灣早 1 小時）<br>📍 每 30 秒自動更新，集合過了會跳到下一個</div>
 
 <h4>🆓 「自由時間」是什麼意思？</h4>
 <div class="warn tip"><b>= 飯店 buffet 用餐時間 + 出去逛街的時間（整段都是你的）</b><br>📍 飯店自助餐通常開放 2-3 小時（如 18:00-21:00），自己決定何時去吃<br>📍 想早點出去逛 → buffet 一開放就去吃，吃飽馬上出門<br>📍 想悠閒享受 → 晚一點吃，吃完直接回房泡湯<br>📍 行程裡 <b>🆓 自由</b> tag 就是這個意思，不是「吃完才開始算自由」</div>
@@ -305,7 +305,7 @@ a{color:#8a7040;text-decoration:none}
 
 <div class="day" data-date="2026-05-21"><div class="day-head"><strong>Day 1 · 5/21 四</strong><div class="meta"><span>福岡→別府</span><span class="chev">▼</span></div></div>
 <div class="day-body">
-<div class="event gather"><div class="time">05:05</div><div class="event-body"><div class="title">小港機場 集合</div><span class="tag gather">集合</span><div class="note">高雄小港國際機場 3F 中華航空櫃台｜CI138 07:05→10:50 福岡｜建議 04:00 從家中出發</div></div></div>
+<div class="event gather"><div class="time">05:05</div><div class="event-body"><div class="title">小港機場 集合</div><span class="tag gather">集合</span><div class="note">⏰ <b>05:05 是台灣時間</b>（這站還在台灣，之後行程都是日本時間）<br>高雄小港國際機場 3F 中華航空櫃台｜CI138 07:05→10:50 福岡<br>建議 04:00 從家中出發</div></div></div>
 <div class="event"><div class="time">10:50</div><div class="event-body"><div class="title">福岡空港抵達</div><span class="tag smoke">🚬 國際線 1F 戶外</span><span class="tag matcha">🍵 blank wako</span><div class="note">入境＋領行李約 40 分｜<b>吸菸區：國際線到達 1F 大廳出口外的指定吸菸所</b>｜國際線 3F blank wako 可先保底買抹茶 2-3 罐</div></div></div>
 <div class="event"><div class="time">13:00</div><div class="event-body"><div class="title">日田豆田町（九州小京都）</div><span class="tag eat">壽司餐盒 車上享用</span><span class="tag smoke">🚬 空檔</span><div class="note">江戶時代木造商家排排站，老街超好拍古樸味<br>有醬油老鋪、和菓子老店、足駄屋（木屐），順便買幾個小紀念品<br>🚬 <b>老街周邊街道空地、停車場可抽（約 2 小時散策時段）</b></div></div></div>
 <div class="event gather"><div class="time">15:40</div><div class="event-body"><div class="title">日田站 集合上車</div><span class="tag gather">集合</span><span class="tag smoke">🚬 上車前</span><div class="note">JR 由布院之森 15:56 出發 → 16:50 抵湯布院｜<b>墨綠色木質車廂像哈利波特特急，沿途林間風景超治癒，記得拍一下車廂內裝</b><br>⚠️ <b>列車內全禁菸（含 IQOS），上車前在日田站外吸菸所抽好，1 小時車程不能抽</b></div></div></div>
@@ -984,14 +984,14 @@ const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
 let curCat='food',curPay='cash';
 
 const GATHERS=[
-  {dt:'2026-05-21 05:05',place:'小港機場 3F 華航櫃台'},
-  {dt:'2026-05-21 15:40',place:'日田站（由布院之森）'},
-  {dt:'2026-05-22 08:30',place:'別府清風 大廳'},
-  {dt:'2026-05-23 08:30',place:'阿蘇格蘭 大廳'},
-  {dt:'2026-05-23 17:30',place:'GRIDS 大廳'},
-  {dt:'2026-05-24 08:45',place:'GRIDS 大廳'},
-  {dt:'2026-05-24 17:30',place:'GRIDS 大廳'},
-  {dt:'2026-05-25 09:00',place:'GRIDS 大廳'}
+  {dt:'2026-05-21 05:05',tz:'+08:00',tzLabel:'台灣時間',place:'小港機場 3F 華航櫃台'},
+  {dt:'2026-05-21 15:40',tz:'+09:00',tzLabel:'日本時間',place:'日田站（由布院之森）'},
+  {dt:'2026-05-22 08:30',tz:'+09:00',tzLabel:'日本時間',place:'別府清風 大廳'},
+  {dt:'2026-05-23 08:30',tz:'+09:00',tzLabel:'日本時間',place:'阿蘇格蘭 大廳'},
+  {dt:'2026-05-23 17:30',tz:'+09:00',tzLabel:'日本時間',place:'GRIDS 大廳'},
+  {dt:'2026-05-24 08:45',tz:'+09:00',tzLabel:'日本時間',place:'GRIDS 大廳'},
+  {dt:'2026-05-24 17:30',tz:'+09:00',tzLabel:'日本時間',place:'GRIDS 大廳'},
+  {dt:'2026-05-25 09:00',tz:'+09:00',tzLabel:'日本時間',place:'GRIDS 大廳'}
 ];
 
 function vib(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
@@ -1039,7 +1039,7 @@ document.getElementById('content').addEventListener('touchend',e=>{
 function updateNextGather(){
   const now=new Date();
   const upcoming=GATHERS.map(g=>{
-    const d=new Date(g.dt.replace(' ','T')+':00+09:00');
+    const d=new Date(g.dt.replace(' ','T')+':00'+g.tz);
     return {...g,d};
   }).filter(g=>g.d>now).sort((a,b)=>a.d-b.d)[0];
   const tEl=document.getElementById('ng-time');
@@ -1051,15 +1051,17 @@ function updateNextGather(){
   }
   const diffMs=upcoming.d-now;
   const diffMin=Math.round(diffMs/60000);
-  const hh=String(upcoming.d.getHours()).padStart(2,'0');
-  const mm=String(upcoming.d.getMinutes()).padStart(2,'0');
+  // Display ORIGINAL wall-clock time from g.dt (event's local timezone)
+  // 不論瀏覽器在哪個時區，都顯示「當地該到的時間」+ 時區標籤
+  const [datePart,timePart]=upcoming.dt.split(' ');
+  const [hh,mm]=timePart.split(':');
+  const [yyyy,mo,dd]=datePart.split('-');
   let dlbl='';
-  if(diffMin<60)dlbl=' ('+diffMin+'分後)';
-  else if(diffMin<24*60)dlbl=' ('+Math.floor(diffMin/60)+'小時後)';
-  else dlbl=' ('+Math.floor(diffMin/(60*24))+'天後)';
+  if(diffMin<60)dlbl=' · '+diffMin+'分後';
+  else if(diffMin<24*60)dlbl=' · '+Math.floor(diffMin/60)+'小時後';
+  else dlbl=' · '+Math.floor(diffMin/(60*24))+'天後';
   tEl.textContent=hh+':'+mm;
-  const md=(upcoming.d.getMonth()+1)+'/'+upcoming.d.getDate();
-  pEl.innerHTML='<div class="lbl">'+md+dlbl+'</div>'+upcoming.place;
+  pEl.innerHTML='<div class="lbl">'+parseInt(mo)+'/'+parseInt(dd)+' '+upcoming.tzLabel+dlbl+'</div>'+upcoming.place;
 }
 
 function todayInit(){
