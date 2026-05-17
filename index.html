@@ -6,6 +6,9 @@
 <meta name="theme-color" content="#b06b54">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="apple-mobile-web-app-title" content="九州5日">
 <meta name="format-detection" content="telephone=yes">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23b06b54'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='%23fff' font-family='sans-serif'%3E九%3C/text%3E%3C/svg%3E">
@@ -17,7 +20,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",s
 .sticky{position:sticky;top:0;background:linear-gradient(135deg,#b06b54,#c9886b);color:#fff;padding:10px 14px calc(10px) 14px;padding-top:calc(10px + env(safe-area-inset-top));z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.15)}
 .calc{display:flex;gap:8px;align-items:center;margin-bottom:8px}
 .calc input{flex:1;padding:10px 12px;border:none;border-radius:8px;font-size:16px;background:rgba(255,255,255,.95);color:#2a1f1c;min-height:40px}
-.calc .eq{font-weight:700;font-size:15px;min-width:96px;text-align:right}
+.calc .eq{font-weight:700;font-size:15px;min-width:80px;text-align:right}
+.calc .refresh{flex-shrink:0;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.45);border-radius:8px;padding:8px 10px;font-size:14px;color:#fff;cursor:pointer;font-family:inherit;font-weight:700;min-height:40px;min-width:40px}
+.calc .refresh:active{transform:scale(.92);background:rgba(255,255,255,.45)}
 .budget{background:rgba(0,0,0,.15);padding:7px 10px;border-radius:6px}
 .budget-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;gap:6px;flex-wrap:wrap}
 .budget-row+.budget-row{margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.15)}
@@ -132,6 +137,7 @@ a{color:#b06b54;text-decoration:none}
   <div class="calc">
     <input type="number" id="jpy" placeholder="¥ 日圓" inputmode="decimal" oninput="calcTwd()">
     <div class="eq" id="twd">≈ NT$0</div>
+    <button class="refresh" onclick="location.reload(true)" aria-label="刷新最新版" title="刷新最新版">🔄</button>
   </div>
   <div class="budget">
     <div class="budget-row">
@@ -406,11 +412,13 @@ a{color:#b06b54;text-decoration:none}
 </div>
 
 <div class="card">
-<h3>ℹ️ 關於</h3>
+<h3>ℹ️ 關於 / 強制更新</h3>
 <div class="row"><span>匯率</span><b>1 ¥ = NT$ 0.23</b></div>
 <div class="row"><span>現金預算</span><b>¥85,000</b></div>
-<div class="row"><span>版本</span><b>v3 含附註＋刷卡</b></div>
-<div class="warn">💡 每個行程／採購卡片下方可點「📝 附註」加備忘<br>💡 新增花費可選「現金」或「刷卡」分別計算<br>💡 iPhone：分享 → 加到主畫面，即可離線使用</div>
+<div class="row"><span>版本</span><b>v3.1 通用基建</b></div>
+<div class="row"><span>內容更新日</span><b>2026-05-17.1</b></div>
+<button onclick="location.reload(true)" style="width:100%;margin-top:14px;padding:14px;background:#b06b54;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;min-height:48px;font-family:inherit">🔄 強制刷新最新版</button>
+<div class="warn">💡 每個行程／採購卡片下方可點「📝 附註」加備忘<br>💡 新增花費可選「現金」或「刷卡」分別計算<br>💡 iPhone：分享 → 加到主畫面，即可離線使用<br>💡 想拿最新版：sticky header 右上 🔄 按鈕，或本卡片上面那顆按鈕</div>
 </div>
 </div>
 
@@ -463,6 +471,7 @@ a{color:#b06b54;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
+const APP_VERSION='2026-05-17.1';
 const RATE=0.23,BUDGET=85000;
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
 let curCat='food';
