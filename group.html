@@ -181,6 +181,11 @@ a{color:#8a7040;text-decoration:none}
 .welcome-tips .ttl{font-family:Georgia,"Noto Serif TC",serif;font-size:12px;color:#8a7040;letter-spacing:2px;margin-bottom:8px;font-style:italic;text-align:center}
 .welcome-tips .item{font-size:12px;color:#5a4a20;line-height:1.85;display:flex;gap:8px;align-items:flex-start}
 .welcome-tips .item .ic{flex-shrink:0;width:18px;text-align:center}
+.collapsible h3{cursor:pointer;user-select:none}
+.collapsible h3 .chev{float:right;transition:transform .25s;font-size:12px;color:#c9a96a;font-weight:400}
+.collapsible.collapsed h3{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.collapsible.collapsed h3 .chev{transform:rotate(-90deg)}
+.collapsible.collapsed .collapsible-body{display:none}
 </style>
 </head>
 <body>
@@ -270,8 +275,9 @@ a{color:#8a7040;text-decoration:none}
   <div class="cover-stamp">— BON VOYAGE —</div>
 </div>
 
-<div class="card">
-<h3>📖 怎麼用這份手冊</h3>
+<div class="card collapsible" id="usage-card">
+<h3 onclick="toggleUsage()">📖 怎麼用這份手冊<span class="chev">▼</span></h3>
+<div class="collapsible-body">
 
 <h4 style="margin-top:0">🗂️ 9 個分頁能拿來做什麼</h4>
 <div class="row"><span>📅 <b>行程</b></span><span style="text-align:right;font-size:12px">5 日完整時間表<br>當日自動展開</span></div>
@@ -307,6 +313,9 @@ a{color:#8a7040;text-decoration:none}
 
 <h4>💌 旅途中提醒</h4>
 <div class="warn tip">📍 米色底行格 = <b>集合時間</b>，務必準時<br>📍 找路、查公車：手機 Google Maps 最快<br>📍 拍照記得分享到群組，回家後一起回味</div>
+
+<div style="text-align:center;margin-top:14px;font-size:11px;color:#a89968;font-style:italic">看完了？點上方標題可以收起來 ↑</div>
+</div>
 </div>
 
 <div class="day" data-date="2026-05-21"><div class="day-head"><strong>Day 1 · 5/21 四</strong><div class="meta"><span>福岡→別府</span><span class="chev">▼</span></div></div>
@@ -1208,6 +1217,17 @@ checkInit();
 render();
 updateNextGather();
 setInterval(updateNextGather,30000);
+
+// 使用指南可收折，記住使用者選擇
+function toggleUsage(){
+  const c=document.getElementById('usage-card');
+  c.classList.toggle('collapsed');
+  localStorage.setItem('hiyp-usage-collapsed',c.classList.contains('collapsed')?'1':'0');
+  vib(5);
+}
+if(localStorage.getItem('hiyp-usage-collapsed')==='1'){
+  document.getElementById('usage-card')?.classList.add('collapsed');
+}
 
 // 不主動偵測新版，使用者打開 app 後自己點 sticky header 的 🔄 按鈕
 </script>
