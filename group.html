@@ -147,24 +147,31 @@ a{color:#8a7040;text-decoration:none}
 .toast{position:fixed;bottom:calc(100px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:rgba(58,46,26,.92);color:#fff;padding:10px 18px;border-radius:24px;font-size:13px;z-index:3000;opacity:0;transition:all .3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-.cover{background:linear-gradient(165deg,#fffaeb 0%,#fff 45%,#fdf0e8 100%);border-radius:20px;padding:38px 24px 32px;margin-bottom:14px;border:1px solid #f3ead2;text-align:center;position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(184,150,74,.10)}
+.cover{background:linear-gradient(165deg,#fffaeb 0%,#fff 45%,#fdf0e8 100%);border-radius:20px;padding:32px 22px 30px;margin-bottom:14px;border:1px solid #f3ead2;text-align:center;position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(184,150,74,.10)}
 .cover::before{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(199,181,212,.35),transparent 65%);border-radius:50%;pointer-events:none}
 .cover::after{content:"";position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(245,212,134,.4),transparent 65%);border-radius:50%;pointer-events:none}
+.cover-deco{position:absolute;opacity:.5;pointer-events:none;z-index:1}
+.cover-deco.tl{top:14px;left:14px;width:54px;height:54px;transform:rotate(-20deg)}
+.cover-deco.br{bottom:14px;right:14px;width:54px;height:54px;transform:rotate(160deg)}
 .cover-logo{position:relative;max-width:260px;margin:0 auto 14px;z-index:2}
 .cover-logo img{width:100%;height:auto;display:block;mix-blend-mode:multiply}
 .cover-logo .fallback{width:130px;height:130px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;box-shadow:0 8px 28px rgba(184,150,74,.18),inset 0 0 0 1px rgba(240,222,160,.6)}
 .cover-brand{position:relative;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-style:italic;font-size:26px;color:#3a2e1a;letter-spacing:1.5px;font-weight:600;margin-bottom:4px;z-index:2}
 .cover-sub{position:relative;font-family:Georgia,serif;font-size:11px;color:#8a7040;letter-spacing:4px;margin-bottom:18px;z-index:2;font-style:italic}
-.cover-essence{position:relative;font-family:Georgia,"Noto Serif TC",serif;font-size:13px;color:#5a4a20;line-height:1.9;margin-bottom:6px;z-index:2;letter-spacing:1px}
-.cover-craft{position:relative;font-size:10px;color:#a89968;letter-spacing:4px;margin-bottom:20px;z-index:2;font-family:Georgia,serif}
-.cover-divider{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto 18px;z-index:2}
-.cover-divider .l{width:40px;height:1px;background:linear-gradient(90deg,transparent,#c9a96a)}
-.cover-divider .r{width:40px;height:1px;background:linear-gradient(90deg,#c9a96a,transparent)}
-.cover-divider .o{width:6px;height:6px;border-radius:50%;background:#c9a96a;opacity:.7}
-.cover-title{position:relative;font-family:Georgia,"Noto Serif TC",serif;font-size:34px;color:#3a2e1a;letter-spacing:8px;font-weight:600;margin-bottom:8px;z-index:2}
-.cover-meta{position:relative;font-size:12px;color:#7a6a4a;letter-spacing:2px;margin-bottom:20px;z-index:2;font-family:Georgia,serif}
-.cover-quote{position:relative;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:13px;color:#8a7040;line-height:1.75;max-width:300px;margin:0 auto 10px;z-index:2;padding:0 12px}
-.cover-cn{position:relative;font-size:12.5px;color:#5a4a20;line-height:1.85;z-index:2;letter-spacing:.5px}
+.cover-essence{position:relative;font-family:Georgia,"Noto Serif TC",serif;font-size:14px;color:#5a4a20;line-height:1.9;margin-bottom:4px;z-index:2;letter-spacing:1.5px}
+.cover-craft{position:relative;font-size:10px;color:#a89968;letter-spacing:5px;margin-bottom:24px;z-index:2;font-family:Georgia,serif}
+.cover-divider{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 20px;z-index:2}
+.cover-divider .l{width:50px;height:1px;background:linear-gradient(90deg,transparent,#c9a96a)}
+.cover-divider .r{width:50px;height:1px;background:linear-gradient(90deg,#c9a96a,transparent)}
+.cover-divider .o{font-family:Georgia,serif;color:#c9a96a;font-size:11px;letter-spacing:2px}
+.cover-title{position:relative;font-family:Georgia,"Noto Serif TC","Songti TC",serif;font-size:38px;color:#3a2e1a;letter-spacing:14px;font-weight:600;margin-bottom:6px;z-index:2;text-indent:14px}
+.cover-meta{position:relative;font-size:11.5px;color:#7a6a4a;letter-spacing:2.5px;margin-bottom:22px;z-index:2;font-family:Georgia,serif}
+.cover-quote{position:relative;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:13px;color:#8a7040;line-height:1.8;max-width:300px;margin:0 auto 10px;z-index:2;padding:0 14px;position:relative}
+.cover-quote::before,.cover-quote::after{font-family:Georgia,serif;color:#d4b87a;font-size:24px;line-height:0;position:absolute;font-style:normal}
+.cover-quote::before{content:"\201C";left:0;top:8px}
+.cover-quote::after{content:"\201D";right:0;bottom:0}
+.cover-cn{position:relative;font-size:13px;color:#5a4a20;line-height:1.9;z-index:2;letter-spacing:1px;margin-bottom:18px}
+.cover-stamp{position:relative;display:inline-block;font-family:Georgia,serif;font-style:italic;font-size:10px;color:#a89968;letter-spacing:4px;padding:6px 18px;border:1px solid rgba(184,150,74,.35);border-radius:20px;z-index:2;background:rgba(255,255,255,.4)}
 .welcome-tips{background:rgba(255,255,255,.75);border-radius:14px;padding:14px 16px;margin-bottom:14px;border:1px solid #f3ead2;backdrop-filter:blur(4px)}
 .welcome-tips .ttl{font-family:Georgia,"Noto Serif TC",serif;font-size:12px;color:#8a7040;letter-spacing:2px;margin-bottom:8px;font-style:italic;text-align:center}
 .welcome-tips .item{font-size:12px;color:#5a4a20;line-height:1.85;display:flex;gap:8px;align-items:flex-start}
@@ -221,6 +228,20 @@ a{color:#8a7040;text-decoration:none}
 <div id="today-banner"></div>
 
 <div class="cover">
+  <svg class="cover-deco tl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M 10 50 Q 22 28 42 12" fill="none" stroke="#b08968" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+    <ellipse cx="18" cy="38" rx="3" ry="6" transform="rotate(-30 18 38)" fill="#a3c87a" opacity="0.65"/>
+    <ellipse cx="26" cy="28" rx="3" ry="6" transform="rotate(-30 26 28)" fill="#c4d4a8" opacity="0.6"/>
+    <ellipse cx="34" cy="20" rx="3" ry="6" transform="rotate(-30 34 20)" fill="#a3c87a" opacity="0.7"/>
+    <circle cx="42" cy="12" r="2" fill="#eec5cf" opacity="0.7"/>
+  </svg>
+  <svg class="cover-deco br" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M 10 50 Q 22 28 42 12" fill="none" stroke="#b08968" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+    <ellipse cx="18" cy="38" rx="3" ry="6" transform="rotate(-30 18 38)" fill="#c4d4a8" opacity="0.6"/>
+    <ellipse cx="26" cy="28" rx="3" ry="6" transform="rotate(-30 26 28)" fill="#a3c87a" opacity="0.7"/>
+    <ellipse cx="34" cy="20" rx="3" ry="6" transform="rotate(-30 34 20)" fill="#c4d4a8" opacity="0.65"/>
+    <circle cx="42" cy="12" r="2" fill="#f5d486" opacity="0.7"/>
+  </svg>
   <div class="cover-logo">
     <img src="logo.jpg" alt="Hi Y.P store" onerror="if(this.src.endsWith('logo.jpg')){this.src='logo.png'}else if(this.src.endsWith('logo.png')){this.src='logo.svg'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}">
     <div class="fallback" style="display:none">
@@ -235,67 +256,97 @@ a{color:#8a7040;text-decoration:none}
   </div>
   <div class="cover-essence">為每個小生命寫下日常的溫柔</div>
   <div class="cover-craft">設計 · 織布 · 印刷 · 手工製作</div>
-  <div class="cover-divider"><span class="l"></span><span class="o"></span><span class="r"></span></div>
-  <div class="cover-title">九州 5 日</div>
-  <div class="cover-meta">員工旅遊 · 2026.05.21 → 05.25</div>
-  <div class="cover-quote">"We travel not to escape life, but for life not to escape us."</div>
+  <div class="cover-divider"><span class="l"></span><span class="o">✦</span><span class="r"></span></div>
+  <div class="cover-title">九 州 五 日</div>
+  <div class="cover-meta">員工旅遊 · 2026.05.21 — 05.25</div>
+  <div class="cover-quote">We travel not to escape life, but for life not to escape us.</div>
   <div class="cover-cn">願這趟旅程把日子過成風景<br>把溫度縫進每一個當下</div>
+  <div class="cover-stamp">— BON VOYAGE —</div>
 </div>
 
-<div class="welcome-tips">
-  <div class="ttl">— 手冊使用小提醒 —</div>
-  <div class="item"><span class="ic">📱</span><span>加到主畫面後可<b>離線</b>開啟，旅途不耗網卡</span></div>
-  <div class="item"><span class="ic">⏰</span><span>米色底＝<b>集合時間</b>，下方倒數會自動提醒</span></div>
-  <div class="item"><span class="ic">🛏️</span><span>每天早晨建議起床時間請看「🛏️ 起床」分頁</span></div>
-  <div class="item"><span class="ic">🛍️</span><span>商場品牌、抹茶、咖啡店都有獨立分頁</span></div>
-  <div class="item"><span class="ic">🔒</span><span>記帳、退稅打勾資料<b>只存在你手機</b>，不會上傳</span></div>
-  <div class="item"><span class="ic">💌</span><span>拍照記得分享到群組，回家後一起回味</span></div>
+<div class="card">
+<h3>📖 怎麼用這份手冊</h3>
+
+<h4 style="margin-top:0">🗂️ 9 個分頁能拿來做什麼</h4>
+<div class="row"><span>📅 <b>行程</b></span><span style="text-align:right;font-size:12px">5 日完整時間表<br>當日自動展開</span></div>
+<div class="row"><span>🛏️ <b>起床</b></span><span style="text-align:right;font-size:12px">每天建議起床／早餐時間</span></div>
+<div class="row"><span>🆓 <b>自由</b></span><span style="text-align:right;font-size:12px">自由時段去哪玩</span></div>
+<div class="row"><span>🛍️ <b>購物</b></span><span style="text-align:right;font-size:12px">各商場品牌目錄</span></div>
+<div class="row"><span>🍵 <b>抹茶</b></span><span style="text-align:right;font-size:12px">公司同事自打抹茶採購</span></div>
+<div class="row"><span>☕ <b>咖啡</b></span><span style="text-align:right;font-size:12px">每天精選 1-2 家精品咖啡</span></div>
+<div class="row"><span>🧾 <b>退稅</b></span><span style="text-align:right;font-size:12px">每間退稅店打勾追蹤</span></div>
+<div class="row"><span>💴 <b>記帳</b></span><span style="text-align:right;font-size:12px">個人花費記錄</span></div>
+<div class="row"><span>ℹ️ <b>資訊</b></span><span style="text-align:right;font-size:12px">緊急聯絡、飯店、日本資訊</span></div>
+
+<h4>💱 匯率計算機（任何分頁頂部都看得到）</h4>
+<div class="warn tip">📍 頂部<b>奶油色輸入框</b>輸入日幣金額 → 自動換算成台幣<br>📍 範例：輸入 <code style="background:#fffaeb;padding:1px 4px;border-radius:3px">5000</code> → 顯示「≈ NT$1,150」<br>📍 匯率採 PDF 官方 <b>1 ¥ = NT$ 0.23</b><br>📍 實際刷卡匯率以銀行為準，這只是現場估算用</div>
+
+<h4>⏰ 下次集合倒數（頂部黃色框）</h4>
+<div class="warn tip">📍 顯示下一個集合時間 + 地點 + <b>還剩幾小時／幾分鐘</b><br>📍 每 30 秒自動更新，不用手動重整<br>📍 集合過了會自動跳到下一個</div>
+
+<h4>💴 記帳怎麼用</h4>
+<div class="warn tip">1. 點右下角 <b>＋</b> 圓形按鈕<br>2. 輸入日幣金額 → 選現金/刷卡 → 選分類（飲食/採購/交通/雜支）<br>3. 點儲存就好<br>📍 資料<b>只存你手機</b>，不會上傳也不會跟其他團員共用<br>📍 想看明細：「💴 記帳」分頁拉到底</div>
+
+<h4>🧾 退稅打勾用法</h4>
+<div class="warn tip">📍 「🧾 退稅」分頁列出每天該跑的退稅店<br>📍 跑完一間就點一下打勾，<b>已完成的會劃線變灰</b><br>📍 不會自動清掉，旅途中可以反覆對照</div>
+
+<h4>📱 加到主畫面（離線也能用）</h4>
+<div class="warn tip">📍 <b>iPhone Safari</b>：底部「分享」鈕 → 加到主畫面<br>📍 <b>Android Chrome</b>：右上選單 → 加到主畫面<br>📍 加完之後沒網路也能查行程、計算匯率、記帳</div>
+
+<h4>🔄 內容會自動更新</h4>
+<div class="warn tip">📍 網址永遠是同一個，<b>每次打開就是最新版</b><br>📍 已加主畫面的話，下拉刷新一次就會抓到新版<br>📍 你的記帳/退稅打勾紀錄不會被更新洗掉</div>
+
+<h4>💌 旅途中提醒</h4>
+<div class="warn tip">📍 米色底行格 = <b>集合時間</b>，務必準時<br>📍 找路、查公車：手機 Google Maps 最快<br>📍 拍照記得分享到群組，回家後一起回味</div>
 </div>
 
 <div class="day" data-date="2026-05-21"><div class="day-head"><strong>Day 1 · 5/21 四</strong><div class="meta"><span>福岡→別府</span><span class="chev">▼</span></div></div>
 <div class="day-body">
 <div class="event gather"><div class="time">05:05</div><div class="event-body"><div class="title">小港機場 集合</div><span class="tag gather">集合</span><div class="note">高雄小港國際機場 3F 中華航空櫃台｜CI138 07:05→10:50 福岡｜建議 04:00 從家中出發</div></div></div>
 <div class="event"><div class="time">10:50</div><div class="event-body"><div class="title">福岡空港抵達</div><span class="tag smoke">🚬 國際線 1F 戶外</span><span class="tag matcha">🍵 blank wako</span><div class="note">入境＋領行李約 40 分｜<b>吸菸區：國際線到達 1F 大廳出口外的指定吸菸所</b>｜國際線 3F blank wako 可先保底買抹茶 2-3 罐</div></div></div>
-<div class="event"><div class="time">13:00</div><div class="event-body"><div class="title">日田豆田町（九州小京都）</div><span class="tag eat">壽司餐盒 車上享用</span><div class="note">江戶時代街道散策、老街拍照</div></div></div>
-<div class="event gather"><div class="time">15:40</div><div class="event-body"><div class="title">日田站 集合上車</div><span class="tag gather">集合</span><div class="note">JR 由布院之森 15:56 出發 → 16:50 抵達湯布院｜車內全禁菸</div></div></div>
+<div class="event"><div class="time">13:00</div><div class="event-body"><div class="title">日田豆田町（九州小京都）</div><span class="tag eat">壽司餐盒 車上享用</span><div class="note">江戶時代木造商家排排站，老街超好拍古樸味<br>有醬油老鋪、和菓子老店、足駄屋（木屐），順便買幾個小紀念品</div></div></div>
+<div class="event gather"><div class="time">15:40</div><div class="event-body"><div class="title">日田站 集合上車</div><span class="tag gather">集合</span><div class="note">JR 由布院之森 15:56 出發 → 16:50 抵湯布院｜<b>墨綠色木質車廂像哈利波特特急，沿途林間風景超治癒，記得拍一下車廂內裝</b>｜車內全禁菸</div></div></div>
 <div class="event"><div class="time">16:50</div><div class="event-body"><div class="title">湯布院站轉巴士</div><div class="note">巴士前往別府 約 40 分</div></div></div>
-<div class="event"><div class="time">17:30</div><div class="event-body"><div class="title">別府清風飯店 Check in</div><span class="tag smoke">🚬 飯店戶外</span><div class="note"><b>吸菸區：飯店正門外右側指定吸菸區（有菸蒂筒）</b>｜室內全禁菸</div></div></div>
-<div class="event"><div class="time">18:00</div><div class="event-body"><div class="title">和洋自助晚餐</div><span class="tag eat">飯店 buffet</span></div></div>
-<div class="event"><div class="time">19:30</div><div class="event-body"><div class="title">Yumetown 別府（自由）</div><span class="tag free">自由 1.5h</span><span class="tag shop">購物</span><div class="note">飯店步行 7-8 分｜21:00 關店｜品牌目錄見「🛍️ 購物」分頁</div></div></div>
+<div class="event"><div class="time">17:30</div><div class="event-body"><div class="title">別府清風飯店 Check in</div><span class="tag smoke">🚬 飯店戶外</span><div class="note">市區飯店，溫泉鄉氛圍｜<b>吸菸區：正門外右側（有菸蒂筒）</b>，室內全禁菸</div></div></div>
+<div class="event"><div class="time">18:00 — 19:15</div><div class="event-body"><div class="title">和洋自助晚餐</div><span class="tag eat">飯店 buffet</span><div class="note"><b>建議 19:15 前吃完，19:30 出發逛 Yumetown 還來得及（21:00 關店）</b><br><br>💡 <b>不想吃 buffet？飯店步行 10 分內備案：</b><br>• 餃子の店 ひぐち（別府站前，本地名物餃子）<br>• とり天 一休（大分名物雞天定食）<br>• 別府冷麺 胡月（特色冷麺）<br>• 友永パン屋（百年麵包老鋪，可打包當宵夜）<br>店名 Google 看評分／營業時間</div></div></div>
+<div class="event"><div class="time">19:30 — 21:00</div><div class="event-body"><div class="title">Yumetown 別府（自由）</div><span class="tag free">自由 1.5h</span><span class="tag shop">購物</span><div class="note">飯店步行 7-8 分｜21:00 關店建議 20:50 結帳<br>品牌目錄見「🛍️ 購物」分頁</div></div></div>
+<div class="event"><div class="time">21:00+</div><div class="event-body"><div class="title">回飯店泡溫泉 ♨️</div><span class="tag hot">飯店大浴場</span><div class="note">別府溫泉鄉名湯，洗去第一天舟車勞頓</div></div></div>
 </div>
 </div>
 
 <div class="day" data-date="2026-05-22"><div class="day-head"><strong>Day 2 · 5/22 五</strong><div class="meta"><span>動物園→阿蘇</span><span class="chev">▼</span></div></div>
 <div class="day-body">
 <div class="event gather"><div class="time">08:30</div><div class="event-body"><div class="title">別府清風 大廳集合</div><span class="tag gather">集合</span><div class="note">退房完成後集合｜08:45 出發</div></div></div>
-<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">九州自然動物園</div><span class="tag smoke">🚬 入口停車場</span><div class="note"><b>吸菸區：入口大門右側停車場旁、紀念品店外</b></div></div></div>
-<div class="event"><div class="time">13:00</div><div class="event-body"><div class="title">湯布院</div><span class="tag eat">炭火燒肉定食</span><span class="tag free">自由 1-1.5h</span><div class="note">金麟湖、湯之坪街道、B-SPEAK 蛋糕</div></div></div>
-<div class="event"><div class="time">17:00</div><div class="event-body"><div class="title">阿蘇格蘭飯店</div><span class="tag eat">阿蘇赤牛 buffet</span><span class="tag hot">露天溫泉 ♨️</span><span class="tag smoke">🚬 飯店戶外</span><div class="note">山上看星空｜<b>吸菸區：飯店大廳外右側陽台、停車場旁指定區（夜間山風大記得帶外套）</b></div></div></div>
+<div class="event"><div class="time">09:00 — 12:00</div><div class="event-body"><div class="title">九州自然動物園</div><span class="tag smoke">🚬 入口停車場</span><div class="note">坐叢林巴士近距離餵獅子、長頸鹿、大象，野生動物超近超有臨場感<br>小動物區可摸貓狗、餵袋鼠松鼠猴，老人小孩都會瘋<br>📌 叢林巴士 ¥1,500 上下，現場排隊（疫後不能團體預約）<br><b>吸菸區：入口大門右側停車場旁、紀念品店外</b></div></div></div>
+<div class="event"><div class="time">13:00 — 15:30</div><div class="event-body"><div class="title">湯布院 午餐 + 自由</div><span class="tag eat">炭火燒肉定食 ¥2,500</span><span class="tag free">自由 1-1.5h</span><div class="note">日本女性票選最愛的夢幻度假勝地，超適合慢慢散步<br>📍 <b>金鱗湖</b>：晨霧繚繞超仙，湖底有溫泉冬天會冒煙<br>🧸 <b>史奴比茶屋</b>：全球第一間 SNOOPY 主題茶屋，必拍合照＋限定周邊<br>🍰 <b>B-SPEAK</b>：湯布院必吃蛋糕捲，當天現做數量限定（行程贈送）<br>🛍️ <b>湯之坪街道</b>：老街淘伴手禮、宮崎駿商店、貓咪屋、溫泉蛋小吃</div></div></div>
+<div class="event"><div class="time">17:00</div><div class="event-body"><div class="title">阿蘇格蘭飯店 Check in</div><span class="tag smoke">🚬 飯店戶外</span><div class="note">山上度假飯店，氣溫比市區低 5-7 度，記得多帶外套<br><b>吸菸區：大廳外右側陽台、停車場旁指定區（夜間山風大）</b></div></div></div>
+<div class="event"><div class="time">18:30 — 20:00</div><div class="event-body"><div class="title">阿蘇赤牛 buffet 晚餐</div><span class="tag eat">飯店 buffet</span><div class="note">招牌阿蘇赤牛吃到飽，肉質鮮甜油花漂亮<br><br>💡 <b>飯店周邊備案（山區，車程 5-10 分才有）：</b><br>• いまきん食堂（阿蘇名物赤牛丼，車程 15 分）<br>• あか牛Dining yoshimura（赤牛料理，車程 10 分）<br>• 山上飯店周邊步行幾乎沒店家，buffet 是主要選項<br>店名 Google 看營業時間，部分晚餐時段較早關</div></div></div>
+<div class="event"><div class="time">20:00+</div><div class="event-body"><div class="title">露天溫泉 + 看星空 ♨️</div><span class="tag hot">山頂露天</span><div class="note">山頂露天湯池 + 滿天星空，這是阿蘇格蘭最大賣點<br>5 月夜晚有點涼，剛泡進去剛剛好｜建議帶外套去回飯店路上</div></div></div>
 </div>
 </div>
 
 <div class="day" data-date="2026-05-23"><div class="day-head"><strong>Day 3 · 5/23 六</strong><div class="meta"><span>阿蘇→熊本</span><span class="chev">▼</span></div></div>
 <div class="day-body">
 <div class="event gather"><div class="time">08:30</div><div class="event-body"><div class="title">阿蘇格蘭 大廳集合</div><span class="tag gather">集合</span><div class="note">退房完成後｜08:45 出發</div></div></div>
-<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">阿蘇神社+門前町</div></div></div>
-<div class="event"><div class="time">11:00</div><div class="event-body"><div class="title">阿蘇草千里</div><span class="tag smoke">🚬 停車場休憩區</span><div class="note">展望景觀、火山口、馬場拍照｜<b>吸菸區：停車場休憩亭旁、餐廳外平台指定區</b></div></div></div>
-<div class="event"><div class="time">12:00</div><div class="event-body"><div class="title">草千里定食 午餐</div><span class="tag eat">¥2,500</span><div class="note">阿蘇赤牛料理</div></div></div>
-<div class="event"><div class="time">13:30</div><div class="event-body"><div class="title">南阿蘇免稅店</div><span class="tag shop">免稅店</span><div class="note">團體行程指定店家｜停留約 45-60 分</div></div></div>
+<div class="event"><div class="time">09:00 — 10:30</div><div class="event-body"><div class="title">阿蘇神社 + 門前町散策</div><div class="note">九州地區的國寶神社（西元 806 年創建），茅草覆蓋的桃山風格樓門超壯觀<br>門前町老街有手工冰淇淋、和菓子、湧水（神社湧泉，可裝瓶帶走）</div></div></div>
+<div class="event"><div class="time">11:00</div><div class="event-body"><div class="title">阿蘇草千里</div><span class="tag smoke">🚬 停車場休憩區</span><div class="note">一望無際大草原 + 中央有湖 + 牛馬悠閒吃草，遠眺活火山<br>超適合慢慢散步、空景拍照、馬場騎馬體驗<br><b>吸菸區：停車場休憩亭旁、餐廳外平台指定區</b></div></div></div>
+<div class="event"><div class="time">12:00 — 13:00</div><div class="event-body"><div class="title">草千里定食 午餐</div><span class="tag eat">¥2,500</span><div class="note">招牌阿蘇赤牛料理，山景餐廳邊看草原邊吃</div></div></div>
+<div class="event"><div class="time">13:30 — 14:30</div><div class="event-body"><div class="title">南阿蘇免稅店</div><span class="tag shop">團體指定店</span><div class="note">團體行程指定購物點，有些限定商品其他地方不一定有<br>停留約 45-60 分，可挑伴手禮、3C 小物、健康保健品</div></div></div>
 <div class="event"><div class="time">15:00</div><div class="event-body"><div class="title">熊本上下通商店街 自由採購</div><span class="tag free">自由 2.5h</span><span class="tag shop">購物</span><span class="tag matcha">🍵 茶道具</span><span class="tag smoke">🚬 鶴屋外 / 唐吉訶德外</span><span class="tag tax">退稅</span><div class="note">下通／上通／鶴屋百貨／Bic Camera／唐吉訶德都在此區｜<b>吸菸區：鶴屋百貨 1F 正門外、唐吉訶德下通店戶外、商店街地面有「喫煙所」標示</b>｜抹茶可逛 堀野園、石田好古堂，詳見「🛍️ 購物」「🍵 抹茶」分頁</div></div></div>
 <div class="event gather"><div class="time">17:30</div><div class="event-body"><div class="title">GRIDS 熊本 大廳集合</div><span class="tag gather">集合</span><div class="note">飯店 check in 後集合</div></div></div>
-<div class="event"><div class="time">18:00</div><div class="event-body"><div class="title">涮涮鍋暢食 晚餐</div><span class="tag eat">¥3,500</span><div class="note">含軟飲暢飲</div></div></div>
-<div class="event"><div class="time">20:00</div><div class="event-body"><div class="title">自由活動</div><span class="tag free">自由 3h+</span><span class="tag shop">購物</span><span class="tag tax">退稅</span><div class="note">下通／上通商店街、唐吉訶德 24h、Bar / 居酒屋</div></div></div>
+<div class="event"><div class="time">18:00 — 19:30</div><div class="event-body"><div class="title">涮涮鍋暢食 晚餐</div><span class="tag eat">¥3,500</span><div class="note">鍋物吃到飽 + 軟飲無限續，CP 值高<br>先喝湯再涮和牛、五花肉，最後下烏龍麵收尾<br><b>建議 19:30 前吃完，20:00 出發逛下通正熱鬧</b></div></div></div>
+<div class="event"><div class="time">20:00+</div><div class="event-body"><div class="title">下通自由活動</div><span class="tag free">自由 3h+</span><span class="tag shop">購物</span><span class="tag tax">退稅</span><div class="note">下通／上通商店街晚上才是高峰時段<br>🛍️ 唐吉訶德 24h、藥妝補貨<br>🍻 居酒屋、Bar 林立、花畑町夜生活<br>🍜 想吃宵夜：熊本拉麵「黑亭」「天外天」很有名</div></div></div>
 </div>
 </div>
 
 <div class="day" data-date="2026-05-24"><div class="day-head"><strong>Day 4 · 5/24 日</strong><div class="meta"><span>熊本市區</span><span class="chev">▼</span></div></div>
 <div class="day-body">
 <div class="event gather"><div class="time">08:45</div><div class="event-body"><div class="title">GRIDS 大廳集合</div><span class="tag gather">集合</span><div class="note">09:00 出發</div></div></div>
-<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">水前寺成趣園</div></div></div>
-<div class="event"><div class="time">12:00</div><div class="event-body"><div class="title">熊本風味御膳 午餐</div><span class="tag eat">¥2,500</span><div class="note">辛子蓮根、太平燕、馬刺し</div></div></div>
-<div class="event"><div class="time">13:30</div><div class="event-body"><div class="title">AEON Mall 嘉島</div><span class="tag free">自由 3h</span><span class="tag shop">購物</span><span class="tag matcha">🍵 抹茶主場</span><span class="tag smoke">🚬 戶外指定區</span><span class="tag tax">退稅</span><div class="note">大型 outlet 型購物中心｜<b>吸菸區：建物外側戶外指定吸菸所（靠停車場那側，找「喫煙所」標示）</b>｜抹茶採購主場（超市丸久小山園、靜岡品牌）</div></div></div>
-<div class="event gather"><div class="time">17:30</div><div class="event-body"><div class="title">飯店 大廳集合</div><span class="tag gather">集合</span><div class="note">回飯店放東西｜晚上自由</div></div></div>
-<div class="event"><div class="time">18:30</div><div class="event-body"><div class="title">晚餐自由</div><span class="tag free">自由</span><div class="note">下通眾多選擇</div></div></div>
+<div class="event"><div class="time">09:00 — 11:30</div><div class="event-body"><div class="title">水前寺成趣園</div><div class="note">350 年歷史日式庭園，模仿東海道五十三景縮影（包含縮小富士山）<br>賞鯉魚、走拱橋、抹茶老茶屋小歇，超適合慢慢逛拍照</div></div></div>
+<div class="event"><div class="time">12:00 — 13:00</div><div class="event-body"><div class="title">熊本風味御膳 午餐</div><span class="tag eat">¥2,500</span><div class="note">熊本鄉土料理三寶一次吃：<br>• 辛子蓮根（芥末蓮藕，熊本城主時代藥膳）<br>• 太平燕（春雨粉絲湯，熊本獨有）<br>• 馬刺し（生馬肉切片，熊本名物 — 不敢吃可跳過）</div></div></div>
+<div class="event"><div class="time">13:30 — 16:30</div><div class="event-body"><div class="title">AEON Mall 嘉島</div><span class="tag free">自由 3h</span><span class="tag shop">購物</span><span class="tag matcha">🍵 抹茶主場</span><span class="tag smoke">🚬 戶外指定區</span><span class="tag tax">退稅</span><div class="note">九州大型購物中心，一站搞定服飾／藥妝／雜貨／超市<br>🍵 抹茶採購主場（超市丸久小山園、靜岡品牌）<br><b>吸菸區：建物外側戶外指定吸菸所（停車場那側，找「喫煙所」標示）</b></div></div></div>
+<div class="event gather"><div class="time">17:30</div><div class="event-body"><div class="title">GRIDS 大廳集合</div><span class="tag gather">集合</span><div class="note">回飯店放東西，晚上自由覓食逛街</div></div></div>
+<div class="event"><div class="time">18:30+</div><div class="event-body"><div class="title">晚餐自由</div><span class="tag free">自由</span><span class="tag eat">推薦下通</span><div class="note">下通商店街晚上眾多選擇，飯店步行 5 分內：<br>🍜 <b>黑亭拉麵</b>（熊本拉麵代表，下通分店）<br>🍜 <b>天外天</b>（熊本拉麵 TOP，下通本店）<br>🥩 <b>馬櫻燒肉</b>（熊本馬肉料理）<br>🍢 <b>熊本居酒屋 串処 焼鳥</b>（道地串燒）<br>🍣 <b>勝寿司</b>（下通老牌壽司）<br>🍰 <b>PARCO B1</b>（甜點街）<br>店名 Google 直接搜，幾乎都在飯店步行 5-10 分內</div></div></div>
 </div>
 </div>
 
@@ -860,7 +911,12 @@ a{color:#8a7040;text-decoration:none}
 <h3>ℹ️ 版本</h3>
 <div class="row"><span>版本</span><b>Hi Y.P 員工旅遊版 v3</b></div>
 <div class="row"><span>主辦</span><b>Hi Y.P store · baby's something</b></div>
-<div class="warn">💡 iPhone：分享 → 加到主畫面，離線可用<br>💡 Android：選單 → 加到主畫面</div>
+</div>
+
+<div class="card">
+<h3>📜 版權與聲明</h3>
+<div class="warn danger" style="background:#fdf9ec;border-left-color:#c9a96a;color:#5a4a20;line-height:1.85"><b>本手冊僅供 Hi Y.P store · baby's something 員工旅遊參加同事與家屬使用</b><br><br>版權所有，<b>不得轉載、轉發給非參加者</b>，旅遊結束後亦不得繼續使用<br><br>一切商標、品牌資訊及內容歸 <b>沐倪有限公司</b> 所有<br><br>本製作人僅提供方便小工具供旅途使用，<b>不負擔任何風險及資訊錯誤責任</b><br>請以官方說明會、領隊現場指示為準</div>
+<div style="font-size:10px;color:#a89968;letter-spacing:1.5px;text-align:center;margin-top:14px;font-family:Georgia,serif;font-style:italic">© 2026 Muni Co., Ltd. · All rights reserved</div>
 </div>
 
 </div>
