@@ -6,6 +6,9 @@
 <meta name="theme-color" content="#e8d49f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="apple-mobile-web-app-title" content="Hi Y.P 九州">
 <meta name="format-detection" content="telephone=yes">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='m' x1='0.5' y1='0' x2='0.5' y2='1'%3E%3Cstop offset='0%25' stop-color='%23c7b5d4'/%3E%3Cstop offset='40%25' stop-color='%23eec5cf'/%3E%3Cstop offset='75%25' stop-color='%23f5d486'/%3E%3Cstop offset='100%25' stop-color='%23e0b85c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='%23fffaeb'/%3E%3Cpath d='M 38 20 C 18 36 18 64 38 82 C 62 72 56 52 50 48 C 56 42 60 28 38 20 Z' fill='url(%23m)'/%3E%3Cpath d='M 74 24 L 76 30 L 82 32 L 76 34 L 74 40 L 72 34 L 66 32 L 72 30 Z' fill='%231e3a8a'/%3E%3Cpath d='M 65 46 L 66.5 50 L 70.5 51 L 66.5 52 L 65 56 L 63.5 52 L 59.5 51 L 63.5 50 Z' fill='%23a3c87a' opacity='0.85'/%3E%3Cpath d='M 80 56 L 81.5 61 L 86 62 L 81.5 63 L 80 68 L 78.5 63 L 74 62 L 78.5 61 Z' fill='%237ec8a8' opacity='0.85'/%3E%3C/svg%3E">
@@ -297,7 +300,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="warn tip">📍 <b>iPhone Safari</b>：底部「分享」鈕 → 加到主畫面<br>📍 <b>Android Chrome</b>：右上選單 → 加到主畫面<br>📍 加完之後沒網路也能查行程、計算匯率、記帳</div>
 
 <h4>🔄 內容會自動更新</h4>
-<div class="warn tip">📍 網址永遠是同一個，<b>每次打開就是最新版</b><br>📍 已加主畫面的話，下拉刷新一次就會抓到新版<br>📍 你的記帳/退稅打勾紀錄不會被更新洗掉</div>
+<div class="warn tip">📍 網址永遠是同一個，<b>每次打開就是最新版</b><br>📍 每 5 分鐘自動檢查新版，<b>有新版會跳通知請你刷新</b><br>📍 已加主畫面 → 開啟 app 後<b>下拉刷新一次</b>就會抓到新版（iOS 15+ / Android Chrome）<br>📍 還是舊版 → 到「ℹ️ 資訊」分頁點「🔄 強制刷新最新版」<br>📍 你的記帳/退稅打勾紀錄<b>不會被更新洗掉</b></div>
 
 <h4>💌 旅途中提醒</h4>
 <div class="warn tip">📍 米色底行格 = <b>集合時間</b>，務必準時<br>📍 找路、查公車：手機 Google Maps 最快<br>📍 拍照記得分享到群組，回家後一起回味</div>
@@ -931,9 +934,12 @@ a{color:#8a7040;text-decoration:none}
 </div>
 
 <div class="card">
-<h3>ℹ️ 版本</h3>
+<h3>ℹ️ 版本 / 強制更新</h3>
 <div class="row"><span>版本</span><b>Hi Y.P 員工旅遊版 v3</b></div>
+<div class="row"><span>內容更新日</span><b id="ver-display">2026-05-17.1</b></div>
 <div class="row"><span>主辦</span><b>Hi Y.P store · baby's something</b></div>
+<button onclick="location.reload(true)" style="width:100%;margin-top:14px;padding:14px;background:#c9a96a;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;min-height:48px;font-family:inherit">🔄 強制刷新最新版</button>
+<div class="warn tip" style="margin-top:10px">📱 <b>加到主畫面後沒看到更新？</b>解法：<br>1. 開啟 app → <b>畫面下拉一次</b>（iOS 15+ / Android Chrome）<br>2. 還是舊版 → 點上方「🔄 強制刷新最新版」<br>3. 都不行 → 從主畫面刪掉 icon，重新加入<br><br>📍 系統<b>每 5 分鐘自動檢查</b>新版，發現就會跳通知</div>
 </div>
 
 <div class="card">
@@ -979,6 +985,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
+const APP_VERSION='2026-05-17.1';
 const RATE=0.23;
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
 let curCat='food',curPay='cash';
@@ -1198,6 +1205,26 @@ checkInit();
 render();
 updateNextGather();
 setInterval(updateNextGather,30000);
+
+// 自動偵測新版本：每 5 分鐘抓一次最新 HTML 對照 APP_VERSION
+async function checkForUpdate(){
+  try{
+    const res=await fetch(location.pathname+'?cb='+Date.now(),{cache:'no-store'});
+    if(!res.ok)return;
+    const text=await res.text();
+    const m=text.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
+    if(m&&m[1]&&m[1]!==APP_VERSION){
+      const t=document.getElementById('toast');
+      t.innerHTML='🔄 有新版可用 · 點我刷新';
+      t.style.cursor='pointer';
+      t.onclick=()=>location.reload(true);
+      t.classList.add('show');
+      // 不自動消失，等使用者點
+    }
+  }catch(e){}
+}
+setTimeout(checkForUpdate,3000);
+setInterval(checkForUpdate,5*60*1000);
 </script>
 </body>
 </html>
