@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#b06b54">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="九州5日">
+<meta name="format-detection" content="telephone=yes">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23b06b54'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='%23fff' font-family='sans-serif'%3E九%3C/text%3E%3C/svg%3E">
+<title>九州 5 日｜Mason</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;background:#f5f1eb;color:#2a1f1c;padding-bottom:calc(90px + env(safe-area-inset-bottom));overscroll-behavior-y:contain}
+.sticky{position:sticky;top:0;background:linear-gradient(135deg,#b06b54,#c9886b);color:#fff;padding:10px 14px calc(10px) 14px;padding-top:calc(10px + env(safe-area-inset-top));z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.calc{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.calc input{flex:1;padding:10px 12px;border:none;border-radius:8px;font-size:16px;background:rgba(255,255,255,.95);color:#2a1f1c;min-height:40px}
+.calc .eq{font-weight:700;font-size:15px;min-width:96px;text-align:right}
+.budget{display:flex;justify-content:space-between;align-items:center;font-size:12px;background:rgba(0,0,0,.15);padding:6px 10px;border-radius:6px}
+.budget strong{font-size:14px}
+.bar{height:5px;background:rgba(255,255,255,.3);border-radius:3px;margin-top:4px;overflow:hidden}
+.bar-fill{height:100%;background:#fff;border-radius:3px;transition:width .3s,background .3s}
+.bar-fill.warn{background:#ffd166}
+.bar-fill.danger{background:#ff6b6b}
+.tabs{display:flex;background:#fff;border-bottom:1px solid #e5d4c5;overflow-x:auto;position:sticky;top:calc(96px + env(safe-area-inset-top));z-index:99;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:14px 16px;font-size:13px;color:#7a6a5e;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;min-height:44px;display:flex;align-items:center}
+.tab.active{color:#b06b54;border-bottom-color:#b06b54;font-weight:600}
+.content{padding:14px;touch-action:pan-y}
+.section{display:none;animation:fade .25s}
+.section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.today-banner{background:linear-gradient(135deg,#b06b54,#c9886b);color:#fff;padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:12px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(176,107,84,.25)}
+.today-banner b{font-size:15px}
+.day{background:#fff;border-radius:14px;margin-bottom:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.day.today{box-shadow:0 0 0 2px #b06b54,0 4px 16px rgba(176,107,84,.18)}
+.day-head{background:linear-gradient(135deg,#b06b54,#c9886b);color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;min-height:48px}
+.day-head strong{font-size:16px}
+.day-head .meta{font-size:12px;opacity:.9;display:flex;align-items:center;gap:8px}
+.day-head .chev{transition:transform .25s;font-size:12px}
+.day.collapsed .chev{transform:rotate(-90deg)}
+.day.collapsed .day-body{display:none}
+.event{padding:12px 16px;border-bottom:1px solid #f5ebe2;display:flex;gap:12px}
+.event:last-child{border-bottom:none}
+.time{font-weight:700;color:#b06b54;font-size:13px;min-width:50px;font-feature-settings:"tnum"}
+.event-body{flex:1;font-size:13px;line-height:1.6;min-width:0}
+.event-body .title{font-weight:600;margin-bottom:2px}
+.event-body .note{color:#7a6a5e;font-size:12px;margin-top:4px;word-break:break-word}
+.tag{display:inline-block;padding:3px 9px;border-radius:10px;font-size:10px;font-weight:600;margin-right:4px;margin-top:4px}
+.tag.buy{background:#b06b54;color:#fff}
+.tag.eat{background:#5a7355;color:#fff}
+.tag.smoke{background:#7a6a5e;color:#fff}
+.tag.hot{background:#d4a574;color:#fff}
+.tag.move{background:#8aa085;color:#fff}
+.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{color:#b06b54;font-size:15px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #e5d4c5}
+.card h4{font-size:14px;margin:10px 0 6px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;font-size:13px;border-bottom:1px solid #f5ebe2;gap:10px}
+.row:last-child{border-bottom:none}
+.row b{color:#b06b54;flex-shrink:0}
+.row.check{cursor:pointer;user-select:none;min-height:44px}
+.row.check.done{color:#a89d94;text-decoration:line-through}
+.row.check .box{display:inline-block;width:20px;height:20px;border:2px solid #b06b54;border-radius:5px;margin-right:10px;vertical-align:middle;text-align:center;line-height:16px;color:#fff;font-size:14px;font-weight:700;flex-shrink:0}
+.row.check.done .box{background:#b06b54}
+a{color:#b06b54;text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:#b06b54;color:#fff !important;padding:10px 14px;border-radius:8px;font-size:13px;margin:6px 6px 0 0;font-weight:600;min-height:40px;border:none;cursor:pointer;font-family:inherit}
+.btn.tel{background:#5a7355}
+.btn.map{background:#8aa085}
+.btn.copy{background:#d4a574}
+.btn:active{transform:scale(.96)}
+.spend-list{list-style:none;margin-top:10px}
+.spend-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f5ebe2;font-size:13px;gap:8px}
+.spend-item .ic{font-size:18px;flex-shrink:0}
+.spend-item .meta{flex:1;min-width:0}
+.spend-item .when{color:#a89d94;font-size:11px;margin-top:2px}
+.spend-item button{background:#fbe9e0;border:none;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer;color:#b06b54;font-weight:700;min-height:32px}
+.add-btn{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));right:20px;width:60px;height:60px;border-radius:30px;background:linear-gradient(135deg,#b06b54,#c9886b);color:#fff;border:none;font-size:32px;font-weight:300;box-shadow:0 4px 20px rgba(176,107,84,.5);z-index:1000;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,opacity .2s}
+.add-btn:active{transform:scale(.92)}
+.add-btn.hide{opacity:0;transform:scale(.5);pointer-events:none}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;align-items:flex-end;justify-content:center;animation:fadein .2s}
+.modal.show{display:flex}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes slideup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.modal-box{background:#fff;border-radius:18px 18px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-width:480px;animation:slideup .25s}
+.modal-box h3{margin-bottom:14px;color:#b06b54;font-size:16px}
+.modal-box input,.modal-box select{width:100%;padding:12px;border:1px solid #e5d4c5;border-radius:8px;margin-bottom:10px;font-size:16px;font-family:inherit;min-height:44px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.quick button{padding:10px 4px;border:1px solid #e5d4c5;background:#fbf6f1;border-radius:8px;font-size:12px;color:#b06b54;cursor:pointer;font-weight:600;font-family:inherit;min-height:40px}
+.quick button:active{background:#b06b54;color:#fff}
+.cat{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.cat button{padding:10px 4px;border:1.5px solid #e5d4c5;background:#fff;border-radius:8px;font-size:11px;cursor:pointer;font-family:inherit;color:#7a6a5e;min-height:50px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.cat button .ic{font-size:18px}
+.cat button.on{border-color:#b06b54;background:#fff5ec;color:#b06b54;font-weight:700}
+.modal-btns{display:flex;gap:8px;margin-top:4px}
+.modal-btns button{flex:1;padding:13px;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;font-family:inherit;min-height:48px}
+.btn-save{background:#b06b54;color:#fff}
+.btn-cancel{background:#e5d4c5;color:#7a6a5e}
+.warn{background:#fff5ec;border-left:3px solid #d4a574;padding:10px 14px;font-size:12px;color:#7a6a5e;border-radius:0 8px 8px 0;margin:10px 0;line-height:1.7;word-break:break-word}
+.warn.danger{background:#ffe9e9;border-left-color:#ff6b6b;color:#b54040}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.kpi-card{background:#fff;padding:14px;border-radius:12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.kpi-card .v{font-size:19px;font-weight:700;color:#b06b54}
+.kpi-card .l{font-size:11px;color:#7a6a5e;margin-top:2px}
+.copyable{cursor:pointer;background:#fbf6f1;padding:8px 10px;border-radius:6px;margin-top:6px;font-size:12px;color:#7a6a5e;line-height:1.6;border:1px dashed #e5d4c5;font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+.copyable:active{background:#b06b54;color:#fff;border-color:#b06b54}
+.toast{position:fixed;bottom:calc(100px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:rgba(42,31,28,.92);color:#fff;padding:10px 18px;border-radius:24px;font-size:13px;z-index:3000;opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="sticky">
+  <div class="calc">
+    <input type="number" id="jpy" placeholder="¥ 日圓" inputmode="decimal" oninput="calcTwd()">
+    <div class="eq" id="twd">≈ NT$0</div>
+  </div>
+  <div class="budget">
+    <span>預算 <strong>¥85,000</strong></span>
+    <span>已花 <strong id="spent">¥0</strong></span>
+    <span>剩 <strong id="left">¥85,000</strong></span>
+  </div>
+  <div class="bar"><div class="bar-fill" id="bar" style="width:0%"></div></div>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="day">📅 五天行程</div>
+  <div class="tab" data-tab="buy">🛍️ 採購</div>
+  <div class="tab" data-tab="book">🍽️ 訂位</div>
+  <div class="tab" data-tab="tel">📞 電話</div>
+  <div class="tab" data-tab="smoke">🚬 抽菸</div>
+  <div class="tab" data-tab="set">⚙️ 設定</div>
+</div>
+
+<div class="content" id="content">
+
+<!-- DAYS -->
+<div class="section active" id="day">
+
+<div id="today-banner"></div>
+
+<div class="day" data-date="2026-05-21"><div class="day-head"><strong>Day 1 · 5/21 四</strong><div class="meta"><span>福岡→別府</span><span class="chev">▼</span></div></div>
+<div class="day-body">
+<div class="event"><div class="time">04:30</div><div class="event-body"><div class="title">小港機場集合</div><div class="note">CI138 07:05→10:50 福岡</div></div></div>
+<div class="event"><div class="time">10:50</div><div class="event-body"><div class="title">福岡空港抵達</div><span class="tag buy">IQOS限定先看</span><span class="tag smoke">機場吸菸區</span><div class="note">入境後直奔免稅店問限定款</div></div></div>
+<div class="event"><div class="time">13:00</div><div class="event-body"><div class="title">日田豆田町</div><div class="note">壽司便當車上吃</div></div></div>
+<div class="event"><div class="time">15:56</div><div class="event-body"><div class="title">由布院之森列車</div><div class="note">→16:50 湯布院（車內全禁菸）</div></div></div>
+<div class="event"><div class="time">17:30</div><div class="event-body"><div class="title">別府清風飯店 Check in</div><span class="tag eat">和洋自助晚餐</span></div></div>
+<div class="event"><div class="time">18:45</div><div class="event-body"><div class="title">⭐ Yumetown 別府（跳過晚餐去）</div><span class="tag buy">UNIQLO+GU</span><span class="tag hot">熊本熊卡</span><div class="note">7-8 分鐘步行，預算 ¥15,000，21:00 關</div><a class="btn map" href="https://maps.google.com/?q=Yumetown+Beppu" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
+</div>
+</div>
+
+<div class="day" data-date="2026-05-22"><div class="day-head"><strong>Day 2 · 5/22 五</strong><div class="meta"><span>動物園→阿蘇</span><span class="chev">▼</span></div></div>
+<div class="day-body">
+<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">九州自然動物園</div></div></div>
+<div class="event"><div class="time">13:00</div><div class="event-body"><div class="title">湯布院</div><span class="tag eat">炭火燒肉定食¥2500</span><div class="note">領 B-SPEAK 蛋糕、史努比茶屋、金麟湖</div></div></div>
+<div class="event"><div class="time">17:00</div><div class="event-body"><div class="title">阿蘇格蘭飯店</div><span class="tag eat">阿蘇赤牛 buffet</span><div class="note">山上露天溫泉看星空 ♨️</div></div></div>
+</div>
+</div>
+
+<div class="day" data-date="2026-05-23"><div class="day-head"><strong>Day 3 · 5/23 六 ⭐</strong><div class="meta"><span>採購主戰場</span><span class="chev">▼</span></div></div>
+<div class="day-body">
+<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">阿蘇神社+門前町</div></div></div>
+<div class="event"><div class="time">11:00</div><div class="event-body"><div class="title">阿蘇草千里</div><span class="tag smoke">停車場吸菸區</span></div></div>
+<div class="event"><div class="time">12:00</div><div class="event-body"><div class="title">草千里午餐 ¥2500</div><div class="note">必吃阿蘇赤牛</div></div></div>
+<div class="event"><div class="time">14:30</div><div class="event-body"><div class="title">⭐ Bic Camera 鶴屋 7F</div><span class="tag buy">SR86 + 凝膠×2</span><span class="tag hot">熊本熊卡達標</span><div class="note">¥78,000（NT$16,380）一筆刷爆 NT$500 加碼</div><a class="btn map" href="https://maps.google.com/?q=Bic+Camera+Tsuruya+Kumamoto" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
+<div class="event"><div class="time">15:45</div><div class="event-body"><div class="title">回飯店放美顏器</div><span class="tag smoke">鶴屋外抽菸</span></div></div>
+<div class="event"><div class="time">18:00</div><div class="event-body"><div class="title">涮涮鍋暢食</div><span class="tag eat">¥3500 含軟飲</span></div></div>
+<div class="event"><div class="time">20:00</div><div class="event-body"><div class="title">⭐ 唐吉訶德下通</div><span class="tag buy">IQOS+喉嚨噴霧×6</span><div class="note">¥10,000+¥6,000，飯店步行 5 分</div></div></div>
+<div class="event"><div class="time">21:00</div><div class="event-body"><div class="title">Bar 小酌 🥃</div></div></div>
+</div>
+</div>
+
+<div class="day" data-date="2026-05-24"><div class="day-head"><strong>Day 4 · 5/24 日 💖</strong><div class="meta"><span>約會夜</span><span class="chev">▼</span></div></div>
+<div class="day-body">
+<div class="event"><div class="time">09:00</div><div class="event-body"><div class="title">水前寺成趣園</div></div></div>
+<div class="event"><div class="time">12:00</div><div class="event-body"><div class="title">熊本風味御膳 ¥2500</div><div class="note">辛子蓮根、太平燕｜⚠️ 馬刺し讓老公吃</div></div></div>
+<div class="event"><div class="time">13:30</div><div class="event-body"><div class="title">AEON Mall 嘉島</div><span class="tag buy">JINS 鈦框</span><span class="tag buy">UNIQLO/GU 補貨</span><div class="note">JINS 全鈦框 ¥13,200+鏡片 ¥3,300（NT$3,120）</div></div></div>
+<div class="event"><div class="time">19:00</div><div class="event-body"><div class="title">🌟 SORA 和牛燒肉「空」套餐</div><span class="tag eat">¥7,920×2</span><span class="tag smoke">テラス可抽</span><div class="note">蜜月旅行紀念｜半個室｜免費訊息盤</div><a class="btn tel" href="tel:+81962238688">📞 撥打</a><a class="btn map" href="https://maps.google.com/?q=和牛のたか+空+下通" target="_blank" rel="noopener">🗺️ 地圖</a></div></div>
+<div class="event"><div class="time">21:15</div><div class="event-body"><div class="title">🎷 醉ing Swing Jazz Bar</div><div class="note">花畑町 10-1 中山ビル 2F</div><a class="btn tel" href="tel:+818060596960">📞 撥打</a></div></div>
+</div>
+</div>
+
+<div class="day" data-date="2026-05-25"><div class="day-head"><strong>Day 5 · 5/25 一</strong><div class="meta"><span>回家</span><span class="chev">▼</span></div></div>
+<div class="day-body">
+<div class="event"><div class="time">08:00</div><div class="event-body"><div class="title">飯店早餐+退房</div></div></div>
+<div class="event"><div class="time">11:50</div><div class="event-body"><div class="title">熊本→高雄 CI199</div><div class="note">13:30 抵達</div></div></div>
+</div>
+</div>
+
+</div>
+
+<!-- BUY -->
+<div class="section" id="buy">
+
+<div class="kpi">
+<div class="kpi-card"><div class="v">¥164,300</div><div class="l">總採購</div></div>
+<div class="kpi-card"><div class="v">NT$846</div><div class="l">淨回饋</div></div>
+</div>
+
+<div class="card">
+<h3>💆 SR86 美顏器 + 凝膠</h3>
+<div class="row"><span>主機（棕色 -T）</span><b>¥72,000</b></div>
+<div class="row"><span>凝膠 EH-4R03 ×2 條</span><b>¥6,000</b></div>
+<div class="row"><span>合計</span><b>¥78,000 / NT$16,380</b></div>
+<div class="warn">📅 5/23（六）14:30｜📍 Bic Camera 鶴屋 7F｜💳 熊本熊卡<br>主機手提 / 凝膠托運｜USB 充電不用變壓器</div>
+<a class="btn map" href="https://maps.google.com/?q=Bic+Camera+Tsuruya+Kumamoto" target="_blank" rel="noopener">🗺️ 地圖</a>
+</div>
+
+<div class="card">
+<h3>👓 JINS 鈦框眼鏡</h3>
+<div class="row"><span>全鈦框（雙鼻橋款）</span><b>¥13,200</b></div>
+<div class="row"><span>升級薄型+抗藍光</span><b>¥3,300</b></div>
+<div class="row"><span>合計（退稅後）</span><b>¥14,850 / NT$3,120</b></div>
+<div class="warn">📅 5/24（日）13:30｜📍 AEON Mall 嘉島 2F<br>帶台灣驗光單 + 喜歡款式截圖｜省 NT$5,000</div>
+</div>
+
+<div class="card">
+<h3>👟 NB 9060 Summer "Raincloud"</h3>
+<div class="row"><span>型號 U90603FA / 27cm</span><b>¥19,800</b></div>
+<div class="warn">📦 東京朋友代購寄飯店<br>📞 calif 渋谷 03-6712-7167<br>指定 5/22 送達 GRIDS 熊本</div>
+</div>
+
+<div class="card">
+<h3>👕 Nautica 短袖 ×3</h3>
+<div class="row"><span>ZOZOTOWN SALE 寄飯店</span><b>¥12,000</b></div>
+<div class="warn">⏰ 5/16 前下單，指定 5/22 配送</div>
+<a class="btn" href="https://zozo.jp/brand/nautica/" target="_blank" rel="noopener">🌐 ZOZO</a>
+</div>
+
+<div class="card">
+<h3>🚬 IQOS 限定主機</h3>
+<div class="row"><span>限定款主機</span><b>¥9,980</b></div>
+<div class="row"><span>日本菸彈 ×3</span><b>¥1,800</b></div>
+<div class="warn">Day 1 福岡空港先看 → Day 3 唐吉訶德補</div>
+</div>
+
+<div class="card">
+<h3>💊 喉嚨噴霧 ×6 + 👔 UNIQLO/GU</h3>
+<div class="row"><span>喉嚨噴霧 ×6</span><b>¥6,000</b></div>
+<div class="row"><span>UNIQLO+GU 別府</span><b>¥15,000</b></div>
+<div class="row"><span>AEON 補貨</span><b>¥10,000</b></div>
+</div>
+
+</div>
+
+<!-- BOOK -->
+<div class="section" id="book">
+<div class="card">
+<h3>🥩 SORA 和牛燒肉「空」</h3>
+<div class="row"><span>日期</span><b>5/24（日）19:00</b></div>
+<div class="row"><span>套餐</span><b>至福「空」18 道 ¥7,920</b></div>
+<div class="row"><span>人數</span><b>2 名</b></div>
+<div class="row"><span>需求</span><b>半個室+蜜月紀念</b></div>
+<div class="row"><span>訊息盤</span><b>✅ 免費贈送</b></div>
+<div class="warn">📍 下通 1-5-10 TT ビル 5F<br>飯店步行 3 分鐘｜接英文菜單<br>テラス席可抽菸 🚬</div>
+<h4 style="margin-top:14px">📋 日文備註（點一下複製）</h4>
+<div class="copyable" onclick="copy(this)">台湾から来ました。日本語が話せません。
+妻と二人で、遅れた新婚旅行のお祝いに伺います。
+可能でしたら、半個室席を希望します。
+よろしくお願いいたします。</div>
+<a class="btn tel" href="tel:+81962238688">📞 +81 96-223-8688</a>
+<a class="btn" href="https://tabelog.com/en/kumamoto/A4301/A430101/43019418/" target="_blank" rel="noopener">Tabelog</a>
+</div>
+
+<div class="card">
+<h3>🎷 醉ing Swing Jazz Bar</h3>
+<div class="row"><span>5/24 21:15</span><b>飯後散步去</b></div>
+<div class="warn">📍 花畑町 10-1 中山ビル 2F</div>
+<a class="btn tel" href="tel:+818060596960">📞 +81 80-6059-6960</a>
+</div>
+
+<div class="card">
+<h3>🏨 GRIDS 熊本飯店</h3>
+<div class="row"><span>入住</span><b>5/23-5/24（兩晚）</b></div>
+<h4 style="margin-top:6px">📦 代收宅配地址（點一下複製）</h4>
+<div class="copyable" onclick="copy(this)">〒860-0012
+熊本県熊本市中央区古屋今町1-7
+GRIDS PREMIUM HOTEL KUMAMOTO フロント気付
+SUN MASON 様
+2026年5月23日チェックイン</div>
+<a class="btn tel" href="tel:+81963122700">📞 +81 96-312-2700</a>
+</div>
+</div>
+
+<!-- TEL -->
+<div class="section" id="tel">
+<div class="card">
+<h3>🇹🇼 旅行社</h3>
+<a class="btn tel" href="tel:0935998988">領隊邵佩玲 0935-998988</a>
+<a class="btn tel" href="tel:+817054374751">日本 +81-70-5437-4751</a>
+<a class="btn tel" href="tel:0912713716">專案鄒家鳳 0912-713716</a>
+<a class="btn tel" href="tel:80008850885">急難救助 800-0885-0885</a>
+</div>
+
+<div class="card">
+<h3>🏨 飯店</h3>
+<a class="btn tel" href="tel:+81503499641">別府清風 +81-50-3499-6414</a>
+<a class="btn tel" href="tel:+81967352111">阿蘇格蘭 +81-967-35-2111</a>
+<a class="btn tel" href="tel:+81963122700">GRIDS 熊本 +81-96-312-2700</a>
+</div>
+
+<div class="card">
+<h3>🍽️ 餐廳・酒吧</h3>
+<a class="btn tel" href="tel:+81962238688">SORA 和牛 +81-96-223-8688</a>
+<a class="btn tel" href="tel:+818060596960">醉ing Jazz +81-80-6059-6960</a>
+</div>
+
+<div class="card">
+<h3>👟 NB 採購（給東京朋友）</h3>
+<a class="btn tel" href="tel:+81367127167">calif 渋谷 03-6712-7167</a>
+<a class="btn tel" href="tel:+81334021906">NB 原宿 03-3402-1906</a>
+<a class="btn tel" href="tel:+81353250851">NB 新宿 03-5325-0851</a>
+</div>
+</div>
+
+<!-- SMOKE -->
+<div class="section" id="smoke">
+<div class="card">
+<h3>🚬 可抽菸時段速查</h3>
+<div class="row"><span>Day 1</span><span style="text-align:right">福岡空港<br>別府飯店外<br>北濱</span></div>
+<div class="row"><span>Day 2</span><span style="text-align:right">動物園停車場<br>湯布院<br>阿蘇飯店外</span></div>
+<div class="row"><span>Day 3</span><span style="text-align:right">草千里<br>鶴屋外<br>唐吉訶德外</span></div>
+<div class="row"><span><b>Day 4 ⭐</b></span><span style="text-align:right"><b>SORA テラス席可抽</b></span></div>
+<div class="row"><span>Day 5</span><span style="text-align:right">熊本空港吸菸室</span></div>
+<div class="warn">⚠️ 由布院之森列車內全禁菸（含加熱菸）<br>⚠️ Bar 內看店家政策<br>💡 推薦 APP「喫煙所マップ」找最近吸菸所</div>
+</div>
+</div>
+
+<!-- SET -->
+<div class="section" id="set">
+<div class="card">
+<h3>💰 已花費 <span style="float:right;font-size:12px;color:#7a6a5e;font-weight:400" id="spend-count">0 筆</span></h3>
+<ul class="spend-list" id="list"></ul>
+<button onclick="clearSpend()" style="margin-top:10px;padding:10px 14px;background:#fbe9e0;border:none;border-radius:8px;font-size:13px;cursor:pointer;color:#b06b54;font-weight:600;min-height:40px">🗑️ 清空全部</button>
+</div>
+
+<div class="card">
+<h3>📋 出國前 Checklist <span style="float:right;font-size:12px;color:#7a6a5e;font-weight:400" id="check-count">0/8</span></h3>
+<div class="row check" data-k="c1"><span><span class="box">✓</span>登錄熊本熊卡 6% 加碼</span></div>
+<div class="row check" data-k="c2"><span><span class="box">✓</span>國泰 CUBE 換 ¥35,000 大寮分行</span></div>
+<div class="row check" data-k="c3"><span><span class="box">✓</span>ZOZOTOWN Nautica 5/16 前下單</span></div>
+<div class="row check" data-k="c4"><span><span class="box">✓</span>請東京朋友幫買 NB</span></div>
+<div class="row check" data-k="c5"><span><span class="box">✓</span>打 GRIDS 確認可代收兩包裹</span></div>
+<div class="row check" data-k="c6"><span><span class="box">✓</span>寶島驗光拿英文版處方箋</span></div>
+<div class="row check" data-k="c7"><span><span class="box">✓</span>下載 Google 翻譯日文離線包</span></div>
+<div class="row check" data-k="c8"><span><span class="box">✓</span>行李箱預留 SR86 25×25×12 空間</span></div>
+</div>
+
+<div class="card">
+<h3>💳 玉山熊本熊卡策略</h3>
+<div class="warn">SR86 一刷 NT$15,120 = 6% 加碼瞬間達 NT$500 上限<br><br>淨回饋 = NT$378（2.5%）+ NT$500（6%）− NT$227（1.5% 手續費）= <b>+NT$651</b><br><br>其他指定通路（唐吉訶德、UNIQLO、GU）超過上限後僅基本 2.5%，但全程刷熊本熊卡最簡單</div>
+<a class="btn" href="https://event.esunbank.com.tw/credit/kumamon-card/japan-discount.html" target="_blank" rel="noopener">🌐 登錄活動</a>
+</div>
+
+<div class="card">
+<h3>ℹ️ 關於</h3>
+<div class="row"><span>匯率</span><b>1 ¥ = NT$ 0.21</b></div>
+<div class="row"><span>預算</span><b>¥85,000</b></div>
+<div class="row"><span>版本</span><b>v2 手機強化版</b></div>
+<div class="warn">💡 iPhone：分享 → 加到主畫面，即可離線使用<br>💡 Android：選單 → 加到主畫面</div>
+</div>
+</div>
+
+</div>
+
+<button class="add-btn" id="addBtn" onclick="openModal()" aria-label="新增花費">+</button>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="modal-box">
+<h3>新增花費</h3>
+<input type="number" id="m-jpy" placeholder="¥ 金額" inputmode="decimal">
+<div class="quick">
+<button type="button" onclick="setQ(500)">¥500</button>
+<button type="button" onclick="setQ(1000)">¥1,000</button>
+<button type="button" onclick="setQ(3000)">¥3,000</button>
+<button type="button" onclick="setQ(5000)">¥5,000</button>
+</div>
+<div class="cat" id="cat">
+<button type="button" data-c="food" class="on"><span class="ic">🍱</span><span>飲食</span></button>
+<button type="button" data-c="buy"><span class="ic">🛍️</span><span>採購</span></button>
+<button type="button" data-c="move"><span class="ic">🚕</span><span>交通</span></button>
+<button type="button" data-c="other"><span class="ic">💰</span><span>雜支</span></button>
+</div>
+<input type="text" id="m-note" placeholder="說明（選填）">
+<div class="modal-btns">
+<button class="btn-cancel" type="button" onclick="closeModal()">取消</button>
+<button class="btn-save" type="button" onclick="saveSpend()">儲存</button>
+</div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const RATE=0.21,BUDGET=85000;
+const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
+let curCat='food';
+
+function vib(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._tm);t._tm=setTimeout(()=>t.classList.remove('show'),1600)}
+
+function calcTwd(){
+  const v=+document.getElementById('jpy').value||0;
+  document.getElementById('twd').textContent='≈ NT$'+Math.round(v*RATE).toLocaleString();
+}
+
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));
+  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+  vib(8);
+}
+
+document.getElementById('tabs').addEventListener('click',e=>{
+  const t=e.target.closest('.tab');if(t)showTab(t.dataset.tab);
+});
+
+// 左右滑切換 Tab
+let tx=0,ty=0;
+const tabOrder=['day','buy','book','tel','smoke','set'];
+document.getElementById('content').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+document.getElementById('content').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*2){
+    const cur=tabOrder.indexOf(document.querySelector('.tab.active').dataset.tab);
+    const next=dx<0?cur+1:cur-1;
+    if(next>=0&&next<tabOrder.length)showTab(tabOrder[next]);
+  }
+},{passive:true});
+
+// 今日定位 + Day 摺疊
+function todayInit(){
+  const today=new Date().toISOString().slice(0,10);
+  const days=document.querySelectorAll('.day');
+  let foundToday=false,nearestPast=null,nearestFuture=null;
+  days.forEach(d=>{
+    const dt=d.dataset.date;
+    if(dt===today){d.classList.add('today');foundToday=true;}
+    else d.classList.add('collapsed');
+    if(dt<today)nearestPast=d;
+    if(dt>today&&!nearestFuture)nearestFuture=d;
+  });
+  // banner
+  const banner=document.getElementById('today-banner');
+  if(foundToday){
+    const t=document.querySelector('.day.today .day-head strong').textContent;
+    banner.innerHTML=`📍 今日 <b>${t}</b>　·　點下方卡片展開`;
+    banner.className='today-banner';
+  }else if(nearestFuture){
+    const dt=nearestFuture.dataset.date;
+    const days_=Math.ceil((new Date(dt)-new Date(today))/86400000);
+    banner.innerHTML=`⏰ 距離出發還有 <b>${days_} 天</b>`;
+    banner.className='today-banner';
+    nearestFuture.classList.remove('collapsed');
+  }else{
+    banner.style.display='none';
+  }
+  // 點 day-head 展開/摺疊
+  document.querySelectorAll('.day-head').forEach(h=>{
+    h.addEventListener('click',()=>{h.parentElement.classList.toggle('collapsed');vib(5);});
+  });
+}
+
+// Modal
+function openModal(){
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('addBtn').classList.add('hide');
+  setTimeout(()=>document.getElementById('m-jpy').focus(),50);
+  vib(8);
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+  document.getElementById('addBtn').classList.remove('hide');
+  document.getElementById('m-jpy').value='';
+  document.getElementById('m-note').value='';
+  curCat='food';
+  document.querySelectorAll('#cat button').forEach(b=>b.classList.toggle('on',b.dataset.c==='food'));
+}
+function setQ(v){document.getElementById('m-jpy').value=v;document.getElementById('m-jpy').focus();vib(5);}
+
+document.getElementById('cat').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  curCat=b.dataset.c;
+  document.querySelectorAll('#cat button').forEach(x=>x.classList.toggle('on',x===b));
+  vib(5);
+});
+
+// Enter 鍵儲存
+document.getElementById('m-jpy').addEventListener('keydown',e=>{if(e.key==='Enter')saveSpend()});
+document.getElementById('m-note').addEventListener('keydown',e=>{if(e.key==='Enter')saveSpend()});
+
+// 花費資料
+function loadSpend(){return JSON.parse(localStorage.getItem('kyushu-spend')||'[]')}
+function saveSpend(){
+  const jpy=+document.getElementById('m-jpy').value;
+  const note=document.getElementById('m-note').value||'';
+  if(!jpy){toast('請輸入金額');vib(20);return;}
+  const list=loadSpend();
+  list.push({jpy,note,cat:curCat,t:Date.now()});
+  localStorage.setItem('kyushu-spend',JSON.stringify(list));
+  closeModal();render();
+  toast('已記錄 ¥'+jpy.toLocaleString());
+  vib([10,40,10]);
+}
+function delSpend(i){
+  if(!confirm('刪除這筆？'))return;
+  const list=loadSpend();list.splice(i,1);
+  localStorage.setItem('kyushu-spend',JSON.stringify(list));
+  render();vib(15);
+}
+function clearSpend(){
+  if(!confirm('確定清空所有記錄？'))return;
+  localStorage.removeItem('kyushu-spend');render();
+  toast('已清空');vib(30);
+}
+function fmtTime(ts){
+  const d=new Date(ts);
+  return (d.getMonth()+1)+'/'+d.getDate()+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+function render(){
+  const list=loadSpend();
+  const total=list.reduce((s,x)=>s+x.jpy,0);
+  const left=BUDGET-total;
+  const pct=Math.min(100,total/BUDGET*100);
+  document.getElementById('spent').textContent='¥'+total.toLocaleString();
+  document.getElementById('left').textContent='¥'+left.toLocaleString();
+  const bar=document.getElementById('bar');
+  bar.style.width=pct+'%';
+  bar.className='bar-fill'+(pct>=95?' danger':pct>=80?' warn':'');
+  document.getElementById('spend-count').textContent=list.length+' 筆';
+  const ul=document.getElementById('list');
+  ul.innerHTML=list.length?list.map((x,i)=>{
+    const ic=ICONS[x.cat]||'💰';
+    const tstr=typeof x.t==='number'?fmtTime(x.t):x.t;
+    return `<li class="spend-item"><span class="ic">${ic}</span><div class="meta"><div><b style="color:#b06b54">¥${x.jpy.toLocaleString()}</b> ${x.note?'· '+escapeHtml(x.note):''}</div><div class="when">${tstr}</div></div><button onclick="delSpend(${i})" aria-label="刪除">×</button></li>`;
+  }).reverse().join(''):'<li style="text-align:center;color:#a89d94;padding:20px;font-size:12px">點右下 + 號開始記帳</li>';
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+// Checklist
+function loadCheck(){return JSON.parse(localStorage.getItem('kyushu-check')||'{}')}
+function checkInit(){
+  const st=loadCheck();
+  document.querySelectorAll('.row.check').forEach(r=>{
+    if(st[r.dataset.k])r.classList.add('done');
+    r.addEventListener('click',()=>{
+      r.classList.toggle('done');
+      const s=loadCheck();s[r.dataset.k]=r.classList.contains('done');
+      localStorage.setItem('kyushu-check',JSON.stringify(s));
+      updateCheckCount();vib(8);
+    });
+  });
+  updateCheckCount();
+}
+function updateCheckCount(){
+  const total=document.querySelectorAll('.row.check').length;
+  const done=document.querySelectorAll('.row.check.done').length;
+  document.getElementById('check-count').textContent=done+'/'+total;
+}
+
+// 複製
+async function copy(el){
+  const text=el.innerText.trim();
+  try{
+    await navigator.clipboard.writeText(text);
+    toast('✅ 已複製');vib([10,30,10]);
+  }catch(e){
+    // fallback
+    const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');toast('✅ 已複製');}catch(_){toast('複製失敗，請手動長按');}
+    document.body.removeChild(ta);
+  }
+}
+
+// ESC 關 modal
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('modal').classList.contains('show'))closeModal()});
+
+// 啟動
+todayInit();
+checkInit();
+render();
+</script>
+</body>
+</html>
