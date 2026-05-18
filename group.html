@@ -149,6 +149,28 @@ a{color:#8a7040;text-decoration:none}
 .kpi-card .l{font-size:11px;color:#8a7864;margin-top:3px;letter-spacing:.5px}
 .copyable{cursor:pointer;background:#fdf9ec;padding:9px 11px;border-radius:6px;margin-top:6px;font-size:12px;color:#7a5a20;line-height:1.6;border:1px dashed #ede0c0;font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
 .copyable:active{background:#c9a96a;color:#fff;border-color:#c9a96a}
+.buy-add{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;background:linear-gradient(135deg,#ebd9a0,#c9a96a);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:14px;min-height:48px;font-family:inherit;box-shadow:0 4px 12px rgba(184,150,74,.22)}
+.buy-add:active{transform:scale(.98)}
+.buy-item{background:#fff;border-radius:14px;margin-bottom:12px;padding:12px;display:flex;gap:12px;box-shadow:0 2px 12px rgba(184,150,74,.08);border:1px solid #f3ead2;transition:opacity .25s}
+.buy-item.bought{opacity:.5;background:#fdf9ec;border-color:#ede0c0}
+.buy-item.bought .name{text-decoration:line-through;color:#8a7864}
+.buy-item .img-box{flex-shrink:0;width:88px;height:88px;background:#fdf9ec;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;font-size:30px;color:#c9a96a;border:1px dashed #d4b87a}
+.buy-item .img-box img{width:100%;height:100%;object-fit:cover}
+.buy-item .img-box:active{transform:scale(.97)}
+.buy-item .info{flex:1;min-width:0;display:flex;flex-direction:column}
+.buy-item .name{font-weight:700;font-size:14px;color:#3a2e1a;margin-bottom:5px;line-height:1.3}
+.buy-item .meta{display:flex;gap:6px;font-size:11px;color:#8a7864;margin-bottom:5px;flex-wrap:wrap;align-items:center}
+.buy-item .meta .qty{background:#fffbe6;color:#8a7040;padding:2px 7px;border-radius:8px;font-weight:700}
+.buy-item .meta .who{background:#fdf9ec;color:#7a6a4a;padding:2px 7px;border-radius:8px;font-weight:600}
+.buy-item .meta .price{color:#8a7040;font-weight:700}
+.buy-item .item-notes{font-size:11.5px;color:#8a7864;line-height:1.55;margin-top:auto;padding-top:4px;white-space:pre-wrap;word-break:break-word}
+.buy-item .actions{display:flex;gap:6px;margin-top:8px}
+.buy-item .actions button{padding:6px 10px;border:1px solid #ede0c0;background:#fff;border-radius:6px;font-size:11.5px;color:#8a7864;cursor:pointer;font-family:inherit;min-height:32px;font-weight:600}
+.buy-item .actions button.done{background:#c9a96a;color:#fff;border-color:#c9a96a}
+.buy-item .actions button:active{transform:scale(.95)}
+.img-upload{width:120px;height:120px;background:#fdf9ec;border:2px dashed #d4b87a;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;cursor:pointer;color:#c9a96a;font-size:13px;text-align:center;overflow:hidden;line-height:1.6}
+.img-upload img{width:100%;height:100%;object-fit:cover}
+.img-upload span{display:block;font-size:11px;color:#a89968;margin-top:4px}
 .toast{position:fixed;bottom:calc(100px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:rgba(58,46,26,.92);color:#fff;padding:10px 18px;border-radius:24px;font-size:13px;z-index:3000;opacity:0;transition:all .3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -229,6 +251,7 @@ a{color:#8a7040;text-decoration:none}
   <div class="tab" data-tab="coffee">☕ 咖啡</div>
   <div class="tab" data-tab="tax">🧾 退稅</div>
   <div class="tab" data-tab="spend">💴 記帳</div>
+  <div class="tab" data-tab="buy">🛒 我的代買</div>
   <div class="tab" data-tab="info">ℹ️ 資訊</div>
 </div>
 
@@ -288,6 +311,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="row"><span>☕ <b>咖啡</b></span><span style="text-align:right;font-size:12px">每天精選 1-2 家精品咖啡</span></div>
 <div class="row"><span>🧾 <b>退稅</b></span><span style="text-align:right;font-size:12px">每間退稅店打勾追蹤</span></div>
 <div class="row"><span>💴 <b>記帳</b></span><span style="text-align:right;font-size:12px">個人花費記錄</span></div>
+<div class="row"><span>🛒 <b>我的代買</b></span><span style="text-align:right;font-size:12px">代買清單<br>含圖片/數量/對象</span></div>
 <div class="row"><span>ℹ️ <b>資訊</b></span><span style="text-align:right;font-size:12px">緊急聯絡、飯店、日本資訊</span></div>
 
 <h4>💱 匯率計算機（任何分頁頂部都看得到）</h4>
@@ -900,6 +924,20 @@ a{color:#8a7040;text-decoration:none}
 
 </div>
 
+<!-- BUY -->
+<div class="section" id="buy">
+
+<div class="warn tip">🛒 <b>個人代買清單</b>（記別人託你買的東西、自己想買的清單）<br>📸 可上傳商品照、設數量、單價自動換算台幣<br>🔒 資料只存你手機，不會跟其他團員共用</div>
+
+<div class="kpi">
+<div class="kpi-card"><div class="v" id="buy-total-jpy">¥0</div><div class="l">未買合計</div></div>
+<div class="kpi-card"><div class="v" id="buy-total-twd">NT$0</div><div class="l">≈ 台幣</div></div>
+</div>
+
+<div id="buy-container"></div>
+
+</div>
+
 <!-- INFO -->
 <div class="section" id="info">
 
@@ -948,7 +986,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="card">
 <h3>ℹ️ 版本 / 強制更新</h3>
 <div class="row"><span>版本</span><b>Hi Y.P 員工旅遊版 v3</b></div>
-<div class="row"><span>內容更新日</span><b id="ver-display">2026-05-17.1</b></div>
+<div class="row"><span>內容更新日</span><b id="ver-display">2026-05-17.2</b></div>
 <div class="row"><span>主辦</span><b>Hi Y.P store · baby's something</b></div>
 <button onclick="location.reload(true)" style="width:100%;margin-top:14px;padding:14px;background:#c9a96a;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;min-height:48px;font-family:inherit">🔄 強制刷新最新版</button>
 <div class="warn tip" style="margin-top:10px">📱 <b>更新方式</b>：<br>1. sticky header 右上的 <b>🔄 按鈕</b>（永遠看得到）<br>2. 上方這顆「🔄 強制刷新最新版」<br>3. 畫面下拉一次（iOS 15+ / Android）<br>4. 都不行 → 從主畫面刪 icon 重加<br><br>📍 不會自動跳通知打擾你，需要新版自己按按鈕<br>📍 沒更新最多就是新加的店家／提醒看不到，倒數計時還是準的</div>
@@ -994,10 +1032,43 @@ a{color:#8a7040;text-decoration:none}
 </div>
 </div>
 
+<div class="modal" id="buy-modal" onclick="if(event.target===this)closeBuyModal()">
+<div class="modal-box">
+<h3 id="buy-modal-title">新增代買項目</h3>
+<div class="img-upload" id="img-upload-box" onclick="document.getElementById('buy-img-input').click()">
+<img id="buy-img-preview" style="display:none">
+<div id="buy-img-placeholder">📷 點此上傳圖片<br><span>(可選，建議拍商品照)</span></div>
+</div>
+<input type="file" id="buy-img-input" accept="image/*" style="display:none" onchange="handleBuyImage(event)">
+<button type="button" id="buy-img-remove" onclick="removeBuyImg()" style="display:none;width:100%;margin-bottom:10px;padding:8px;background:#fdf9ec;border:1px solid #ede0c0;border-radius:6px;font-size:12px;color:#8a7040;cursor:pointer;font-family:inherit">🗑️ 移除圖片</button>
+<input type="text" id="buy-name" placeholder="名稱（例：日本限定 KitKat 抹茶）">
+<div style="display:flex;gap:8px">
+<input type="number" id="buy-qty" placeholder="數量" inputmode="numeric" min="1" style="flex:1" oninput="updateBuyPreview()">
+<input type="number" id="buy-price" placeholder="單價 ¥" inputmode="numeric" min="0" style="flex:2" oninput="updateBuyPreview()">
+</div>
+<div id="buy-calc-preview" style="text-align:right;font-size:13px;color:#8a7040;margin-top:-4px;margin-bottom:12px;font-weight:700;font-family:Georgia,serif">合計 ¥0 ≈ NT$0</div>
+<input type="text" id="buy-who" placeholder="代買對象（自己/同事/老婆/...）" list="who-list-buy">
+<datalist id="who-list-buy">
+<option value="自己">
+<option value="老婆">
+<option value="老公">
+<option value="爸媽">
+<option value="同事">
+<option value="朋友">
+</datalist>
+<textarea id="buy-notes" placeholder="備註（地點、規格、提醒等）"></textarea>
+<div class="modal-btns">
+<button class="btn-cancel" type="button" onclick="closeBuyModal()">取消</button>
+<button class="btn-del" type="button" onclick="deleteBuyItem()" id="buy-del-btn" style="display:none">🗑️ 刪除</button>
+<button class="btn-save" type="button" onclick="saveBuyItem()">儲存</button>
+</div>
+</div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-05-17.1';
+const APP_VERSION='2026-05-17.2';
 const RATE=0.23;
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
 let curCat='food',curPay='cash';
@@ -1044,7 +1115,7 @@ document.getElementById('tabs').addEventListener('click',e=>{
 });
 
 let tx=0,ty=0;
-const tabOrder=['day','morn','free','shop','matcha','coffee','tax','spend','info'];
+const tabOrder=['day','morn','free','shop','matcha','coffee','tax','spend','buy','info'];
 document.getElementById('content').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
 document.getElementById('content').addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
@@ -1212,9 +1283,162 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&document.getElementById('modal').classList.contains('show'))closeModal();
 });
 
+// 代買清單（個人 localStorage，含圖片上傳）
+const BUY_KEY='hiyp-buy-items';
+let buyItems=[];
+let curBuyEdit=null;
+let curBuyImg='';
+function escHtmlBuy(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function loadBuyItems(){const s=localStorage.getItem(BUY_KEY);if(s){try{return JSON.parse(s)}catch(e){return[]}}return[]}
+function saveBuyData(){localStorage.setItem(BUY_KEY,JSON.stringify(buyItems))}
+function updateBuyPreview(){
+  const q=+document.getElementById('buy-qty').value||1;
+  const p=+document.getElementById('buy-price').value||0;
+  const j=q*p;
+  const el=document.getElementById('buy-calc-preview');
+  if(el)el.textContent='合計 ¥'+j.toLocaleString()+' ≈ NT$'+Math.round(j*RATE).toLocaleString();
+}
+function renderBuy(){
+  const c=document.getElementById('buy-container');if(!c)return;
+  buyItems=loadBuyItems();
+  let totalLeft=0;
+  let html='<button class="buy-add" onclick="openBuyModal()">＋ 新增代買項目</button>';
+  if(buyItems.length===0){
+    html+='<div style="text-align:center;padding:30px 20px;color:#a89968;font-size:13px;background:#fff;border-radius:14px;border:1px dashed #ede0c0">還沒有項目<br>點上方「＋」加你要代買 / 想買的東西</div>';
+  }
+  buyItems.forEach(it=>{
+    const sub=(it.qty||1)*(it.price||0);
+    if(!it.bought)totalLeft+=sub;
+    const imgHtml=it.img?`<img src="${it.img}">`:'📷';
+    html+=`<div class="buy-item${it.bought?' bought':''}" data-id="${it.id}">
+      <div class="img-box" onclick="editBuyItem('${it.id}')">${imgHtml}</div>
+      <div class="info">
+        <div class="name">${escHtmlBuy(it.name)}</div>
+        <div class="meta">
+          ${it.qty>1?`<span class="qty">×${it.qty}</span>`:''}
+          <span class="who">👤 ${escHtmlBuy(it.who||'自己')}</span>
+          ${it.price?`<span class="price">¥${sub.toLocaleString()} <span style="opacity:.75;font-weight:600">≈ NT$${Math.round(sub*RATE).toLocaleString()}</span></span>`:''}
+        </div>
+        ${it.notes?`<div class="item-notes">${escHtmlBuy(it.notes)}</div>`:''}
+        <div class="actions">
+          <button class="${it.bought?'done':''}" onclick="toggleBought('${it.id}')">${it.bought?'✓ 已買':'☐ 標已買'}</button>
+          <button onclick="editBuyItem('${it.id}')">✏️ 編輯</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  c.innerHTML=html;
+  document.getElementById('buy-total-jpy').textContent='¥'+totalLeft.toLocaleString();
+  document.getElementById('buy-total-twd').textContent='NT$'+Math.round(totalLeft*RATE).toLocaleString();
+}
+function openBuyModal(id){
+  curBuyEdit=id||null;curBuyImg='';
+  const t=document.getElementById('buy-modal-title');
+  const pv=document.getElementById('buy-img-preview');
+  const ph=document.getElementById('buy-img-placeholder');
+  const rm=document.getElementById('buy-img-remove');
+  if(id){
+    const it=buyItems.find(x=>x.id===id);if(!it)return;
+    t.textContent='編輯：'+it.name;
+    document.getElementById('buy-name').value=it.name||'';
+    document.getElementById('buy-qty').value=it.qty||1;
+    document.getElementById('buy-price').value=it.price||'';
+    document.getElementById('buy-who').value=it.who||'自己';
+    document.getElementById('buy-notes').value=it.notes||'';
+    document.getElementById('buy-del-btn').style.display='';
+    if(it.img){curBuyImg=it.img;pv.src=it.img;pv.style.display='block';ph.style.display='none';rm.style.display='block'}
+    else{pv.style.display='none';ph.style.display='block';rm.style.display='none'}
+  }else{
+    t.textContent='新增代買項目';
+    document.getElementById('buy-name').value='';
+    document.getElementById('buy-qty').value=1;
+    document.getElementById('buy-price').value='';
+    document.getElementById('buy-who').value='自己';
+    document.getElementById('buy-notes').value='';
+    document.getElementById('buy-del-btn').style.display='none';
+    pv.style.display='none';ph.style.display='block';rm.style.display='none';
+  }
+  updateBuyPreview();
+  document.getElementById('buy-modal').classList.add('show');
+  document.getElementById('addBtn').classList.add('hide');
+}
+function editBuyItem(id){openBuyModal(id)}
+function closeBuyModal(){
+  document.getElementById('buy-modal').classList.remove('show');
+  document.getElementById('addBtn').classList.remove('hide');
+  document.getElementById('buy-img-input').value='';
+}
+function compressBuyImage(file,maxW=480,q=0.72){
+  return new Promise((resolve,reject)=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        const cv=document.createElement('canvas');
+        let w=img.width,h=img.height;
+        if(w>maxW){h=h*(maxW/w);w=maxW}
+        cv.width=w;cv.height=h;
+        cv.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(cv.toDataURL('image/jpeg',q));
+      };
+      img.onerror=reject;img.src=e.target.result;
+    };
+    r.onerror=reject;r.readAsDataURL(file);
+  });
+}
+async function handleBuyImage(e){
+  const f=e.target.files[0];if(!f)return;
+  try{
+    const d=await compressBuyImage(f);
+    curBuyImg=d;
+    document.getElementById('buy-img-preview').src=d;
+    document.getElementById('buy-img-preview').style.display='block';
+    document.getElementById('buy-img-placeholder').style.display='none';
+    document.getElementById('buy-img-remove').style.display='block';
+    toast('圖片已加入');
+  }catch(err){toast('圖片處理失敗')}
+}
+function removeBuyImg(){
+  curBuyImg='';
+  document.getElementById('buy-img-preview').style.display='none';
+  document.getElementById('buy-img-placeholder').style.display='block';
+  document.getElementById('buy-img-remove').style.display='none';
+  document.getElementById('buy-img-input').value='';
+}
+function saveBuyItem(){
+  const name=document.getElementById('buy-name').value.trim();
+  if(!name){toast('請輸入名稱');vib(20);return}
+  const qty=+document.getElementById('buy-qty').value||1;
+  const price=+document.getElementById('buy-price').value||0;
+  const who=document.getElementById('buy-who').value.trim()||'自己';
+  const notes=document.getElementById('buy-notes').value.trim();
+  if(curBuyEdit){
+    const it=buyItems.find(x=>x.id===curBuyEdit);
+    if(it){it.name=name;it.qty=qty;it.price=price;it.who=who;it.notes=notes;it.img=curBuyImg}
+  }else{
+    buyItems.push({id:'b'+Date.now(),name,qty,price,who,notes,img:curBuyImg,bought:false});
+  }
+  saveBuyData();renderBuy();closeBuyModal();
+  toast('已儲存');vib(8);
+}
+function deleteBuyItem(){
+  if(!curBuyEdit)return;
+  if(!confirm('確定刪除這個項目？'))return;
+  buyItems=buyItems.filter(x=>x.id!==curBuyEdit);
+  saveBuyData();renderBuy();closeBuyModal();
+  toast('已刪除');vib(15);
+}
+function toggleBought(id){
+  const it=buyItems.find(x=>x.id===id);if(!it)return;
+  it.bought=!it.bought;
+  saveBuyData();renderBuy();
+  toast(it.bought?'✓ 標記已買':'☐ 改回未買');vib(8);
+}
+
 todayInit();
 checkInit();
 render();
+renderBuy();
 updateNextGather();
 setInterval(updateNextGather,30000);
 

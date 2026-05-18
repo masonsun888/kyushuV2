@@ -564,9 +564,10 @@ a{color:#b06b54;text-decoration:none}
 <button type="button" id="buy-img-remove" onclick="removeBuyImg()" style="display:none;width:100%;margin-bottom:10px;padding:8px;background:#fbe9e0;border:none;border-radius:6px;font-size:12px;color:#b06b54;cursor:pointer;font-family:inherit">🗑️ 移除圖片</button>
 <input type="text" id="buy-name" placeholder="名稱（例：SR86 美顏器）">
 <div style="display:flex;gap:8px">
-<input type="number" id="buy-qty" placeholder="數量" inputmode="numeric" min="1" style="flex:1">
-<input type="number" id="buy-price" placeholder="單價 ¥" inputmode="numeric" min="0" style="flex:2">
+<input type="number" id="buy-qty" placeholder="數量" inputmode="numeric" min="1" style="flex:1" oninput="updateBuyPreview()">
+<input type="number" id="buy-price" placeholder="單價 ¥" inputmode="numeric" min="0" style="flex:2" oninput="updateBuyPreview()">
 </div>
+<div id="buy-calc-preview" style="text-align:right;font-size:13px;color:#b06b54;margin-top:-4px;margin-bottom:12px;font-weight:700;font-family:Georgia,serif">合計 ¥0 ≈ NT$0</div>
 <input type="text" id="buy-who" placeholder="代買對象（自己/阿姨/...）" list="who-list">
 <datalist id="who-list">
 <option value="自己">
@@ -896,6 +897,13 @@ function loadBuyItems(){
   return INITIAL_BUY;
 }
 function saveBuyData(){localStorage.setItem(BUY_KEY,JSON.stringify(buyItems))}
+function updateBuyPreview(){
+  const q=+document.getElementById('buy-qty').value||1;
+  const p=+document.getElementById('buy-price').value||0;
+  const j=q*p;
+  const el=document.getElementById('buy-calc-preview');
+  if(el)el.textContent='合計 ¥'+j.toLocaleString()+' ≈ NT$'+Math.round(j*RATE).toLocaleString();
+}
 
 function escHtml(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
@@ -916,7 +924,7 @@ function renderBuy(){
         <div class="meta">
           ${it.qty>1?`<span class="qty">×${it.qty}</span>`:''}
           <span class="who">👤 ${escHtml(it.who||'自己')}</span>
-          ${it.price?`<span class="price">¥${sub.toLocaleString()}</span>`:''}
+          ${it.price?`<span class="price">¥${sub.toLocaleString()} <span style="opacity:.75;font-weight:600">≈ NT$${Math.round(sub*RATE).toLocaleString()}</span></span>`:''}
         </div>
         ${it.notes?`<div class="item-notes">${escHtml(it.notes)}</div>`:''}
         <div class="actions">
@@ -967,6 +975,7 @@ function openBuyModal(id){
     previewEl.style.display='none';placeholderEl.style.display='block';
     removeEl.style.display='none';
   }
+  updateBuyPreview();
   document.getElementById('buy-modal').classList.add('show');
   document.getElementById('addBtn').classList.add('hide');
 }
