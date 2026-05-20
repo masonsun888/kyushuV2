@@ -630,8 +630,9 @@ document.getElementById('content').addEventListener('touchend',e=>{
 },{passive:true});
 
 // 今日定位 + Day 摺疊
+function localDateStr(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function todayInit(){
-  const today=new Date().toISOString().slice(0,10);
+  const today=localDateStr();
   const days=document.querySelectorAll('.day');
   let foundToday=false,nearestPast=null,nearestFuture=null;
   days.forEach(d=>{
@@ -648,7 +649,7 @@ function todayInit(){
     banner.className='today-banner';
   }else if(nearestFuture){
     const dt=nearestFuture.dataset.date;
-    const days_=Math.ceil((new Date(dt)-new Date(today))/86400000);
+    const days_=Math.round((new Date(dt+'T00:00:00')-new Date(today+'T00:00:00'))/86400000);
     banner.innerHTML=`⏰ 距離出發還有 <b>${days_} 天</b>`;
     banner.className='today-banner';
     nearestFuture.classList.remove('collapsed');
@@ -1087,8 +1088,12 @@ function updateNextGather(){
   const [,mo,dd]=datePart.split('-');
   let dlbl='';
   if(diffMin<60)dlbl=' · '+diffMin+'分後';
-  else if(diffMin<24*60)dlbl=' · '+Math.floor(diffMin/60)+'小時後';
-  else dlbl=' · '+Math.floor(diffMin/(60*24))+'天後';
+  else if(diffMin<1440)dlbl=' · '+Math.floor(diffMin/60)+'小時後';
+  else{
+    const days=Math.floor(diffMin/1440);
+    const hrs=Math.round((diffMin%1440)/60);
+    dlbl=' · '+days+'天'+(hrs>0?hrs+'小時':'')+'後';
+  }
   tEl.textContent=hh+':'+mm;
   pEl.innerHTML='<div class="lbl">'+parseInt(mo)+'/'+parseInt(dd)+' '+upcoming.tzLabel+dlbl+'</div>'+upcoming.place;
 }

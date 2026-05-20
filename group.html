@@ -986,7 +986,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="card">
 <h3>ℹ️ 版本 / 強制更新</h3>
 <div class="row"><span>版本</span><b>Hi Y.P 員工旅遊版 v3</b></div>
-<div class="row"><span>內容更新日</span><b id="ver-display">2026-05-17.2</b></div>
+<div class="row"><span>內容更新日</span><b id="ver-display">2026-05-17.3</b></div>
 <div class="row"><span>主辦</span><b>Hi Y.P store · baby's something</b></div>
 <button onclick="location.reload(true)" style="width:100%;margin-top:14px;padding:14px;background:#c9a96a;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;min-height:48px;font-family:inherit">🔄 強制刷新最新版</button>
 <div class="warn tip" style="margin-top:10px">📱 <b>更新方式</b>：<br>1. sticky header 右上的 <b>🔄 按鈕</b>（永遠看得到）<br>2. 上方這顆「🔄 強制刷新最新版」<br>3. 畫面下拉一次（iOS 15+ / Android）<br>4. 都不行 → 從主畫面刪 icon 重加<br><br>📍 不會自動跳通知打擾你，需要新版自己按按鈕<br>📍 沒更新最多就是新加的店家／提醒看不到，倒數計時還是準的</div>
@@ -1068,7 +1068,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-05-17.2';
+const APP_VERSION='2026-05-17.3';
 const RATE=0.23;
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
 let curCat='food',curPay='cash';
@@ -1148,14 +1148,19 @@ function updateNextGather(){
   const [yyyy,mo,dd]=datePart.split('-');
   let dlbl='';
   if(diffMin<60)dlbl=' · '+diffMin+'分後';
-  else if(diffMin<24*60)dlbl=' · '+Math.floor(diffMin/60)+'小時後';
-  else dlbl=' · '+Math.floor(diffMin/(60*24))+'天後';
+  else if(diffMin<1440)dlbl=' · '+Math.floor(diffMin/60)+'小時後';
+  else{
+    const days=Math.floor(diffMin/1440);
+    const hrs=Math.round((diffMin%1440)/60);
+    dlbl=' · '+days+'天'+(hrs>0?hrs+'小時':'')+'後';
+  }
   tEl.textContent=hh+':'+mm;
   pEl.innerHTML='<div class="lbl">'+parseInt(mo)+'/'+parseInt(dd)+' '+upcoming.tzLabel+dlbl+'</div>'+upcoming.place;
 }
 
+function localDateStr(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function todayInit(){
-  const today=new Date().toISOString().slice(0,10);
+  const today=localDateStr();
   const days=document.querySelectorAll('.day');
   let foundToday=false,nearestFuture=null;
   days.forEach(d=>{
@@ -1171,7 +1176,7 @@ function todayInit(){
     banner.className='today-banner';
   }else if(nearestFuture){
     const dt=nearestFuture.dataset.date;
-    const days_=Math.ceil((new Date(dt)-new Date(today))/86400000);
+    const days_=Math.round((new Date(dt+'T00:00:00')-new Date(today+'T00:00:00'))/86400000);
     banner.innerHTML=`⏰ 距離出發還有 <b>${days_} 天</b>`;
     banner.className='today-banner';
     nearestFuture.classList.remove('collapsed');
