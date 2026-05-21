@@ -602,7 +602,7 @@ a{color:#b06b54;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-05-17.4';
+const APP_VERSION='2026-05-17.5';
 let RATE=0.23;const BUDGET=85000;
 let rateSource='預設';
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
@@ -1136,7 +1136,11 @@ const GATHERS=[
 function updateNextGather(){
   const now=new Date();
   const upcoming=GATHERS.map(g=>{
-    const d=new Date(g.dt.replace(' ','T')+':00'+g.tz);
+    const [dp,tp]=g.dt.split(' ');
+    const [Y,Mo,Da]=dp.split('-').map(Number);
+    const [H,Mi]=tp.split(':').map(Number);
+    const off=parseInt(g.tz,10);
+    const d=new Date(Date.UTC(Y,Mo-1,Da,H-off,Mi,0));
     return {...g,d};
   }).filter(g=>g.d>now).sort((a,b)=>a.d-b.d)[0];
   const tEl=document.getElementById('ng-time');
