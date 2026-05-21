@@ -315,7 +315,7 @@ a{color:#8a7040;text-decoration:none}
 <div class="row"><span>ℹ️ <b>資訊</b></span><span style="text-align:right;font-size:12px">緊急聯絡、飯店、日本資訊</span></div>
 
 <h4>💱 匯率計算機（任何分頁頂部都看得到）</h4>
-<div class="warn tip">📍 頂部<b>奶油色輸入框</b>輸入日幣金額 → 自動換算成台幣<br>📍 範例：輸入 <code style="background:#fffaeb;padding:1px 4px;border-radius:3px">5000</code> → 顯示「≈ NT$1,150」<br>📍 匯率採 PDF 官方 <b>1 ¥ = NT$ 0.23</b><br>📍 實際刷卡匯率以銀行為準，這只是現場估算用</div>
+<div class="warn tip">📍 頂部<b>奶油色輸入框</b>輸入日幣金額 → 自動換算成台幣<br>📍 範例：輸入 <code style="background:#fffaeb;padding:1px 4px;border-radius:3px">5000</code> → 顯示「≈ NT$1,150」<br>📍 匯率<b>自動抓即時市場價</b>（可在「ℹ️ 資訊 → 匯率設定」手動調整）<br>📍 實際刷卡匯率以銀行為準，這只是現場估算用</div>
 
 <h4>⏰ 下次集合倒數（頂部黃色框）</h4>
 <div class="warn tip">📍 顯示下一個集合時間 + 地點 + <b>還剩幾小時／幾分鐘</b><br>📍 時間下方會標 <b>「台灣時間」或「日本時間」</b>，不會搞混<br>📍 Day 1 第一個集合是<b>台灣時間 05:05</b>（小港機場還在台灣）<br>📍 從 Day 1 下午抵達日本後，全部都是 <b>日本時間</b>（比台灣早 1 小時）<br>📍 每 30 秒自動更新，集合過了會跳到下一個</div>
@@ -976,7 +976,7 @@ a{color:#8a7040;text-decoration:none}
 <h3>🇯🇵 日本旅遊小資訊</h3>
 <div class="row"><span>時差</span><b>日本比台灣 早 1 小時</b></div>
 <div class="row"><span>電壓</span><b>100V · 兩孔扁形插座（跟台灣相同，免變壓器）</b></div>
-<div class="row"><span>匯率</span><b>1 ¥ ≈ NT$ 0.23</b></div>
+<div class="row"><span>匯率</span><b id="rate-display-info">即時匯率（見下方匯率設定）</b></div>
 <div class="row"><span>5 月氣溫</span><b>高 22°C / 低 16°C（早晚涼，建議帶薄外套）</b></div>
 <h4>📞 國際電話</h4>
 <div class="row"><span>日本打回台灣</span><b>001 + 886 + 區碼去 0 + 號碼</b></div>
@@ -986,10 +986,23 @@ a{color:#8a7040;text-decoration:none}
 <div class="card">
 <h3>ℹ️ 版本 / 強制更新</h3>
 <div class="row"><span>版本</span><b>Hi Y.P 員工旅遊版 v3</b></div>
-<div class="row"><span>內容更新日</span><b id="ver-display">2026-05-17.3</b></div>
+<div class="row"><span>內容更新日</span><b id="ver-display">2026-05-17.4</b></div>
 <div class="row"><span>主辦</span><b>Hi Y.P store · baby's something</b></div>
 <button onclick="location.reload(true)" style="width:100%;margin-top:14px;padding:14px;background:#c9a96a;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;min-height:48px;font-family:inherit">🔄 強制刷新最新版</button>
 <div class="warn tip" style="margin-top:10px">📱 <b>更新方式</b>：<br>1. sticky header 右上的 <b>🔄 按鈕</b>（永遠看得到）<br>2. 上方這顆「🔄 強制刷新最新版」<br>3. 畫面下拉一次（iOS 15+ / Android）<br>4. 都不行 → 從主畫面刪 icon 重加<br><br>📍 不會自動跳通知打擾你，需要新版自己按按鈕<br>📍 沒更新最多就是新加的店家／提醒看不到，倒數計時還是準的</div>
+</div>
+
+<div class="card">
+<h3>💱 匯率設定</h3>
+<div class="row"><span>目前使用</span><b id="rate-display">1 ¥ = NT$ 0.2300（預設）</b></div>
+<div class="row"><span>即時更新</span><b id="rate-time">尚未更新</b></div>
+<button onclick="fetchLiveRate(true)" style="width:100%;margin-top:12px;padding:12px;background:#c9a96a;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;min-height:44px;font-family:inherit">🔄 抓最新即時匯率</button>
+<div style="display:flex;gap:8px;margin-top:10px">
+<input type="number" id="rate-input" placeholder="手動輸入（例 0.215）" inputmode="decimal" step="0.001" style="flex:1;padding:11px;border:1px solid #ede0c0;border-radius:8px;font-size:15px;font-family:inherit;min-height:44px;background:#fff;color:#3a2e1a">
+<button onclick="setManualRate()" style="flex-shrink:0;padding:11px 14px;background:#8a7040;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">設定</button>
+</div>
+<button onclick="clearManualRate()" style="width:100%;margin-top:8px;padding:10px;background:#fdf9ec;color:#8a7040;border:1px solid #ede0c0;border-radius:8px;font-size:12px;cursor:pointer;min-height:40px;font-family:inherit">改回即時匯率</button>
+<div class="warn tip" style="margin-top:10px">💡 開 app 自動抓即時市場匯率（離線用上次的）<br>💡 <b>收款建議手動抓高一點</b>（如 +3-5%），銀行換匯有價差，純市場價收會略虧<br>💡 範例：市場 0.205 → 收款抓 0.215 較保險</div>
 </div>
 
 <div class="card">
@@ -1068,8 +1081,9 @@ a{color:#8a7040;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-05-17.3';
-const RATE=0.23;
+const APP_VERSION='2026-05-17.4';
+let RATE=0.23;
+let rateSource='預設';
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
 let curCat='food',curPay='cash';
 
@@ -1102,6 +1116,60 @@ function copyText(el){
 function calcTwd(){
   const v=+document.getElementById('jpy').value||0;
   document.getElementById('twd').textContent='≈ NT$'+Math.round(v*RATE).toLocaleString();
+}
+
+// 匯率管理（即時抓 + 手動覆寫）
+function loadRate(){
+  const manual=localStorage.getItem('hiyp-rate-manual');
+  if(manual){RATE=parseFloat(manual);rateSource='手動';return}
+  const cached=localStorage.getItem('hiyp-rate-live');
+  if(cached){RATE=parseFloat(cached);rateSource='即時';}
+}
+function applyRate(){
+  calcTwd();
+  if(typeof render==='function')render();
+  if(typeof renderBuy==='function')renderBuy();
+  updateRateDisplay();
+}
+function updateRateDisplay(){
+  const el=document.getElementById('rate-display');
+  if(el)el.textContent='1 ¥ = NT$ '+RATE.toFixed(4)+'（'+rateSource+'）';
+  const el2=document.getElementById('rate-display-info');
+  if(el2)el2.textContent='1 ¥ ≈ NT$ '+RATE.toFixed(4)+'（'+rateSource+'）';
+  const tEl=document.getElementById('rate-time');
+  if(tEl){const t=localStorage.getItem('hiyp-rate-time');tEl.textContent=t?new Date(+t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'尚未更新';}
+}
+async function fetchLiveRate(manualTrigger){
+  if(!manualTrigger&&localStorage.getItem('hiyp-rate-manual'))return;
+  if(manualTrigger)toast('抓取中…');
+  try{
+    const res=await fetch('https://open.er-api.com/v6/latest/JPY',{cache:'no-store'});
+    const data=await res.json();
+    if(data&&data.rates&&data.rates.TWD){
+      RATE=data.rates.TWD;rateSource='即時';
+      localStorage.setItem('hiyp-rate-live',RATE);
+      localStorage.setItem('hiyp-rate-time',Date.now());
+      localStorage.removeItem('hiyp-rate-manual');
+      applyRate();
+      if(manualTrigger)toast('已更新即時匯率 '+RATE.toFixed(4));
+    }else if(manualTrigger)toast('抓取失敗，沿用現值');
+  }catch(e){if(manualTrigger)toast('離線或抓取失敗');}
+}
+function setManualRate(){
+  const v=parseFloat(document.getElementById('rate-input').value);
+  if(!v||v<=0||v>1){toast('請輸入有效匯率（例 0.215）');vib(20);return}
+  RATE=v;rateSource='手動';
+  localStorage.setItem('hiyp-rate-manual',v);
+  applyRate();
+  document.getElementById('rate-input').value='';
+  toast('已設定手動匯率 '+v.toFixed(4));vib(8);
+}
+function clearManualRate(){
+  localStorage.removeItem('hiyp-rate-manual');
+  const cached=localStorage.getItem('hiyp-rate-live');
+  if(cached){RATE=parseFloat(cached);rateSource='即時';}else{RATE=0.23;rateSource='預設';}
+  applyRate();toast('已改回即時匯率');
+  fetchLiveRate(true);
 }
 
 function showTab(id){
@@ -1440,12 +1508,15 @@ function toggleBought(id){
   toast(it.bought?'✓ 標記已買':'☐ 改回未買');vib(8);
 }
 
+loadRate();
 todayInit();
 checkInit();
 render();
 renderBuy();
+updateRateDisplay();
 updateNextGather();
 setInterval(updateNextGather,30000);
+fetchLiveRate();
 
 // 使用指南可收折，記住使用者選擇
 function toggleUsage(){

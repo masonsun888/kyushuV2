@@ -497,11 +497,23 @@ a{color:#b06b54;text-decoration:none}
 </div>
 
 <div class="card">
+<h3>💱 匯率設定</h3>
+<div class="row"><span>目前使用</span><b id="rate-display">1 ¥ = NT$ 0.2300（預設）</b></div>
+<div class="row"><span>即時更新</span><b id="rate-time">尚未更新</b></div>
+<button onclick="fetchLiveRate(true)" style="width:100%;margin-top:12px;padding:12px;background:#b06b54;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;min-height:44px;font-family:inherit">🔄 抓最新即時匯率</button>
+<div style="display:flex;gap:8px;margin-top:10px">
+<input type="number" id="rate-input" placeholder="手動輸入（例 0.215）" inputmode="decimal" step="0.001" style="flex:1;padding:11px;border:1px solid #e5d4c5;border-radius:8px;font-size:15px;font-family:inherit;min-height:44px;background:#fff;color:#2a1f1c">
+<button onclick="setManualRate()" style="flex-shrink:0;padding:11px 14px;background:#8a5a40;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">設定</button>
+</div>
+<button onclick="clearManualRate()" style="width:100%;margin-top:8px;padding:10px;background:#faf5f0;color:#8a5a40;border:1px solid #e5d4c5;border-radius:8px;font-size:12px;cursor:pointer;min-height:40px;font-family:inherit">改回即時匯率</button>
+<div class="warn">💡 開 app 自動抓即時市場匯率（離線用上次的）<br>💡 <b>跟人收款建議手動抓高一點</b>（+3-5%），銀行換匯有價差<br>💡 範例：市場 0.205 → 收款抓 0.215 較保險</div>
+</div>
+
+<div class="card">
 <h3>ℹ️ 關於 / 強制更新</h3>
-<div class="row"><span>匯率</span><b>1 ¥ = NT$ 0.23</b></div>
 <div class="row"><span>現金預算</span><b>¥85,000</b></div>
-<div class="row"><span>版本</span><b>v3.1 通用基建</b></div>
-<div class="row"><span>內容更新日</span><b>2026-05-17.1</b></div>
+<div class="row"><span>版本</span><b>v3.2 即時匯率</b></div>
+<div class="row"><span>內容更新日</span><b>2026-05-17.4</b></div>
 <button onclick="location.reload(true)" style="width:100%;margin-top:14px;padding:14px;background:#b06b54;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;min-height:48px;font-family:inherit">🔄 強制刷新最新版</button>
 <div class="warn">💡 每個行程／採購卡片下方可點「📝 附註」加備忘<br>💡 新增花費可選「現金」或「刷卡」分別計算<br>💡 iPhone：分享 → 加到主畫面，即可離線使用<br>💡 想拿最新版：sticky header 右上 🔄 按鈕，或本卡片上面那顆按鈕</div>
 </div>
@@ -590,8 +602,9 @@ a{color:#b06b54;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-05-17.1';
-const RATE=0.23,BUDGET=85000;
+const APP_VERSION='2026-05-17.4';
+let RATE=0.23;const BUDGET=85000;
+let rateSource='預設';
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
 let curCat='food';
 let curPay='cash';
@@ -603,6 +616,58 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 function calcTwd(){
   const v=+document.getElementById('jpy').value||0;
   document.getElementById('twd').textContent='≈ NT$'+Math.round(v*RATE).toLocaleString();
+}
+
+// 匯率管理（即時抓 + 手動覆寫，與團隊版共用 localStorage key）
+function loadRate(){
+  const manual=localStorage.getItem('hiyp-rate-manual');
+  if(manual){RATE=parseFloat(manual);rateSource='手動';return}
+  const cached=localStorage.getItem('hiyp-rate-live');
+  if(cached){RATE=parseFloat(cached);rateSource='即時';}
+}
+function applyRate(){
+  calcTwd();
+  if(typeof render==='function')render();
+  if(typeof renderBuy==='function')renderBuy();
+  updateRateDisplay();
+}
+function updateRateDisplay(){
+  const el=document.getElementById('rate-display');
+  if(el)el.textContent='1 ¥ = NT$ '+RATE.toFixed(4)+'（'+rateSource+'）';
+  const tEl=document.getElementById('rate-time');
+  if(tEl){const t=localStorage.getItem('hiyp-rate-time');tEl.textContent=t?new Date(+t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'尚未更新';}
+}
+async function fetchLiveRate(manualTrigger){
+  if(!manualTrigger&&localStorage.getItem('hiyp-rate-manual'))return;
+  if(manualTrigger)toast('抓取中…');
+  try{
+    const res=await fetch('https://open.er-api.com/v6/latest/JPY',{cache:'no-store'});
+    const data=await res.json();
+    if(data&&data.rates&&data.rates.TWD){
+      RATE=data.rates.TWD;rateSource='即時';
+      localStorage.setItem('hiyp-rate-live',RATE);
+      localStorage.setItem('hiyp-rate-time',Date.now());
+      localStorage.removeItem('hiyp-rate-manual');
+      applyRate();
+      if(manualTrigger)toast('已更新即時匯率 '+RATE.toFixed(4));
+    }else if(manualTrigger)toast('抓取失敗，沿用現值');
+  }catch(e){if(manualTrigger)toast('離線或抓取失敗');}
+}
+function setManualRate(){
+  const v=parseFloat(document.getElementById('rate-input').value);
+  if(!v||v<=0||v>1){toast('請輸入有效匯率（例 0.215）');vib(20);return}
+  RATE=v;rateSource='手動';
+  localStorage.setItem('hiyp-rate-manual',v);
+  applyRate();
+  document.getElementById('rate-input').value='';
+  toast('已設定手動匯率 '+v.toFixed(4));vib(8);
+}
+function clearManualRate(){
+  localStorage.removeItem('hiyp-rate-manual');
+  const cached=localStorage.getItem('hiyp-rate-live');
+  if(cached){RATE=parseFloat(cached);rateSource='即時';}else{RATE=0.23;rateSource='預設';}
+  applyRate();toast('已改回即時匯率');
+  fetchLiveRate(true);
 }
 
 function showTab(id){
@@ -1099,13 +1164,16 @@ function updateNextGather(){
 }
 
 // 啟動
+loadRate();
 todayInit();
 checkInit();
 renderNotes();
 render();
 renderBuy();
+updateRateDisplay();
 updateNextGather();
 setInterval(updateNextGather,30000);
+fetchLiveRate();
 </script>
 </body>
 </html>
