@@ -525,7 +525,7 @@ a{color:#b06b54;text-decoration:none}
 
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
 <div class="modal-box">
-<h3>新增花費</h3>
+<h3 id="spend-modal-title">新增花費</h3>
 <input type="number" id="m-jpy" placeholder="¥ 金額" inputmode="decimal">
 <div class="quick">
 <button type="button" onclick="setQ(500)">¥500</button>
@@ -546,6 +546,7 @@ a{color:#b06b54;text-decoration:none}
 <input type="text" id="m-note" placeholder="說明（選填）">
 <div class="modal-btns">
 <button class="btn-cancel" type="button" onclick="closeModal()">取消</button>
+<button class="btn-del" type="button" onclick="delSpendFromModal()" id="spend-del-btn" style="display:none">🗑️ 刪除</button>
 <button class="btn-save" type="button" onclick="saveSpend()">儲存</button>
 </div>
 </div>
@@ -602,7 +603,7 @@ a{color:#b06b54;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-05-17.7';
+const APP_VERSION='2026-05-17.8';
 let RATE=0.23;const BUDGET=85000;
 let rateSource='預設';
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
@@ -727,18 +728,40 @@ function todayInit(){
 }
 
 // 花費 Modal
-function openModal(){
+let curEditIdx=null;
+function openModal(idx){
+  curEditIdx=(typeof idx==='number')?idx:null;
+  const titleEl=document.getElementById('spend-modal-title');
+  const delBtn=document.getElementById('spend-del-btn');
+  if(curEditIdx!==null){
+    const it=loadSpend()[curEditIdx];
+    if(it){
+      titleEl.textContent='編輯花費';
+      document.getElementById('m-jpy').value=it.jpy;
+      document.getElementById('m-note').value=it.note||'';
+      curCat=it.cat||'food';curPay=it.pay||'cash';
+      document.querySelectorAll('#cat button').forEach(b=>b.classList.toggle('on',b.dataset.c===curCat));
+      document.querySelectorAll('#pay button').forEach(b=>b.classList.toggle('on',b.dataset.p===curPay));
+      delBtn.style.display='';
+    }
+  }else{
+    titleEl.textContent='新增花費';
+    delBtn.style.display='none';
+  }
   document.getElementById('modal').classList.add('show');
   document.getElementById('addBtn').classList.add('hide');
   setTimeout(()=>document.getElementById('m-jpy').focus(),50);
   vib(8);
 }
+function editSpend(i){openModal(i)}
 function closeModal(){
   document.getElementById('modal').classList.remove('show');
   document.getElementById('addBtn').classList.remove('hide');
   document.getElementById('m-jpy').value='';
   document.getElementById('m-note').value='';
-  curCat='food';curPay='cash';
+  curCat='food';curPay='cash';curEditIdx=null;
+  document.getElementById('spend-modal-title').textContent='新增花費';
+  document.getElementById('spend-del-btn').style.display='none';
   document.querySelectorAll('#cat button').forEach(b=>b.classList.toggle('on',b.dataset.c==='food'));
   document.querySelectorAll('#pay button').forEach(b=>b.classList.toggle('on',b.dataset.p==='cash'));
 }
@@ -767,11 +790,26 @@ function saveSpend(){
   const note=document.getElementById('m-note').value||'';
   if(!jpy){toast('請輸入金額');vib(20);return;}
   const list=loadSpend();
-  list.push({jpy,note,cat:curCat,pay:curPay,t:Date.now()});
-  localStorage.setItem('kyushu-spend',JSON.stringify(list));
-  closeModal();render();
-  toast((curPay==='card'?'💳 ':'💴 ')+'已記錄 ¥'+jpy.toLocaleString());
+  if(curEditIdx!==null&&list[curEditIdx]){
+    list[curEditIdx].jpy=jpy;list[curEditIdx].note=note;
+    list[curEditIdx].cat=curCat;list[curEditIdx].pay=curPay;
+    localStorage.setItem('kyushu-spend',JSON.stringify(list));
+    closeModal();render();
+    toast('已更新 ¥'+jpy.toLocaleString());
+  }else{
+    list.push({jpy,note,cat:curCat,pay:curPay,t:Date.now()});
+    localStorage.setItem('kyushu-spend',JSON.stringify(list));
+    closeModal();render();
+    toast((curPay==='card'?'💳 ':'💴 ')+'已記錄 ¥'+jpy.toLocaleString());
+  }
   vib([10,40,10]);
+}
+function delSpendFromModal(){
+  if(curEditIdx===null)return;
+  if(!confirm('刪除這筆？'))return;
+  const list=loadSpend();list.splice(curEditIdx,1);
+  localStorage.setItem('kyushu-spend',JSON.stringify(list));
+  closeModal();render();vib(15);
 }
 function delSpend(i){
   if(!confirm('刪除這筆？'))return;
@@ -820,7 +858,7 @@ function render(){
     const pay=x.pay==='card'?'card':'cash';
     const payLbl=pay==='card'?'刷卡':'現金';
     const tw=Math.round(x.jpy*RATE);
-    return `<li class="spend-item"><span class="ic">${ic}</span><div class="meta"><div><b style="color:#b06b54">¥${x.jpy.toLocaleString()}</b> <span style="color:#a89d94;font-size:11px">≈ NT$${tw.toLocaleString()}</span><span class="pay-pill ${pay}">${payLbl}</span> ${x.note?'· '+escapeHtml(x.note):''}</div><div class="when">${tstr}</div></div><button onclick="delSpend(${i})" aria-label="刪除">×</button></li>`;
+    return `<li class="spend-item"><span class="ic" onclick="editSpend(${i})" style="cursor:pointer">${ic}</span><div class="meta" onclick="editSpend(${i})" style="cursor:pointer"><div><b style="color:#b06b54">¥${x.jpy.toLocaleString()}</b> <span style="color:#a89d94;font-size:11px">≈ NT$${tw.toLocaleString()}</span><span class="pay-pill ${pay}">${payLbl}</span> ${x.note?'· '+escapeHtml(x.note):''}</div><div class="when">${tstr} · 點我編輯</div></div><button onclick="delSpend(${i})" aria-label="刪除">×</button></li>`;
   }).reverse().join(''):'<li style="text-align:center;color:#a89d94;padding:20px;font-size:12px">點右下 + 號開始記帳</li>';
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
