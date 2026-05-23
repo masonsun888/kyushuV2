@@ -470,10 +470,10 @@ a{color:#b06b54;text-decoration:none}
 <div class="section" id="set">
 <div class="card">
 <h3>💰 花費明細 <span style="float:right;font-size:12px;color:#7a6a5e;font-weight:400" id="spend-count">0 筆</span></h3>
-<div class="row"><span>現金已花</span><b id="set-cash">¥0</b></div>
+<div class="row"><span>💴 現金已花</span><b id="set-cash">¥0 ≈ NT$0</b></div>
 <div class="row"><span>現金剩餘</span><b id="set-cash-left">¥85,000</b></div>
-<div class="row"><span>刷卡花費</span><b id="set-card">¥0</b></div>
-<div class="row"><span>合計花費</span><b id="set-total">¥0</b></div>
+<div class="row"><span>💳 刷卡花費</span><b id="set-card">¥0 ≈ NT$0</b></div>
+<div class="row"><span><b>合計花費</b></span><b id="set-total">¥0 ≈ NT$0</b></div>
 <ul class="spend-list" id="list"></ul>
 <button onclick="clearSpend()" style="margin-top:10px;padding:10px 14px;background:#fbe9e0;border:none;border-radius:8px;font-size:13px;cursor:pointer;color:#b06b54;font-weight:600;min-height:40px">🗑️ 清空全部</button>
 </div>
@@ -602,7 +602,7 @@ a{color:#b06b54;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-05-17.5';
+const APP_VERSION='2026-05-17.6';
 let RATE=0.23;const BUDGET=85000;
 let rateSource='預設';
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
@@ -807,10 +807,11 @@ function render(){
   bar.style.width=pct+'%';
   bar.className='bar-fill'+(pct>=95?' danger':pct>=80?' warn':'');
   // 設定 tab 統計
-  const sc=document.getElementById('set-cash');if(sc)sc.textContent='¥'+cash.toLocaleString();
+  const sub='style="opacity:.7;font-weight:600;font-size:12px"';
+  const sc=document.getElementById('set-cash');if(sc)sc.innerHTML='¥'+cash.toLocaleString()+' <span '+sub+'>≈ NT$'+Math.round(cash*RATE).toLocaleString()+'</span>';
   const scl=document.getElementById('set-cash-left');if(scl)scl.textContent='¥'+left.toLocaleString();
-  const sd=document.getElementById('set-card');if(sd)sd.textContent='¥'+card.toLocaleString();
-  const st=document.getElementById('set-total');if(st)st.textContent='¥'+total.toLocaleString();
+  const sd=document.getElementById('set-card');if(sd)sd.innerHTML='¥'+card.toLocaleString()+' <span '+sub+'>≈ NT$'+Math.round(card*RATE).toLocaleString()+'</span>';
+  const st=document.getElementById('set-total');if(st)st.innerHTML='¥'+total.toLocaleString()+' <span '+sub+'>≈ NT$'+Math.round(total*RATE).toLocaleString()+'</span>';
   document.getElementById('spend-count').textContent=list.length+' 筆';
   const ul=document.getElementById('list');
   ul.innerHTML=list.length?list.map((x,i)=>{
