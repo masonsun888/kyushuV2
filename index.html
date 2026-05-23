@@ -602,7 +602,7 @@ a{color:#b06b54;text-decoration:none}
 <div class="toast" id="toast"></div>
 
 <script>
-const APP_VERSION='2026-05-17.6';
+const APP_VERSION='2026-05-17.7';
 let RATE=0.23;const BUDGET=85000;
 let rateSource='預設';
 const ICONS={food:'🍱',buy:'🛍️',move:'🚕',other:'💰'};
@@ -819,7 +819,8 @@ function render(){
     const tstr=typeof x.t==='number'?fmtTime(x.t):x.t;
     const pay=x.pay==='card'?'card':'cash';
     const payLbl=pay==='card'?'刷卡':'現金';
-    return `<li class="spend-item"><span class="ic">${ic}</span><div class="meta"><div><b style="color:#b06b54">¥${x.jpy.toLocaleString()}</b><span class="pay-pill ${pay}">${payLbl}</span> ${x.note?'· '+escapeHtml(x.note):''}</div><div class="when">${tstr}</div></div><button onclick="delSpend(${i})" aria-label="刪除">×</button></li>`;
+    const tw=Math.round(x.jpy*RATE);
+    return `<li class="spend-item"><span class="ic">${ic}</span><div class="meta"><div><b style="color:#b06b54">¥${x.jpy.toLocaleString()}</b> <span style="color:#a89d94;font-size:11px">≈ NT$${tw.toLocaleString()}</span><span class="pay-pill ${pay}">${payLbl}</span> ${x.note?'· '+escapeHtml(x.note):''}</div><div class="when">${tstr}</div></div><button onclick="delSpend(${i})" aria-label="刪除">×</button></li>`;
   }).reverse().join(''):'<li style="text-align:center;color:#a89d94;padding:20px;font-size:12px">點右下 + 號開始記帳</li>';
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
